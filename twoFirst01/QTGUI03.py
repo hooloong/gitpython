@@ -7,6 +7,12 @@ class MyDialog( QtGui.QDialog ):
         super( MyDialog, self ).__init__()
         uic.loadUi( "res.ui", self )
         self.setWindowIcon(QtGui.QIcon("222.ico"))
+    def closeEvent(self,event):
+        reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+        if reply== QtGui.QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 class MyWindow( QtGui.QWidget ):
     def __init__( self ):
@@ -31,6 +37,17 @@ class MyWindow( QtGui.QWidget ):
         r = dialog.exec_();
         if r:
             self.button.setText( dialog.lineEdit.text() )
+
+    def center(self):
+        screen = QtGui.QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width()-size.width())/2,(screen.height()-size.height())/2)
+    def closeEvent(self, event):
+        reply = QtGui.QMessageBox.question( self, 'Message',"Are you sure to quit?",QtGui.QMessageBox.Yes,QtGui.QMessageBox.No)
+        if reply== QtGui.QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 app = QtGui.QApplication( sys.argv )
 demo = MyWindow()
