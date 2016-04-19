@@ -6,7 +6,7 @@ try:
     TFC = C.WinDLL( r"D:\HiDTV\SVP_FUSION\Bin_SX7\TFCAPI.dll" )
 except:
     # bin_FRCXB
-    TFC = C.WinDLL( r"D:\HiDTV\SVP_FUSION\Bin_FRCXB\TFCAPI.dll" )
+    TFC = C.WinDLL( r"D:\sharedoc\HiDTV\SVP_FUSION\Bin_SX7\TFCAPI.dll" )
 
 
 def Cfunc(fcn, argin, argout=None):
