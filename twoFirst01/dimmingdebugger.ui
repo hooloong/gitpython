@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>832</width>
+    <height>532</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Dimming Debugger     DisConnect..</string>
   </property>
@@ -26,13 +34,13 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
       <string>PWMs</string>
      </attribute>
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="tableWidget_PWM">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -75,7 +83,7 @@
      <attribute name="title">
       <string>Currents</string>
      </attribute>
-     <widget class="QTableWidget" name="tableWidget_2">
+     <widget class="QTableWidget" name="tableWidget_Current">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -112,7 +120,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_readpwm">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -125,7 +133,7 @@
      <string>ReadPWM</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButton_readcurrent">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -144,7 +152,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>832</width>
      <height>23</height>
     </rect>
    </property>
