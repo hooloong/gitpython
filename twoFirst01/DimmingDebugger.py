@@ -44,7 +44,8 @@ class MyWindow( QtGui.QMainWindow ):
             event.accept()
         else:
             event.ignore()
-app = QtGui.QApplication( sys.argv )
-mywindow = MyWindow()
-mywindow.show()
-app.exec_()
+if __name__ == "__main__":
+    app = QtGui.QApplication( sys.argv )
+    mywindow = MyWindow()
+    mywindow.show()
+    app.exec_()
