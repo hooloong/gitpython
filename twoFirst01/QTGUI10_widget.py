@@ -26,7 +26,7 @@ class ToggleButton(QtGui.QWidget):
     def __init__(self,parent=None):
         QtGui.QWidget.__init__(self,parent)
         self.setWindowTitle("ToggleButton")
-        self.setGeometry(300,300,280,170)
+        self.setGeometry(400,400,380,370)
         self.color = QtGui.QColor(255,0,0)
         self.red = QtGui.QPushButton('Red',self)
         self.red.setCheckable(True)
@@ -42,30 +42,31 @@ class ToggleButton(QtGui.QWidget):
         self.connect(self.blue,QtCore.SIGNAL('clicked()'),self.setBlue)
 
         self.square1 = QtGui.QWidget(self)
-        self.square1.setGeometry(150,20,100,100)
+        self.square1.setStyleSheet('QWidget {background-color:%s}' % self.color.name())
+        self.square1.setGeometry(100,100,100,100)
         print "%s " % self.color.name()
-        self.square1.setStyleSheet('Qwidget {background-color:%s}' % self.color.name())
+
         QtGui.QApplication.setStyle(QtGui.QStyleFactory.create('cleanlooks'))
     def setRed(self):
         if self.red.isChecked():
             self.color.setRed(255)
         else:
             self.color.setRed(0)
-        self.square1.setStyleSheet('Qwidget {background-color:%s}' % self.color.name())
+        self.square1.setStyleSheet('QWidget {background-color:%s}' % self.color.name())
         print "%s " % self.color.name()
     def setGreen(self):
         if self.green.isChecked():
             self.color.setGreen(255)
         else:
             self.color.setGreen(0)
-        self.square1.setStyleSheet('Qwidget {background-color:%s}' % self.color.name())
+        self.square1.setStyleSheet('QWidget {background-color:%s}' % self.color.name())
         print "%s " % self.color.name()
     def setBlue(self):
         if self.blue.isChecked():
             self.color.setBlue(255)
         else:
             self.color.setBlue(0)
-        self.square1.setStyleSheet('Qwidget {background-color:%s}' % self.color.name())
+        self.square1.setStyleSheet('QWidget {background-color:%s}' % self.color.name())
         print "%s " % self.color.name()
 
 
