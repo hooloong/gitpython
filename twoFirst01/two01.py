@@ -6,7 +6,7 @@ try:
     TFC = C.WinDLL( r"D:\HiDTV\SVP_FUSION\Bin_SX7\TFCAPI.dll" )
 except:
     # bin_FRCXB
-    TFC = C.WinDLL( r"D:\sharedoc\HiDTV\SVP_FUSION\Bin_SX7\TFCAPI.dll" )
+    TFC = C.WinDLL( r"TFCAPI.dll" )
 
 
 def Cfunc(fcn, argin, argout=None):
@@ -24,6 +24,7 @@ TFCConnect2Chip = Cfunc(TFC.tfcConnInit,None,C.c_bool)
 tfcConnTerm = Cfunc(TFC.tfcConnTerm, None, None)
 tfcConnReinit = Cfunc(TFC.tfcConnReinit,None,C.c_bool)
 TFC.tfcGetVersion = Cfunc(TFC.tfcGetVersion,(C.POINTER(C.c_int32),C.POINTER(C.c_int32)))
+TFCReadDwordP =  Cfunc(TFC.tfcReadDword,(C.c_uint32 , C.c_byte),C.c_uint32)
 def tfcGetVersion():
     ma = C.c_long();
     mi = C.c_long();
