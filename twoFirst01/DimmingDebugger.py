@@ -28,6 +28,7 @@ class MyWindow( QtGui.QMainWindow ):
         self.connect(self.actionConnect,QtCore.SIGNAL('triggered()'),self.connectChip)
         self.connect(self.actionDisconnect,QtCore.SIGNAL('triggered()'),self.disconnectChip)
         self.connect(self.pushButton_readpwm,QtCore.SIGNAL('clicked()'),self.readPWM)
+        self.connect(self.pushButton_readpwm,QtCore.SIGNAL('pressed()'),self.changeText)
         self.connect(self.pushButton_readcurrent,QtCore.SIGNAL('clicked()'),self.readCurrent)
     def connectChip(self):
         self.connectFlag = TFC.TFCConnect2Chip()
@@ -41,11 +42,19 @@ class MyWindow( QtGui.QMainWindow ):
             self.statusBar().showMessage('Could not Connect to chip!!!')
             self.setWindowTitle("Dimming Debugger     DisConnect..")
     def disconnectChip(self):
+        if self.connectFlag == False:
+            return
         self.connectFlag = False
         TFC.tfcConnTerm()
         self.setWindowTitle("Dimming Debugger     DisConnect..")
+    def changeText(self):
+        if self.connectFlag == False:
+            return
+        self.pushButton_readpwm.setText("Reading")
     def readPWM(self):
         #added read from registers
+        if self.connectFlag == False:
+            return
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
                 TFC.tfc2ddWriteDword(0x68,0xA5)
@@ -55,8 +64,11 @@ class MyWindow( QtGui.QMainWindow ):
                 pwmdutytemp = "%X" % (var & 0xFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM.setItem(i,j,newItemt)
-
+        self.pushButton_readpwm.setText("ReadPWM")
+        print self.pushButton_readpwm.text
     def readCurrent(self):
+        if self.connectFlag == False:
+            return
         return
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
