@@ -4,8 +4,9 @@ import ctypes as C
 import two01 as TFC
 import xmltodict
 import time
+import numpy as np
 from dispmipsfunc import *
-from PyQt4 import  QtCore, QtGui,uic
+from PyQt4 import  QtCore, QtGui,uic,Qwt5
 class MyWindow( QtGui.QMainWindow ):
     def __init__( self ):
         super( MyWindow, self ).__init__()
@@ -14,6 +15,9 @@ class MyWindow( QtGui.QMainWindow ):
         self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnect to chip!!!')
         self.connectFlag = 0
+        self.pwm = np.zeros(32)
+        self.pwm.dtype = np.uint32
+        print self.pwm
         #init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
         for i in range(self.tableWidget_PWM.rowCount()):
@@ -61,11 +65,13 @@ class MyWindow( QtGui.QMainWindow ):
                 TFC.tfc2ddWriteDword(0x6C,i*self.tableWidget_PWM.rowCount() + j)
                 time.sleep(0.05)
                 var = TFC.tfc2ddReadDword(0x68) >> 8;
+                self.pwm[i*self.tableWidget_PWM.rowCount() + j] = var & 0xFFF
                 pwmdutytemp = "%X" % (var & 0xFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM.setItem(i,j,newItemt)
         self.pushButton_readpwm.setText("ReadPWM")
         print self.pushButton_readpwm.text
+        print self.pwm
     def readCurrent(self):
         if self.connectFlag == False:
             return
