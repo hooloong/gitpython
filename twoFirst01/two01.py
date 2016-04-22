@@ -19,7 +19,7 @@ def Cfunc(fcn, argin, argout=None):
 BYTE = C.c_byte
 WORD = C.c_uint16
 DWORD = C.c_uint32
-
+BASIC_PAGE = 0x198A0000
 TFCConnect2Chip = Cfunc(TFC.tfcConnInit,None,C.c_bool)
 tfcConnTerm = Cfunc(TFC.tfcConnTerm, None, None)
 tfcConnReinit = Cfunc(TFC.tfcConnReinit,None,C.c_bool)
@@ -41,15 +41,21 @@ def tfcWriteByte(page,reg,val):
 
 TFC.tfcWriteDword = Cfunc(TFC.tfcWriteDword,(DWORD,BYTE,DWORD))
 def tfcWriteDword(page,reg,val):
-    TFC.tfcWrigeDword(page,reg,val)
+    TFC.tfcWriteDword(page,reg,val)
+
+def tfc2ddWriteDword(reg,val):
+    TFC.tfcWriteDword(BASIC_PAGE,reg,val)
 
 TFC.tfcWriteDwordMask = Cfunc(TFC.tfcWriteDwordMask,(DWORD,BYTE,DWORD,DWORD))
-def tfcWriteDword(page,reg,mask,val):
-    TFC.tfcWrigeDword(page,reg,mask,val)
+
+def tfcWriteDwordMask(page,reg,mask,val):
+    TFC.tfcWriteDword(page,reg,mask,val)
 
 TFC.tfcReadDword = Cfunc(TFC.tfcReadDword,(DWORD,BYTE),(DWORD))
 def tfcReadDword(page,reg):
-    return TFC.tfcWrigeDword(DWORD(page),BYTE(reg))
+    return TFC.tfcReadDword(DWORD(page),BYTE(reg))
+def tfc2ddReadDword(reg):
+    return TFC.tfcReadDword(BASIC_PAGE,BYTE(reg))
 
 if __name__ == "__main__":
     print("Version: %s" % tfcGetVersion())

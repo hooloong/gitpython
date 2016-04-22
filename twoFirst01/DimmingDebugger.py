@@ -3,6 +3,7 @@ import sys
 import ctypes as C
 import two01 as TFC
 import xmltodict
+import time
 from dispmipsfunc import *
 from PyQt4 import  QtCore, QtGui,uic
 class MyWindow( QtGui.QMainWindow ):
@@ -13,6 +14,17 @@ class MyWindow( QtGui.QMainWindow ):
         self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnect to chip!!!')
         self.connectFlag = 0
+        #init tablewidget
+        newItemt = QtGui.QTableWidgetItem('0')
+        for i in range(self.tableWidget_PWM.rowCount()):
+            for j in range(self.tableWidget_PWM.columnCount()):
+                newItemt = QtGui.QTableWidgetItem('0')
+                self.tableWidget_PWM.setItem(i,j,newItemt)
+        for i in range(self.tableWidget_Current.rowCount()):
+            for j in range(self.tableWidget_Current.columnCount()):
+                newItemt = QtGui.QTableWidgetItem('0')
+                self.tableWidget_Current.setItem(i,j,newItemt)
+        #end table init
         self.connect(self.actionConnect,QtCore.SIGNAL('triggered()'),self.connectChip)
         self.connect(self.actionDisconnect,QtCore.SIGNAL('triggered()'),self.disconnectChip)
         self.connect(self.pushButton_readpwm,QtCore.SIGNAL('clicked()'),self.readPWM)
@@ -34,10 +46,16 @@ class MyWindow( QtGui.QMainWindow ):
         self.setWindowTitle("Dimming Debugger     DisConnect..")
     def readPWM(self):
         #added read from registers
-        var = TFC.TFCReadDwordP(0x198A0000,0xC0);
-        pwmdutytemp = "%X" % (var & 0xFFF)
-        newItem = QtGui.QTableWidgetItem(pwmdutytemp)
-        self.tableWidget_PWM.setItem(0,0,newItem)
+        for i in range(self.tableWidget_PWM.rowCount()):
+            for j in range(self.tableWidget_PWM.columnCount()):
+                TFC.tfc2ddWriteDword(0x68,0xA5)
+                TFC.tfc2ddWriteDword(0x6C,i*self.tableWidget_PWM.rowCount() + j)
+                time.sleep(0.05)
+                var = TFC.tfc2ddReadDword(0x68) >> 8;
+                pwmdutytemp = "%X" % (var & 0xFFF)
+                newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
+                self.tableWidget_PWM.setItem(i,j,newItemt)
+
     def readCurrent(self):
         return
     def closeEvent(self,event):
