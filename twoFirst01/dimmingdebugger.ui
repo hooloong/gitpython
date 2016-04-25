@@ -55,11 +55,20 @@
       <property name="columnCount">
        <number>8</number>
       </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>45</number>
       </attribute>
       <attribute name="horizontalHeaderMinimumSectionSize">
        <number>21</number>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderHighlightSections">
+       <bool>true</bool>
       </attribute>
       <row/>
       <row/>
@@ -418,8 +427,14 @@
       <property name="columnCount">
        <number>8</number>
       </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>45</number>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
       </attribute>
       <row/>
       <row/>
@@ -458,8 +473,14 @@
       <property name="columnCount">
        <number>8</number>
       </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>45</number>
+      </attribute>
+      <attribute name="verticalHeaderHighlightSections">
+       <bool>false</bool>
       </attribute>
       <row/>
       <row/>
@@ -965,7 +986,7 @@
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>300</y>
+      <y>310</y>
       <width>491</width>
       <height>20</height>
      </rect>
@@ -974,14 +995,42 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QListView" name="listView">
+   <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>291</width>
-      <height>631</height>
+      <x>10</x>
+      <y>30</y>
+      <width>251</width>
+      <height>321</height>
      </rect>
+    </property>
+    <row>
+     <property name="text">
+      <string>power_max</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>power_max_percent</string>
+     </property>
+    </row>
+    <column>
+     <property name="text">
+      <string>Value</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Parameters:</string>
     </property>
    </widget>
   </widget>
