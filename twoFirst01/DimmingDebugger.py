@@ -16,7 +16,15 @@ class MyWindow( QtGui.QMainWindow ):
         self.setWindowIcon(QtGui.QIcon("222.ico"))
         # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnected to chip!!!')
-
+        self.scene = QtGui.QGraphicsScene()
+        self.scene.addText("Dimming Debugger")
+        self.graphicsView = QtGui.QGraphicsView(self.scene)
+        self.graphicsView.setGeometry(10,370,310,251)
+        # vbox = QtGui.QVBoxLayout()
+        # vbox.addWidget(self.tableWidget_Paras)
+        # vbox.addWidget(self.graphicsView)
+        # self.setLayout(vbox)
+        # self.graphicsView.show()
         self.s_dict = dict(defaultfilename = "parameters.json")
         # self.s_dict =
         self.connectFlag = 0
