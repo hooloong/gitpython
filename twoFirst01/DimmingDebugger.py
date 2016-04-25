@@ -1,4 +1,5 @@
 __author__ = 'hooloongge'
+# -*- coding: utf-8 -*-
 import sys
 import ctypes as C
 import two01 as TFC
@@ -16,8 +17,8 @@ class MyWindow( QtGui.QMainWindow ):
         # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnected to chip!!!')
 
-
-
+        self.s_dict = dict(defaultfilename = "parameters.json")
+        # self.s_dict =
         self.connectFlag = 0
         self.pwm = np.zeros(32)
         self.pwm.dtype = np.uint32
@@ -62,25 +63,40 @@ class MyWindow( QtGui.QMainWindow ):
         self.connectFlag = False
         TFC.tfcConnTerm()
         self.setWindowTitle("Dimming Debugger     DisConnect..")
+    def loadParaTable(self):
+        i = 1
+        j = 0
+        self.tableWidget_Paras.setRowCount(len(self.s_dict))
+        for key in self.s_dict:
+            print key, self.s_dict[key]
+            newItemh = QtGui.QTableWidgetItem(key)
+            self.tableWidget_Paras.setVerticalHeaderItem(i,newItemh)
+            str = "%d" % self.s_dict[key]
+            newItemi = QtGui.QTableWidgetItem(str)
+            self.tableWidget_Paras.setItem(j,0,newItemi)
+            i = i+1
+            j = j +1
     def loadSettingfromJson(self):
         settingfile = "parameters.json"
         s_fp = open(settingfile,'r')
         if s_fp == False:
             print "error file!!!!"
-            return
-        self.s_dict = json.load(s_fp)
-        s_fp.close()
+        else:
+            self.s_setjson = json.load(s_fp)
+            s_fp.close()
+            self.s_dict = self.s_setjson["parameters"]
+            print self.s_setjson
+            print self.s_dict
+            self.loadParaTable()
     def saveSettingfromJson(self):
-        settingfile = "parameters.json"
+        settingfile = "parameters1.json"
         s_fp = open(settingfile,'w+')
         if s_fp == False:
             print "error file!!!!"
-            return
-        elif self.s_dict.len() == 0:
+        elif len(self.s_dict) == 1:
             print "read firstly !!!!"
-            return
         else:
-            s_fp.write(json.loads(self.s_dict))
+            s_fp.write("%s" % self.s_setjson)
             s_fp.close()
     def changeText_pwm(self):
         if self.connectFlag == False:

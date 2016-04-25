@@ -995,7 +995,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="tableWidget_Paras">
     <property name="geometry">
      <rect>
       <x>10</x>
