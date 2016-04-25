@@ -13,8 +13,11 @@ class MyWindow( QtGui.QMainWindow ):
         super( MyWindow, self ).__init__()
         uic.loadUi( "dimmingdebugger.ui", self )
         self.setWindowIcon(QtGui.QIcon("222.ico"))
-        self.setGeometry(300,300,810,640)
+        # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnected to chip!!!')
+
+
+
         self.connectFlag = 0
         self.pwm = np.zeros(32)
         self.pwm.dtype = np.uint32
@@ -38,6 +41,10 @@ class MyWindow( QtGui.QMainWindow ):
         self.connect(self.pushButton_readpwm,QtCore.SIGNAL('pressed()'),self.changeText_pwm)
         self.connect(self.pushButton_readcurrent,QtCore.SIGNAL('pressed()'),self.changeText_current)
         self.connect(self.pushButton_readcurrent,QtCore.SIGNAL('clicked()'),self.readCurrent)
+
+        self.actionQuit.connect(self.actionQuit,QtCore.SIGNAL('triggered()'),QtGui.qApp,QtCore.SLOT('quit()'))
+        self.actionOpen_setting_file.connect(self.actionOpen_setting_file,QtCore.SIGNAL('triggered()'),self.loadSettingfromJson)
+        self.actionSave_setting_file.connect(self.actionSave_setting_file,QtCore.SIGNAL('triggered()'),self.saveSettingfromJson)
     def connectChip(self):
         self.connectFlag = TFC.TFCConnect2Chip()
         print("tfcConnInit returns ",self.connectFlag)
@@ -55,6 +62,26 @@ class MyWindow( QtGui.QMainWindow ):
         self.connectFlag = False
         TFC.tfcConnTerm()
         self.setWindowTitle("Dimming Debugger     DisConnect..")
+    def loadSettingfromJson(self):
+        settingfile = "parameters.json"
+        s_fp = open(settingfile,'r')
+        if s_fp == False:
+            print "error file!!!!"
+            return
+        self.s_dict = json.load(s_fp)
+        s_fp.close()
+    def saveSettingfromJson(self):
+        settingfile = "parameters.json"
+        s_fp = open(settingfile,'w+')
+        if s_fp == False:
+            print "error file!!!!"
+            return
+        elif self.s_dict.len() == 0:
+            print "read firstly !!!!"
+            return
+        else:
+            s_fp.write(json.loads(self.s_dict))
+            s_fp.close()
     def changeText_pwm(self):
         if self.connectFlag == False:
             return
