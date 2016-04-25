@@ -1,0 +1,19 @@
+{
+    "parameters": {
+        "power_max": 8386560,
+        "power_max_percent": 30,
+        "peak_max_num": 56,
+        "peak_min_num": 36,
+        "peak_max_global_gain": 100,
+        "peak_min_global_gain": 50,
+        "peak_max_num": 56,
+    },
+    "uisetting": {
+        "firstName": "Isaac",
+        "lastName": "Asimov",
+        "genre": "sciencefiction"
+        "firstName": "Tad",
+        "lastName": "Williams",
+        "genre": "fantasy"
+    }
+}
