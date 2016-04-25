@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>857</width>
-    <height>691</height>
+    <width>867</width>
+    <height>708</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -479,6 +479,9 @@
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>45</number>
       </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
       <attribute name="verticalHeaderHighlightSections">
        <bool>false</bool>
       </attribute>
@@ -884,6 +887,12 @@
       <attribute name="horizontalHeaderMinimumSectionSize">
        <number>21</number>
       </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderHighlightSections">
+       <bool>false</bool>
+      </attribute>
       <row/>
       <row/>
       <row/>
@@ -923,6 +932,12 @@
       </property>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>45</number>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderHighlightSections">
+       <bool>false</bool>
       </attribute>
       <row/>
       <row/>
@@ -1006,12 +1021,7 @@
     </property>
     <row>
      <property name="text">
-      <string>power_max</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>power_max_percent</string>
+      <string>paras</string>
      </property>
     </row>
     <column>
@@ -1033,13 +1043,36 @@
      <string>Parameters:</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_write">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>510</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>WriteChip</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>370</y>
+      <width>331</width>
+      <height>251</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>857</width>
+     <width>867</width>
      <height>23</height>
     </rect>
    </property>

@@ -30,11 +30,15 @@ class MyWindow( QtGui.QMainWindow ):
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
                 newItemt = QtGui.QTableWidgetItem('0')
+                newItemt1 = QtGui.QTableWidgetItem('0')
                 self.tableWidget_PWM.setItem(i,j,newItemt)
+                self.tableWidget_PWM_2.setItem(i,j,newItemt1)
         for i in range(self.tableWidget_Current.rowCount()):
             for j in range(self.tableWidget_Current.columnCount()):
                 newItemt = QtGui.QTableWidgetItem('0')
+                newItemt1 = QtGui.QTableWidgetItem('0')
                 self.tableWidget_Current.setItem(i,j,newItemt)
+                self.tableWidget_Current_2.setItem(i,j,newItemt1)
         #end table init
         self.connect(self.actionConnect,QtCore.SIGNAL('triggered()'),self.connectChip)
         self.connect(self.actionDisconnect,QtCore.SIGNAL('triggered()'),self.disconnectChip)
@@ -42,7 +46,9 @@ class MyWindow( QtGui.QMainWindow ):
         self.connect(self.pushButton_readpwm,QtCore.SIGNAL('pressed()'),self.changeText_pwm)
         self.connect(self.pushButton_readcurrent,QtCore.SIGNAL('pressed()'),self.changeText_current)
         self.connect(self.pushButton_readcurrent,QtCore.SIGNAL('clicked()'),self.readCurrent)
-
+        self.connect(self.pushButton_A1,QtCore.SIGNAL('clicked()'),self.Algo_1)
+        self.connect(self.pushButton_A2,QtCore.SIGNAL('clicked()'),self.Algo_2)
+        self.connect(self.pushButton_A3,QtCore.SIGNAL('clicked()'),self.Algo_3)
         self.actionQuit.connect(self.actionQuit,QtCore.SIGNAL('triggered()'),QtGui.qApp,QtCore.SLOT('quit()'))
         self.actionOpen_setting_file.connect(self.actionOpen_setting_file,QtCore.SIGNAL('triggered()'),self.loadSettingfromJson)
         self.actionSave_setting_file.connect(self.actionSave_setting_file,QtCore.SIGNAL('triggered()'),self.saveSettingfromJson)
@@ -68,7 +74,7 @@ class MyWindow( QtGui.QMainWindow ):
         j = 0
         self.tableWidget_Paras.setRowCount(len(self.s_dict))
         for key in self.s_dict:
-            print key, self.s_dict[key]
+            # print key, self.s_dict[key]
             newItemh = QtGui.QTableWidgetItem(key)
             self.tableWidget_Paras.setVerticalHeaderItem(i,newItemh)
             str = "%d" % self.s_dict[key]
@@ -139,7 +145,29 @@ class MyWindow( QtGui.QMainWindow ):
         self.pushButton_readcurrent.setText("ReadCurrent")
         # print self.pushButton_readcurrent.text
         print self.current
-
+    def outputCurrent(self):
+        for i in range(self.tableWidget_Current_2.rowCount()):
+            for j in range(self.tableWidget_Current_2.columnCount()):
+                var = self.current[i*self.tableWidget_Current.rowCount() + j]
+                pwmdutytemp = "%X" % (var & 0xFFF)
+                newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
+                self.tableWidget_Current_2.setItem(i,j,newItemt)
+        print self.current
+    def outputPWM(self):
+        for i in range(self.tableWidget_PWM_2.rowCount()):
+            for j in range(self.tableWidget_PWM_2.columnCount()):
+                var = self.pwm[i*self.tableWidget_PWM_2.rowCount() + j]
+                pwmdutytemp = "%X" % (var & 0xFFF)
+                newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
+                self.tableWidget_PWM_2.setItem(i,j,newItemt)
+    def Algo_1(self):
+        return;
+    def Algo_2(self):
+        self.outputPWM()
+        self.outputCurrent()
+        return
+    def Algo_3(self):
+        return
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
         if reply== QtGui.QMessageBox.Yes:
