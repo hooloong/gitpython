@@ -77,7 +77,7 @@ class MyWindow( QtGui.QMainWindow ):
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM.setItem(i,j,newItemt)
         self.pushButton_readpwm.setText("ReadPWM")
-        print self.pushButton_readpwm.text
+        # print self.pushButton_readpwm.text
         print self.pwm
     def readCurrent(self):
         if self.connectFlag == False:
@@ -95,7 +95,7 @@ class MyWindow( QtGui.QMainWindow ):
         self.pushButton_readcurrent.setText("ReadCurrent")
         # print self.pushButton_readcurrent.text
         print self.current
-        return
+
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
         if reply== QtGui.QMessageBox.Yes:
