@@ -5,11 +5,19 @@
         "peak_max_num": 56,
         "peak_min_num": 36,
         "peak_max_global_gain": 100,
-        "peak_min_global_gain": 50
+        "peak_min_global_gain": 50,
+        "peak_value_thr":3840,
+        "medium_value_thr":20148,
+        "low_value_thr":256,
+        "limit_cof":40
     },
     "uisetting": {
-        "firstName": "Isaac",
-        "lastName": "Asimov",
-        "genre": "sciencefiction"
+        "Chip_ip": "10.86.60.185",
+        "Chip_type":"FRCXB",
+        "Dim_debug_module": "2dd_boost",
+        "Help":"Debug for peak brightness on AMS3824 chip",
+        "Version": "version_0_1_build_160426",
+        "Author": "hooloong",
+        "mail": "hooloong_ge@sigmadesigns.com"
     }
 }

@@ -84,7 +84,7 @@ class MyWindow( QtGui.QMainWindow ):
         for key in self.s_dict:
             # print key, self.s_dict[key]
             newItemh = QtGui.QTableWidgetItem(key)
-            self.tableWidget_Paras.setVerticalHeaderItem(i,newItemh)
+            self.tableWidget_Paras.setVerticalHeaderItem(j,newItemh)
             str = "%d" % self.s_dict[key]
             newItemi = QtGui.QTableWidgetItem(str)
             self.tableWidget_Paras.setItem(j,0,newItemi)
