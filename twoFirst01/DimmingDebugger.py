@@ -56,6 +56,7 @@ class MyWindow( QtGui.QMainWindow ):
         self.connect(self.pushButton_readpwm,QtCore.SIGNAL('pressed()'),self.changeText_pwm)
         self.connect(self.pushButton_readcurrent,QtCore.SIGNAL('pressed()'),self.changeText_current)
         self.connect(self.pushButton_readcurrent,QtCore.SIGNAL('clicked()'),self.readCurrent)
+        self.connect(self.pushButton_flushimg,QtCore.SIGNAL('clicked()'),self.update)
         self.connect(self.pushButton_A1,QtCore.SIGNAL('clicked()'),self.Algo_1)
         self.connect(self.pushButton_A2,QtCore.SIGNAL('clicked()'),self.Algo_2)
         self.connect(self.pushButton_A3,QtCore.SIGNAL('clicked()'),self.Algo_3)
@@ -63,6 +64,7 @@ class MyWindow( QtGui.QMainWindow ):
         self.actionOpen_setting_file.connect(self.actionOpen_setting_file,QtCore.SIGNAL('triggered()'),self.loadSettingfromJson)
         self.actionSave_setting_file.connect(self.actionSave_setting_file,QtCore.SIGNAL('triggered()'),self.saveSettingfromJson)
 
+        self.loadSettingfromJson()
     def paintEvent(self,envent):
         self.painter.begin(self)
         startposx = self.tableWidget_Paras.x()
@@ -74,6 +76,7 @@ class MyWindow( QtGui.QMainWindow ):
                 color = QtGui.QColor(br,br,br)
                 self.painter.setBrush(color)
                 self.painter.drawRect(startposx+i*40,startposy+j*30,40,30)
+        self.painter.end()
     def connectChip(self):
         self.connectFlag = TFC.TFCConnect2Chip()
         print("tfcConnInit returns ",self.connectFlag)
