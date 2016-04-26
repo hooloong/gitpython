@@ -16,10 +16,12 @@ class MyWindow( QtGui.QMainWindow ):
         self.setWindowIcon(QtGui.QIcon("222.ico"))
         # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnected to chip!!!')
-        self.scene = QtGui.QGraphicsScene()
-        self.scene.addText("Dimming Debugger")
-        self.graphicsView = QtGui.QGraphicsView(self.scene)
-        self.graphicsView.setGeometry(10,370,310,251)
+        self.painter = QtGui.QPainter()
+
+        # self.scene = QtGui.QGraphicsScene()
+        # self.scene.addText("Dimming Debugger")
+        # self.graphicsView = QtGui.QGraphicsView(self.scene)
+        # self.graphicsView.setGeometry(10,370,310,251)
         # vbox = QtGui.QVBoxLayout()
         # vbox.addWidget(self.tableWidget_Paras)
         # vbox.addWidget(self.graphicsView)
@@ -60,6 +62,18 @@ class MyWindow( QtGui.QMainWindow ):
         self.actionQuit.connect(self.actionQuit,QtCore.SIGNAL('triggered()'),QtGui.qApp,QtCore.SLOT('quit()'))
         self.actionOpen_setting_file.connect(self.actionOpen_setting_file,QtCore.SIGNAL('triggered()'),self.loadSettingfromJson)
         self.actionSave_setting_file.connect(self.actionSave_setting_file,QtCore.SIGNAL('triggered()'),self.saveSettingfromJson)
+
+    def paintEvent(self,envent):
+        self.painter.begin(self)
+        startposx = self.tableWidget_Paras.x()
+        startposy = self.tableWidget_Paras.y()+self.tableWidget_Paras.height()+60
+        for i in range(8):
+            for j in range(8):
+                var = self.pwm[j*self.tableWidget_Current.rowCount() + i]
+                br = (var & 0xFFF) >> 4
+                color = QtGui.QColor(br,br,br)
+                self.painter.setBrush(color)
+                self.painter.drawRect(startposx+i*40,startposy+j*30,40,30)
     def connectChip(self):
         self.connectFlag = TFC.TFCConnect2Chip()
         print("tfcConnInit returns ",self.connectFlag)
