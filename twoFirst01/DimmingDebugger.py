@@ -1,12 +1,10 @@
 __author__ = 'hooloongge'
 # -*- coding: utf-8 -*-
-import sys
+import sys,math,random,time
 import ctypes as C
 import two01 as TFC
 import xmltodict
 import json
-import time
-# import iniparse
 import ConfigParser
 import numpy as np
 from dispmipsfunc import *
@@ -23,12 +21,14 @@ class MyWindow(QtGui.QMainWindow):
         self.painter = QtGui.QPainter()
 
         self.s_dict = dict(defaultfilename="parameters.json")
-        # self.s_dict =
         self.connectFlag = 0
-        self.pwm = np.zeros(32)
-        self.pwm.dtype = np.uint32
-        self.current = np.zeros(32)
-        self.current.dtype = np.uint32
+        self.pwm = np.zeros(64,np.uint32)
+        # self.pwm *= 0xA00
+        # self.pwm.dtype = np.uint32
+        for i in range(64):
+            self.pwm[i] = random.randrange(100,4095)
+        self.current = np.zeros(64,np.uint32)
+        self.output_pwm = np.zeros(64,np.uint32)
         print self.pwm
         #init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
@@ -62,7 +62,7 @@ class MyWindow(QtGui.QMainWindow):
                                              self.saveSettingfromJson)
 
         self.loadSettingfromJson()
-
+        self.PWMshowinTable()
     def paintEvent(self, envent):
         self.painter.begin(self)
         startposx = self.tableWidget_Paras.x()
@@ -122,8 +122,8 @@ class MyWindow(QtGui.QMainWindow):
             self.s_setjson = json.load(s_fp)
             s_fp.close()
             self.s_dict = self.s_setjson["parameters"]
-            print self.s_setjson
-            print self.s_dict
+            # print self.s_setjson
+            # print self.s_dict
             self.loadParaTable()
 
     def saveSettingfromJson(self):
@@ -165,6 +165,12 @@ class MyWindow(QtGui.QMainWindow):
         # print self.pushButton_readpwm.text
         print self.pwm
         self.update()
+    def PWMshowinTable(self):
+        for i in range(self.tableWidget_PWM.rowCount()):
+            for j in range(self.tableWidget_PWM.columnCount()):
+                pwmdutytemp = "%X" % (self.pwm[i * self.tableWidget_PWM.rowCount() + j])
+                newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
+                self.tableWidget_PWM.setItem(i, j, newItemt)
 
     def readCurrent(self):
         if self.connectFlag is False:
@@ -190,23 +196,24 @@ class MyWindow(QtGui.QMainWindow):
                 pwmdutytemp = "%X" % (var & 0xFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_Current_2.setItem(i, j, newItemt)
-        print self.current
+        # print self.current
 
     def outputPWM(self):
         for i in range(self.tableWidget_PWM_2.rowCount()):
             for j in range(self.tableWidget_PWM_2.columnCount()):
-                var = self.pwm[i * self.tableWidget_PWM_2.rowCount() + j]
+                var = self.output_pwm[i * self.tableWidget_PWM_2.rowCount() + j]
                 pwmdutytemp = "%X" % (var & 0xFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM_2.setItem(i, j, newItemt)
 
     def Algo_1(self):
         peak_sum = 0
-        global_gain = 1024
+        # global_gain = 1024
         reduce_pwm = 100
-        led_x = 8
-        led_y = 8
+        led_x = self.s_dict["led_x"]
+        led_y = self.s_dict["led_y"]
         led_size = led_x * led_y
+        dc_size = self.s_dict["dc_dc_size"]
         dc_max_sum = np.zeros((8, 5), np.uint32)
         reduce_pwm_coef = np.ones((8, 3), np.uint32)
         reduce_pwm_coef *= 100
@@ -222,13 +229,36 @@ class MyWindow(QtGui.QMainWindow):
             if self.pwm[i] > self.s_dict["peak_value_thr"]:
                 dc_peak_num[tmp_i] += 1
                 peak_sum += 1
-        print peak_sum
-        print dc_peak_num
+        if peak_sum >= self.s_dict["peak_max_num"]:
+            global_gain = self.s_dict["peak_min_global_gain"]
+        elif peak_sum <= self.s_dict["peak_min_num"]:
+            global_gain = self.s_dict["peak_max_global_gain"]
+        else:
+            global_gain = self.s_dict["peak_max_global_gain"] - (peak_sum - self.s_dict["peak_min_num"]) * (self.s_dict["peak_max_global_gain"] - self.s_dict["peak_min_global_gain"]) / (self.s_dict["peak_max_num"] - self.s_dict["peak_min_num"])
 
+        for i in range(led_size):
+            self.output_pwm[i] = self.pwm[i] * global_gain /100
+        # print self.output_pwm
+        for i in range(led_size):
+            tmp_i = dc_mapping_3820_m70[i]
+            if self.output_pwm[i] > self.s_dict["peak_value_thr"]:
+                dc_max_sum[tmp_i][3] += self.output_pwm[i] * 256
+            elif self.output_pwm[i] > self.s_dict["medium_value_thr"]:
+                dc_max_sum[tmp_i][2] += self.output_pwm[i] * 256
+            elif self.output_pwm[i] > self.s_dict["low_value_thr"]:
+                dc_max_sum[tmp_i][1] += self.output_pwm[i] * 256
+            else:
+                dc_max_sum[tmp_i][0] += self.output_pwm[i] * 256
+            dc_max_sum[tmp_i][4] += self.output_pwm[i]
+        print dc_peak_num, peak_sum, global_gain, dc_max_sum
+        for i in range(dc_size):
+            power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] * 2 /100
+            if dc_max_sum[i][4] > power_max:
+                reduce_pwm_sum = dc_max_sum[i][4] - power_max
 
     def Algo_2(self):
         self.outputPWM()
-        self.outputCurrent()
+        # self.outputCurrent()
 
     def Algo_3(self):
         pass

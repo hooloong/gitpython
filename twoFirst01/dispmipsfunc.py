@@ -1,11 +1,4 @@
-#!bin/env python
 __author__ = 'hooloongge'
-"""
-Memory map for the DISPMIPS included SX7 and FRCX
-
-Can be used to calculate physical memory address from
-pointers of the displayMIPS
-"""
 
 import ctypes as C
 from pdb import set_trace
