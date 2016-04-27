@@ -255,6 +255,31 @@ class MyWindow(QtGui.QMainWindow):
             power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] * 2 /100
             if dc_max_sum[i][4] > power_max:
                 reduce_pwm_sum = dc_max_sum[i][4] - power_max
+                if (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"])/100) > reduce_pwm_sum:
+                    reduce_pwm_coef[i][0] = 100 - reduce_pwm_sum*100/dc_max_sum[i][1]
+                    continue
+                else:
+                    reduce_pwm_sum -= (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"]))/100
+                    reduce_pwm_coef[i][0] = self.s_dict["limit_cof"]
+                if (dc_max_sum[i][2] * (100 - self.s_dict["limit_cof"])/100) > reduce_pwm_sum:
+                    reduce_pwm_coef[i][1] = 100 - reduce_pwm_sum*100/dc_max_sum[i][2]
+                    continue
+                else:
+                    reduce_pwm_sum -= (dc_max_sum[i][2] * (100 - self.s_dict["limit_cof"]))/100
+                    reduce_pwm_coef[i][1] = self.s_dict["limit_cof"]
+                reduce_pwm_coef[i][2] = 100 - (reduce_pwm_sum * 100 /dc_max_sum[i][3])
+        for i in range(led_size):
+            tmp_i = dc_mapping_3820_m70[i]
+            if self.output_pwm[i] > self.s_dict["peak_value_thr"]:
+                reduce_pwm = reduce_pwm_coef[tmp_i][2]
+            elif self.output_pwm[i] > self.s_dict["medium_value_thr"]:
+                reduce_pwm = reduce_pwm_coef[tmp_i][1]
+            elif self.output_pwm[i] > self.s_dict["low_value_thr"]:
+                reduce_pwm = reduce_pwm_coef[tmp_i][0]
+            else:
+                reduce_pwm = 100
+            self.output_pwm[i] *= reduce_pwm/100
+        print self.output_pwm
 
     def Algo_2(self):
         self.outputPWM()
