@@ -14,7 +14,7 @@ from PyQt4 import QtCore, QtGui, uic, Qwt5
 class MyWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
-        uic.loadUi("dimmingdebugger.ui", self)
+        uic.loadUi("dimmingdebugger_res.ui", self)
         self.setWindowIcon(QtGui.QIcon("222.ico"))
         # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnected to chip!!!')
@@ -278,7 +278,7 @@ class MyWindow(QtGui.QMainWindow):
                 reduce_pwm = reduce_pwm_coef[tmp_i][0]
             else:
                 reduce_pwm = 100
-            self.output_pwm[i] *= reduce_pwm/100
+            self.output_pwm[i] = (self.output_pwm[i] * reduce_pwm)/100
         self.outputPWM()
     def Algo_2(self):
         self.outputPWM()
