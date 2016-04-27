@@ -279,8 +279,7 @@ class MyWindow(QtGui.QMainWindow):
             else:
                 reduce_pwm = 100
             self.output_pwm[i] *= reduce_pwm/100
-        print self.output_pwm
-
+        self.outputPWM()
     def Algo_2(self):
         self.outputPWM()
         # self.outputCurrent()
