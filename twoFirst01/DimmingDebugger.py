@@ -6,6 +6,8 @@ import two01 as TFC
 import xmltodict
 import json
 import time
+#import iniparse
+import ConfigParser
 import numpy as np
 from dispmipsfunc import *
 from PyQt4 import  QtCore, QtGui,uic,Qwt5
@@ -18,15 +20,6 @@ class MyWindow( QtGui.QMainWindow ):
         self.statusBar().showMessage('DisConnected to chip!!!')
         self.painter = QtGui.QPainter()
 
-        # self.scene = QtGui.QGraphicsScene()
-        # self.scene.addText("Dimming Debugger")
-        # self.graphicsView = QtGui.QGraphicsView(self.scene)
-        # self.graphicsView.setGeometry(10,370,310,251)
-        # vbox = QtGui.QVBoxLayout()
-        # vbox.addWidget(self.tableWidget_Paras)
-        # vbox.addWidget(self.graphicsView)
-        # self.setLayout(vbox)
-        # self.graphicsView.show()
         self.s_dict = dict(defaultfilename = "parameters.json")
         # self.s_dict =
         self.connectFlag = 0
@@ -78,22 +71,27 @@ class MyWindow( QtGui.QMainWindow ):
                 self.painter.drawRect(startposx+i*40,startposy+j*30,40,30)
         self.painter.end()
     def connectChip(self):
+        config_read = ConfigParser.RawConfigParser()
+        config_read.read("ChipDebugger.INI")
+        eth_ip = config_read.get("Connection","Ethernet.IP")
         self.connectFlag = TFC.TFCConnect2Chip()
         print("tfcConnInit returns ",self.connectFlag)
         if self.connectFlag:
              print("Connect to chip!!! ")
              self.statusBar().showMessage('"Connect to chip!!!')
-             self.setWindowTitle("Dimming Debugger     Connection")
+             self.setWindowTitle("Dimming Debugger" + "   " +"Connection" + "   " + eth_ip)
         else:
             print("Could not Connect to chip!!! ")
-            self.statusBar().showMessage('Could not Connect to chip!!!')
-            self.setWindowTitle("Dimming Debugger     DisConnection")
+            self.statusBar().showMessage('Could not Connect to ' + "   " +eth_ip + "!!!!" )
+            self.setWindowTitle("Dimming Debugger" + "    " + "DisConnection")
     def disconnectChip(self):
         if self.connectFlag == False:
             return
         self.connectFlag = False
         TFC.tfcConnTerm()
         self.setWindowTitle("Dimming Debugger     DisConnect..")
+
+
     def loadParaTable(self):
         i = 1
         j = 0
@@ -161,7 +159,7 @@ class MyWindow( QtGui.QMainWindow ):
             for j in range(self.tableWidget_Current.columnCount()):
                 TFC.tfc2ddWriteDword(0x68,0xA5)
                 TFC.tfc2ddWriteDword(0x6C,i*self.tableWidget_Current.rowCount() + j)
-                time.sleep(0.05)
+                time.sleep(0.1)
                 var = TFC.tfc2ddReadDword(0x68) >> 8;
                 self.current[i*self.tableWidget_Current.rowCount() + j] = var & 0xFFF
                 pwmdutytemp = "%X" % (var & 0xFFF)

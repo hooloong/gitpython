@@ -9,7 +9,9 @@
         "peak_value_thr":3840,
         "medium_value_thr":20148,
         "low_value_thr":256,
-        "limit_cof":40
+        "limit_cof":40,
+        "peak_current_max":127,
+        "lowest_current_min": 14
     },
     "uisetting": {
         "Chip_ip": "10.86.60.185",
