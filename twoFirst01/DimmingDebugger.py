@@ -58,7 +58,9 @@ class MyWindow(QtGui.QMainWindow):
         self.connect(self.pushButton_A1, QtCore.SIGNAL('clicked()'), self.Algo_1)
         self.connect(self.pushButton_A2, QtCore.SIGNAL('clicked()'), self.Algo_2)
         self.connect(self.pushButton_A3, QtCore.SIGNAL('clicked()'), self.Algo_3)
-        self.connect(self.pushButton_plot, QtCore.SIGNAL('clicked()'), self.CreateNewPlotDailog)
+        self.connect(self.pushButton_plotout, QtCore.SIGNAL('clicked()'), self.CreateNewPlotDailog_1)
+        self.connect(self.pushButton_plotin, QtCore.SIGNAL('clicked()'), self.CreateNewPlotDailog)
+        # self.connect(self.pushButton_plot, QtCore.SIGNAL('clicked()'), self.CreateNewPlotDailog_2)
         self.actionQuit.connect(self.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
         self.actionOpen_setting_file.connect(self.actionOpen_setting_file, QtCore.SIGNAL('triggered()'),
                                              self.loadSettingfromJson)
@@ -293,19 +295,11 @@ class MyWindow(QtGui.QMainWindow):
     def Algo_3(self):
         pass
     def CreateNewPlotDailog(self):
-        # new_dailog = MyPlotDialog()
-        # r = new_dailog.exec_();
-        data = np.array([
-        [0,1,0,2,0],
-        [0,3,0,2,0],
-        [6,1,1,7,0],
-        [0,5,0,2,9],
-        [0,1,0,4,0],
-        [9,1,3,4,2],
-        [0,0,2,1,3],
-        ])
-        column_names = ['a','b','c','d','e']
-        row_names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+        # data = self.output_pwm
+        data = self.pwm.copy()
+        data.shape = (8,8)
+        column_names = ['1','2','3','4','5','6','7','8']
+        row_names = ['1','2','3','4','5','6','7','8']
         fig = plt.figure()
         ax = Axes3D(fig)
         lx= len(data[0])   # Work out matrix dimensions
@@ -319,15 +313,43 @@ class MyWindow(QtGui.QMainWindow):
         dx = 0.5 * np.ones_like(zpos)
         dy = dx.copy()
         dz = data.flatten()
-        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='b')
+        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='r')
         #sh()
         ax.w_xaxis.set_ticklabels(column_names)
         ax.w_yaxis.set_ticklabels(row_names)
-        ax.set_xlabel('Letter')
-        ax.set_ylabel('Day')
-        ax.set_zlabel('Occurrence')
+        ax.set_xlabel('led_x')
+        ax.set_ylabel('led_y')
+        ax.set_zlabel('Brightness')
         plt.show()
-
+    def CreateNewPlotDailog_1(self):
+        data = self.output_pwm.copy()
+        data.shape = (8,8)
+        column_names = ['1','2','3','4','5','6','7','8']
+        row_names = ['1','2','3','4','5','6','7','8']
+        fig = plt.figure()
+        ax = Axes3D(fig)
+        lx= len(data[0])   # Work out matrix dimensions
+        ly= len(data[:,0])
+        xpos = np.arange(0,lx,1) # Set up a mesh of positions
+        ypos = np.arange(0,ly,1)
+        xpos, ypos = np.meshgrid(xpos+0.25, ypos+0.25)
+        xpos = xpos.flatten() # Convert positions to 1D array
+        ypos = ypos.flatten()
+        zpos = np.zeros(lx*ly)
+        dx = 0.5 * np.ones_like(zpos)
+        dy = dx.copy()
+        dz = data.flatten()
+        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='r')
+        #sh()
+        ax.w_xaxis.set_ticklabels(column_names)
+        ax.w_yaxis.set_ticklabels(row_names)
+        ax.set_xlabel('led_x')
+        ax.set_ylabel('led_y')
+        ax.set_zlabel('Brightness')
+        plt.show()
+    def CreateNewPlotDailog_2(self):
+        new_dailog = MyPlotDialog()
+        r = new_dailog.exec_();
     def closeEvent(self, event):
         reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes,
                                            QtGui.QMessageBox.No)

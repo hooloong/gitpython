@@ -1069,7 +1069,7 @@
      <string>Flushimg</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_plot">
+   <widget class="QPushButton" name="pushButton_plotout">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -1079,7 +1079,20 @@
      </rect>
     </property>
     <property name="text">
-     <string>PlotIt!</string>
+     <string>Plot Out</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_plotin">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>180</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Plot In</string>
     </property>
    </widget>
   </widget>
