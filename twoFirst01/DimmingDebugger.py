@@ -9,7 +9,10 @@ import ConfigParser
 import numpy as np
 from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, uic, Qwt5
-
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
 
 class MyWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -55,6 +58,7 @@ class MyWindow(QtGui.QMainWindow):
         self.connect(self.pushButton_A1, QtCore.SIGNAL('clicked()'), self.Algo_1)
         self.connect(self.pushButton_A2, QtCore.SIGNAL('clicked()'), self.Algo_2)
         self.connect(self.pushButton_A3, QtCore.SIGNAL('clicked()'), self.Algo_3)
+        self.connect(self.pushButton_plot, QtCore.SIGNAL('clicked()'), self.CreateNewPlotDailog)
         self.actionQuit.connect(self.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
         self.actionOpen_setting_file.connect(self.actionOpen_setting_file, QtCore.SIGNAL('triggered()'),
                                              self.loadSettingfromJson)
@@ -288,6 +292,41 @@ class MyWindow(QtGui.QMainWindow):
 
     def Algo_3(self):
         pass
+    def CreateNewPlotDailog(self):
+        # new_dailog = MyPlotDialog()
+        # r = new_dailog.exec_();
+        data = np.array([
+        [0,1,0,2,0],
+        [0,3,0,2,0],
+        [6,1,1,7,0],
+        [0,5,0,2,9],
+        [0,1,0,4,0],
+        [9,1,3,4,2],
+        [0,0,2,1,3],
+        ])
+        column_names = ['a','b','c','d','e']
+        row_names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+        fig = plt.figure()
+        ax = Axes3D(fig)
+        lx= len(data[0])   # Work out matrix dimensions
+        ly= len(data[:,0])
+        xpos = np.arange(0,lx,1) # Set up a mesh of positions
+        ypos = np.arange(0,ly,1)
+        xpos, ypos = np.meshgrid(xpos+0.25, ypos+0.25)
+        xpos = xpos.flatten() # Convert positions to 1D array
+        ypos = ypos.flatten()
+        zpos = np.zeros(lx*ly)
+        dx = 0.5 * np.ones_like(zpos)
+        dy = dx.copy()
+        dz = data.flatten()
+        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='b')
+        #sh()
+        ax.w_xaxis.set_ticklabels(column_names)
+        ax.w_yaxis.set_ticklabels(row_names)
+        ax.set_xlabel('Letter')
+        ax.set_ylabel('Day')
+        ax.set_zlabel('Occurrence')
+        plt.show()
 
     def closeEvent(self, event):
         reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes,
@@ -314,10 +353,60 @@ class Worker(QtCore.QThread):
             self.num += 1
             self.emit(SIGNAL('output(QString)'), file_str)
             self.sleep(3)
+class MyMplCanvas(FigureCanvas):
+    """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        self.fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = self.fig.add_subplot(111)
+        # We want the axes cleared every time plot() is called
+        self.axes.hold(False)
+
+        self.compute_initial_figure()
+
+        FigureCanvas.__init__(self, self.fig)
+        self.setParent(parent)
+
+        FigureCanvas.setSizePolicy(self,
+                                   QtGui.QSizePolicy.Expanding,
+                                   QtGui.QSizePolicy.Expanding)
+        FigureCanvas.updateGeometry(self)
+
+    def sizeHint(self):
+        w, h = self.get_width_height()
+        return QtCore.QSize(w, h)
+
+    def minimumSizeHint(self):
+        return QtCore.QSize(10, 10)
 
 
+class MyStaticMplCanvas(MyMplCanvas):
+    """Simple canvas with a sine plot."""
+    def compute_initial_figure(self):
+        t = np.arange(0.0, 3.0, 0.01)
+        s = np.sin(2*np.pi*t)
+        self.axes.plot(t, s)
+
+
+class MyPlotDialog( QtGui.QDialog ):
+    def __init__( self ):
+        super( MyPlotDialog, self ).__init__()
+        uic.loadUi( "plot_it.ui", self )
+        self.setWindowIcon(QtGui.QIcon("222.ico"))
+        self.main_widget = QtGui.QWidget(self)
+
+        l = QtGui.QVBoxLayout(self.main_widget)
+        sc = MyStaticMplCanvas(self.main_widget, width=5, height=4, dpi=100)
+        l.addWidget(sc)
+        self.main_widget.setFocus()
+        # self.setCentralWidget(self.main_widget)
+    def closeEvent(self,event):
+        reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+        if reply== QtGui.QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     mywindow = MyWindow()
     mywindow.show()
-    app.exec_()
+    sys.exit(app.exec_())

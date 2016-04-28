@@ -1059,14 +1059,27 @@
    <widget class="QPushButton" name="pushButton_flushimg">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>280</y>
+      <x>440</x>
+      <y>640</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Flushimg</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_plot">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>560</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PlotIt!</string>
     </property>
    </widget>
   </widget>
