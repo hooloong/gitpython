@@ -313,7 +313,7 @@ class MyWindow(QtGui.QMainWindow):
         dx = 0.5 * np.ones_like(zpos)
         dy = dx.copy()
         dz = data.flatten()
-        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='r')
+        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='y')
         #sh()
         ax.w_xaxis.set_ticklabels(column_names)
         ax.w_yaxis.set_ticklabels(row_names)
