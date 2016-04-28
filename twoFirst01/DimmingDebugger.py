@@ -21,7 +21,7 @@ class MyWindow(QtGui.QMainWindow):
         self.painter = QtGui.QPainter()
 
         self.s_dict = dict(defaultfilename="parameters.json")
-        self.connectFlag = 0
+        self.connectFlag = False
         self.pwm = np.zeros(64,np.uint32)
         # self.pwm *= 0xA00
         # self.pwm.dtype = np.uint32
@@ -139,13 +139,15 @@ class MyWindow(QtGui.QMainWindow):
 
     def changeText_pwm(self):
         if self.connectFlag is False:
-            return
-        self.pushButton_readpwm.setText("Reading")
+            pass
+        else:
+            self.pushButton_readpwm.setText("Reading")
 
     def changeText_current(self):
         if self.connectFlag == False:
-            return
-        self.pushButton_readcurrent.setText("Reading")
+            pass
+        else:
+            self.pushButton_readcurrent.setText("Reading")
 
     def readPWM(self):
         #added read from registers
