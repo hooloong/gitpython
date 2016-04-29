@@ -349,6 +349,7 @@ class MyWindow(QtGui.QMainWindow):
         ax.set_ylabel('led_y')
         ax.set_zlabel('Brightness')
         plt.show()
+
     def CreateNewPlotDailog_2(self):
         new_dailog = MyPlotDialog()
         r = new_dailog.exec_();
