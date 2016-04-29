@@ -297,6 +297,7 @@ class MyWindow(QtGui.QMainWindow):
     def CreateNewPlotDailog(self):
         # data = self.output_pwm
         data = self.pwm.copy()
+
         data.shape = (8,8)
         column_names = ['1','2','3','4','5','6','7','8']
         row_names = ['1','2','3','4','5','6','7','8']
@@ -323,6 +324,7 @@ class MyWindow(QtGui.QMainWindow):
         plt.show()
     def CreateNewPlotDailog_1(self):
         data = self.output_pwm.copy()
+        data = (data * self.s_dict["current_scale_3820"])/100
         data.shape = (8,8)
         column_names = ['1','2','3','4','5','6','7','8']
         row_names = ['1','2','3','4','5','6','7','8']

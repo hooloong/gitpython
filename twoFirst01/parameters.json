@@ -15,7 +15,8 @@
         "led_size":64,
         "dc_dc_size":8,
         "peak_current_max":127,
-        "lowest_current_min": 14
+        "lowest_current_min": 14,
+        "current_scale_3820": 150
     },
     "uisetting": {
         "Chip_ip": "10.86.60.185",
