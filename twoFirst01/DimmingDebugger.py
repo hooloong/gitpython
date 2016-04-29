@@ -1,6 +1,6 @@
 __author__ = 'hooloongge'
 # -*- coding: utf-8 -*-
-import sys,math,random,time
+import sys, math, random, time
 import ctypes as C
 import two01 as TFC
 import xmltodict
@@ -14,6 +14,7 @@ from matplotlib.figure import Figure
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
+
 class MyWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
@@ -25,15 +26,15 @@ class MyWindow(QtGui.QMainWindow):
 
         self.s_dict = dict(defaultfilename="parameters.json")
         self.connectFlag = False
-        self.pwm = np.zeros(64,np.uint32)
+        self.pwm = np.zeros(64, np.uint32)
         # self.pwm *= 0xA00
         # self.pwm.dtype = np.uint32
         for i in range(64):
-            self.pwm[i] = random.randrange(100,4095)
-        self.current = np.zeros(64,np.uint32)
-        self.output_pwm = np.zeros(64,np.uint32)
+            self.pwm[i] = random.randrange(100, 4095)
+        self.current = np.zeros(64, np.uint32)
+        self.output_pwm = np.zeros(64, np.uint32)
         print self.pwm
-        #init tablewidget
+        # init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
@@ -69,6 +70,7 @@ class MyWindow(QtGui.QMainWindow):
 
         self.loadSettingfromJson()
         self.PWMshowinTable()
+
     def paintEvent(self, envent):
         self.painter.begin(self)
         startposx = self.tableWidget_Paras.x()
@@ -156,7 +158,7 @@ class MyWindow(QtGui.QMainWindow):
             self.pushButton_readcurrent.setText("Reading")
 
     def readPWM(self):
-        #added read from registers
+        # added read from registers
         if self.connectFlag is False:
             return
         for i in range(self.tableWidget_PWM.rowCount()):
@@ -173,6 +175,7 @@ class MyWindow(QtGui.QMainWindow):
         # print self.pushButton_readpwm.text
         print self.pwm
         self.update()
+
     def PWMshowinTable(self):
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
@@ -204,7 +207,7 @@ class MyWindow(QtGui.QMainWindow):
                 pwmdutytemp = "%X" % (var & 0xFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_Current_2.setItem(i, j, newItemt)
-        # print self.current
+                # print self.current
 
     def outputPWM(self):
         for i in range(self.tableWidget_PWM_2.rowCount()):
@@ -242,10 +245,13 @@ class MyWindow(QtGui.QMainWindow):
         elif peak_sum <= self.s_dict["peak_min_num"]:
             global_gain = self.s_dict["peak_max_global_gain"]
         else:
-            global_gain = self.s_dict["peak_max_global_gain"] - (peak_sum - self.s_dict["peak_min_num"]) * (self.s_dict["peak_max_global_gain"] - self.s_dict["peak_min_global_gain"]) / (self.s_dict["peak_max_num"] - self.s_dict["peak_min_num"])
+            global_gain = self.s_dict["peak_max_global_gain"] - (peak_sum - self.s_dict["peak_min_num"]) * (
+                self.s_dict["peak_max_global_gain"] - self.s_dict["peak_min_global_gain"]) / (
+                                                                    self.s_dict["peak_max_num"] - self.s_dict[
+                                                                        "peak_min_num"])
 
         for i in range(led_size):
-            self.output_pwm[i] = self.pwm[i] * global_gain /100
+            self.output_pwm[i] = self.pwm[i] * global_gain / 100
         # print self.output_pwm
         for i in range(led_size):
             tmp_i = dc_mapping_3820_m70[i]
@@ -260,22 +266,22 @@ class MyWindow(QtGui.QMainWindow):
             dc_max_sum[tmp_i][4] += self.output_pwm[i]
         print dc_peak_num, peak_sum, global_gain, dc_max_sum
         for i in range(dc_size):
-            power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] * 2 /100
+            power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] * 2 / 100
             if dc_max_sum[i][4] > power_max:
                 reduce_pwm_sum = dc_max_sum[i][4] - power_max
-                if (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"])/100) > reduce_pwm_sum:
-                    reduce_pwm_coef[i][0] = 100 - reduce_pwm_sum*100/dc_max_sum[i][1]
+                if (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"]) / 100) > reduce_pwm_sum:
+                    reduce_pwm_coef[i][0] = 100 - reduce_pwm_sum * 100 / dc_max_sum[i][1]
                     continue
                 else:
-                    reduce_pwm_sum -= (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"]))/100
+                    reduce_pwm_sum -= (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"])) / 100
                     reduce_pwm_coef[i][0] = self.s_dict["limit_cof"]
-                if (dc_max_sum[i][2] * (100 - self.s_dict["limit_cof"])/100) > reduce_pwm_sum:
-                    reduce_pwm_coef[i][1] = 100 - reduce_pwm_sum*100/dc_max_sum[i][2]
+                if (dc_max_sum[i][2] * (100 - self.s_dict["limit_cof"]) / 100) > reduce_pwm_sum:
+                    reduce_pwm_coef[i][1] = 100 - reduce_pwm_sum * 100 / dc_max_sum[i][2]
                     continue
                 else:
-                    reduce_pwm_sum -= (dc_max_sum[i][2] * (100 - self.s_dict["limit_cof"]))/100
+                    reduce_pwm_sum -= (dc_max_sum[i][2] * (100 - self.s_dict["limit_cof"])) / 100
                     reduce_pwm_coef[i][1] = self.s_dict["limit_cof"]
-                reduce_pwm_coef[i][2] = 100 - (reduce_pwm_sum * 100 /dc_max_sum[i][3])
+                reduce_pwm_coef[i][2] = 100 - (reduce_pwm_sum * 100 / dc_max_sum[i][3])
         for i in range(led_size):
             tmp_i = dc_mapping_3820_m70[i]
             if self.output_pwm[i] > self.s_dict["peak_value_thr"]:
@@ -286,63 +292,66 @@ class MyWindow(QtGui.QMainWindow):
                 reduce_pwm = reduce_pwm_coef[tmp_i][0]
             else:
                 reduce_pwm = 100
-            self.output_pwm[i] = (self.output_pwm[i] * reduce_pwm)/100
+            self.output_pwm[i] = (self.output_pwm[i] * reduce_pwm) / 100
         self.outputPWM()
+
     def Algo_2(self):
         self.outputPWM()
         # self.outputCurrent()
 
     def Algo_3(self):
         pass
+
     def CreateNewPlotDailog(self):
         # data = self.output_pwm
         data = self.pwm.copy()
 
-        data.shape = (8,8)
-        column_names = ['1','2','3','4','5','6','7','8']
-        row_names = ['1','2','3','4','5','6','7','8']
+        data.shape = (8, 8)
+        column_names = ['1', '2', '3', '4', '5', '6', '7', '8']
+        row_names = ['1', '2', '3', '4', '5', '6', '7', '8']
         fig = plt.figure()
         ax = Axes3D(fig)
-        lx= len(data[0])   # Work out matrix dimensions
-        ly= len(data[:,0])
-        xpos = np.arange(0,lx,1) # Set up a mesh of positions
-        ypos = np.arange(0,ly,1)
-        xpos, ypos = np.meshgrid(xpos+0.25, ypos+0.25)
-        xpos = xpos.flatten() # Convert positions to 1D array
+        lx = len(data[0])  # Work out matrix dimensions
+        ly = len(data[:, 0])
+        xpos = np.arange(0, lx, 1)  # Set up a mesh of positions
+        ypos = np.arange(0, ly, 1)
+        xpos, ypos = np.meshgrid(xpos + 0.25, ypos + 0.25)
+        xpos = xpos.flatten()  # Convert positions to 1D array
         ypos = ypos.flatten()
-        zpos = np.zeros(lx*ly)
+        zpos = np.zeros(lx * ly)
         dx = 0.5 * np.ones_like(zpos)
         dy = dx.copy()
         dz = data.flatten()
-        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='y')
-        #sh()
+        ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color='y')
+        # sh()
         ax.w_xaxis.set_ticklabels(column_names)
         ax.w_yaxis.set_ticklabels(row_names)
         ax.set_xlabel('led_x')
         ax.set_ylabel('led_y')
         ax.set_zlabel('Brightness')
         plt.show()
+
     def CreateNewPlotDailog_1(self):
         data = self.output_pwm.copy()
-        data = (data * self.s_dict["current_scale_3820"])/100
-        data.shape = (8,8)
-        column_names = ['1','2','3','4','5','6','7','8']
-        row_names = ['1','2','3','4','5','6','7','8']
+        data = (data * self.s_dict["current_scale_3820"]) / 100
+        data.shape = (8, 8)
+        column_names = ['1', '2', '3', '4', '5', '6', '7', '8']
+        row_names = ['1', '2', '3', '4', '5', '6', '7', '8']
         fig = plt.figure()
         ax = Axes3D(fig)
-        lx= len(data[0])   # Work out matrix dimensions
-        ly= len(data[:,0])
-        xpos = np.arange(0,lx,1) # Set up a mesh of positions
-        ypos = np.arange(0,ly,1)
-        xpos, ypos = np.meshgrid(xpos+0.25, ypos+0.25)
-        xpos = xpos.flatten() # Convert positions to 1D array
+        lx = len(data[0])  # Work out matrix dimensions
+        ly = len(data[:, 0])
+        xpos = np.arange(0, lx, 1)  # Set up a mesh of positions
+        ypos = np.arange(0, ly, 1)
+        xpos, ypos = np.meshgrid(xpos + 0.25, ypos + 0.25)
+        xpos = xpos.flatten()  # Convert positions to 1D array
         ypos = ypos.flatten()
-        zpos = np.zeros(lx*ly)
+        zpos = np.zeros(lx * ly)
         dx = 0.5 * np.ones_like(zpos)
         dy = dx.copy()
         dz = data.flatten()
-        ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='r')
-        #sh()
+        ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color='r')
+        # sh()
         ax.w_xaxis.set_ticklabels(column_names)
         ax.w_yaxis.set_ticklabels(row_names)
         ax.set_xlabel('led_x')
@@ -353,6 +362,7 @@ class MyWindow(QtGui.QMainWindow):
     def CreateNewPlotDailog_2(self):
         new_dailog = MyPlotDialog()
         r = new_dailog.exec_();
+
     def closeEvent(self, event):
         reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes,
                                            QtGui.QMessageBox.No)
@@ -378,8 +388,11 @@ class Worker(QtCore.QThread):
             self.num += 1
             self.emit(SIGNAL('output(QString)'), file_str)
             self.sleep(3)
+
+
 class MyMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
+
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.fig.add_subplot(111)
@@ -406,16 +419,17 @@ class MyMplCanvas(FigureCanvas):
 
 class MyStaticMplCanvas(MyMplCanvas):
     """Simple canvas with a sine plot."""
+
     def compute_initial_figure(self):
         t = np.arange(0.0, 3.0, 0.01)
-        s = np.sin(2*np.pi*t)
+        s = np.sin(2 * np.pi * t)
         self.axes.plot(t, s)
 
 
-class MyPlotDialog( QtGui.QDialog ):
-    def __init__( self ):
-        super( MyPlotDialog, self ).__init__()
-        uic.loadUi( "plot_it.ui", self )
+class MyPlotDialog(QtGui.QDialog):
+    def __init__(self):
+        super(MyPlotDialog, self).__init__()
+        uic.loadUi("plot_it.ui", self)
         self.setWindowIcon(QtGui.QIcon("222.ico"))
         self.main_widget = QtGui.QWidget(self)
 
@@ -424,12 +438,16 @@ class MyPlotDialog( QtGui.QDialog ):
         l.addWidget(sc)
         self.main_widget.setFocus()
         # self.setCentralWidget(self.main_widget)
-    def closeEvent(self,event):
-        reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-        if reply== QtGui.QMessageBox.Yes:
+
+    def closeEvent(self, event):
+        reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes,
+                                           QtGui.QMessageBox.No)
+        if reply == QtGui.QMessageBox.Yes:
             event.accept()
         else:
             event.ignore()
+
+
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     mywindow = MyWindow()

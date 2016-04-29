@@ -598,7 +598,7 @@
       </item>
       <item row="2" column="3">
        <property name="text">
-        <string>3</string>
+        <string>2</string>
        </property>
       </item>
       <item row="2" column="4">
@@ -638,7 +638,7 @@
       </item>
       <item row="3" column="3">
        <property name="text">
-        <string>2</string>
+        <string>3</string>
        </property>
       </item>
       <item row="3" column="4">
@@ -678,7 +678,7 @@
       </item>
       <item row="4" column="3">
        <property name="text">
-        <string>5</string>
+        <string>4</string>
        </property>
       </item>
       <item row="4" column="4">
@@ -718,7 +718,7 @@
       </item>
       <item row="5" column="3">
        <property name="text">
-        <string>4</string>
+        <string>5</string>
        </property>
       </item>
       <item row="5" column="4">
