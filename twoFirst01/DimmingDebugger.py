@@ -31,7 +31,7 @@ class MyWindow(QtGui.QMainWindow):
         # self.pwm.dtype = np.uint32
         for i in range(64):
             self.pwm[i] = random.randrange(100, 4095)
-        self.current = np.zeros(64, np.uint32)
+        self.current = np.ones(64, np.uint32)
         self.output_pwm = np.zeros(64, np.uint32)
         print self.pwm
         # init tablewidget
@@ -332,25 +332,28 @@ class MyWindow(QtGui.QMainWindow):
                 self.s_dict["peak_max_global_gain"] - self.s_dict["peak_min_global_gain"]) / (
                                                                     self.s_dict["peak_max_num"] - self.s_dict[
                                                                         "peak_min_num"])
+        global_current_set = (global_gain * self.s_dict["peak_current_max"] ) / 100
 
+        #self.current *= self.s_dict["normal_current_mid"]
+        self.current = self.current * (global_gain * self.s_dict["peak_current_max"] ) / 100
         for i in range(led_size):
-            self.output_pwm[i] = self.pwm[i] * global_gain / 100
+            self.output_pwm[i] = self.pwm[i] * global_current_set   # scale the output brightness = pwm*current
         # print self.output_pwm
         for i in range(led_size):
             tmp_i = dc_mapping_3820_m70[i]
-            if self.output_pwm[i] > self.s_dict["peak_value_thr"]:
-                dc_max_sum[tmp_i][3] += self.output_pwm[i] * 256
+            if self.output_pwm[i] > self.s_dict["peak_value_thr"] :
+                dc_max_sum[tmp_i][3] += self.output_pwm[i]
             elif self.output_pwm[i] > self.s_dict["medium_value_thr"]:
-                dc_max_sum[tmp_i][2] += self.output_pwm[i] * 256
+                dc_max_sum[tmp_i][2] += self.output_pwm[i]
             elif self.output_pwm[i] > self.s_dict["low_value_thr"]:
-                dc_max_sum[tmp_i][1] += self.output_pwm[i] * 256
+                dc_max_sum[tmp_i][1] += self.output_pwm[i]
             else:
-                dc_max_sum[tmp_i][0] += self.output_pwm[i] * 256
+                dc_max_sum[tmp_i][0] += self.output_pwm[i]
             dc_max_sum[tmp_i][4] += self.output_pwm[i]
-        assert isinstance(dc_max_sum, object)
+
         print dc_peak_num, peak_sum, global_gain, dc_max_sum
         for i in range(dc_size):
-            power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] * 2 / 100
+            power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] / 100
             if dc_max_sum[i][4] > power_max:
                 reduce_pwm_sum = dc_max_sum[i][4] - power_max
                 if (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"]) / 100) > reduce_pwm_sum:
