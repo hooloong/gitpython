@@ -33,6 +33,7 @@ class MyWindow(QtGui.QMainWindow):
             self.pwm[i] = random.randrange(100, 4095)
         self.current = np.ones(64, np.uint32)
         self.output_pwm = np.zeros(64, np.uint32)
+        self.output_current = np.ones(64, np.uint32)
         print self.pwm
         # init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
@@ -70,6 +71,7 @@ class MyWindow(QtGui.QMainWindow):
 
         self.loadSettingfromJson()
         self.PWMshowinTable()
+
 
     def paintEvent(self, envent):
         self.painter.begin(self)
@@ -177,11 +179,18 @@ class MyWindow(QtGui.QMainWindow):
         self.update()
 
     def PWMshowinTable(self):
+        self.current =  self.current * self.s_dict["normal_current_mid"]
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
                 pwmdutytemp = "%X" % (self.pwm[i * self.tableWidget_PWM.rowCount() + j])
+
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM.setItem(i, j, newItemt)
+
+                currenttablevar = "%X" % (self.current[i * self.tableWidget_PWM.rowCount() + j])
+
+                newItemt = QtGui.QTableWidgetItem(currenttablevar)
+                self.tableWidget_Current.setItem(i, j, newItemt)
 
     def readCurrent(self):
         if self.connectFlag is False:
@@ -203,8 +212,8 @@ class MyWindow(QtGui.QMainWindow):
     def outputCurrent(self):
         for i in range(self.tableWidget_Current_2.rowCount()):
             for j in range(self.tableWidget_Current_2.columnCount()):
-                var = self.current[i * self.tableWidget_Current.rowCount() + j]
-                pwmdutytemp = "%X" % (var & 0xFFF)
+                var = self.output_current[i * self.tableWidget_Current.rowCount() + j]
+                pwmdutytemp = "%X" % (var & 0xFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_Current_2.setItem(i, j, newItemt)
                 # print self.current
@@ -335,7 +344,9 @@ class MyWindow(QtGui.QMainWindow):
         global_current_set = (global_gain * self.s_dict["peak_current_max"] ) / 100
 
         #self.current *= self.s_dict["normal_current_mid"]
-        self.current = self.current * (global_gain * self.s_dict["peak_current_max"] ) / 100
+        self.current = np.ones(64, np.uint32)
+        self.current =  self.current * (global_gain * self.s_dict["peak_current_max"] ) / 100
+        print self.current
         for i in range(led_size):
             self.output_pwm[i] = self.pwm[i] * global_current_set   # scale the output brightness = pwm*current
         # print self.output_pwm
@@ -352,8 +363,8 @@ class MyWindow(QtGui.QMainWindow):
             dc_max_sum[tmp_i][4] += self.output_pwm[i]
 
         print dc_peak_num, peak_sum, global_gain, dc_max_sum
+        power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] / 100
         for i in range(dc_size):
-            power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] / 100
             if dc_max_sum[i][4] > power_max:
                 reduce_pwm_sum = dc_max_sum[i][4] - power_max
                 if (dc_max_sum[i][1] * (100 - self.s_dict["limit_cof"]) / 100) > reduce_pwm_sum:
@@ -371,16 +382,34 @@ class MyWindow(QtGui.QMainWindow):
                 reduce_pwm_coef[i][2] = 100 - (reduce_pwm_sum * 100 / dc_max_sum[i][3])
         for i in range(led_size):
             tmp_i = dc_mapping_3820_m70[i]
-            if self.output_pwm[i] > self.s_dict["peak_value_thr"]:
+            if self.pwm[i] > self.s_dict["peak_value_thr"]:
                 reduce_pwm = reduce_pwm_coef[tmp_i][2]
-            elif self.output_pwm[i] > self.s_dict["medium_value_thr"]:
+                self.output_pwm[i] = self.pwm[i]
+                self.output_current[i] = self.current[i] * reduce_pwm /100
+            elif self.pwm[i] > self.s_dict["medium_value_thr"]:
                 reduce_pwm = reduce_pwm_coef[tmp_i][1]
-            elif self.output_pwm[i] > self.s_dict["low_value_thr"]:
+                self.output_current[i] = self.current[i] * reduce_pwm / 100
+                if self.output_current[i] < self.s_dict["lowest_current_min"]:
+                    self.output_pwm[i] = self.pwm[i] * (2*self.s_dict["lowest_current_min"] -self.output_current[i] )/self.s_dict["lowest_current_min"]
+                    self.output_current[i] = self.s_dict["lowest_current_min"]
+                    if self.output_pwm[i] > 0xFFF:
+                        self.output_pwm[i] = 0xFFF
+            elif self.pwm[i] > self.s_dict["low_value_thr"]:
                 reduce_pwm = reduce_pwm_coef[tmp_i][0]
+                self.output_current[i] = self.current[i] * reduce_pwm / 100
+                if self.output_current[i] < self.s_dict["lowest_current_min"]:
+                    self.output_pwm[i] = self.pwm[i] * (2 * self.s_dict["lowest_current_min"] - self.output_current[i]) / \
+                                     self.s_dict["lowest_current_min"]
+                    self.output_current[i] = self.s_dict["lowest_current_min"]
+                    if self.output_pwm[i] > 0xFFF:
+                        self.output_pwm[i] = 0xFFF
             else:
-                reduce_pwm = 100
-            self.output_pwm[i] = (self.output_pwm[i] * reduce_pwm) / 100
+                self.output_current[i] = self.s_dict["lowest_current_min"]
+                self.output_pwm[i] = 0xE00
+            # self.output_pwm[i] = (self.output_pwm[i] * reduce_pwm) / 100
+        print self.output_current
         self.outputPWM()
+        self.outputCurrent()
 
     def CreateNewPlotDailog(self):
         # data = self.output_pwm
