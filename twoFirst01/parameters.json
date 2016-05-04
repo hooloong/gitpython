@@ -9,7 +9,7 @@
         "peak_value_thr":3840,
         "low_value_thr":256,
         "medium_value_thr":2048,
-        "limit_cof":20,
+        "limit_cof":25,
         "limit_pwm_adjust":3800,
         "limit_cof_1":10,
         "limit_cof_2":20,
