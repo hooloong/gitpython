@@ -380,6 +380,8 @@ class MyWindow(QtGui.QMainWindow):
                     reduce_pwm_sum -= (dc_max_sum[i][2] * (100 - self.s_dict["limit_cof"])) / 100
                     reduce_pwm_coef[i][1] = self.s_dict["limit_cof"]
                 reduce_pwm_coef[i][2] = 100 - (reduce_pwm_sum * 100 / dc_max_sum[i][3])
+        print reduce_pwm_coef
+        print self.output_pwm
         for i in range(led_size):
             tmp_i = dc_mapping_3820_m70[i]
             if self.pwm[i] > self.s_dict["peak_value_thr"]:
@@ -394,6 +396,8 @@ class MyWindow(QtGui.QMainWindow):
                     self.output_current[i] = self.s_dict["lowest_current_min"]
                     if self.output_pwm[i] > 0xFFF:
                         self.output_pwm[i] = 0xFFF
+                else:
+                     self.output_pwm[i] = self.pwm[i]
             elif self.pwm[i] > self.s_dict["low_value_thr"]:
                 reduce_pwm = reduce_pwm_coef[tmp_i][0]
                 self.output_current[i] = self.current[i] * reduce_pwm / 100
@@ -403,6 +407,8 @@ class MyWindow(QtGui.QMainWindow):
                     self.output_current[i] = self.s_dict["lowest_current_min"]
                     if self.output_pwm[i] > 0xFFF:
                         self.output_pwm[i] = 0xFFF
+                else:
+                     self.output_pwm[i] = self.pwm[i]
             else:
                 self.output_current[i] = self.s_dict["lowest_current_min"]
                 self.output_pwm[i] = 0xE00
