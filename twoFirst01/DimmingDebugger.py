@@ -448,7 +448,9 @@ class MyWindow(QtGui.QMainWindow):
 
     def CreateNewPlotDailog_1(self):
         data = self.output_pwm.copy()
-        data = (data * self.s_dict["current_scale_3820"]) / 100
+        # data = (data * self.s_dict["current_scale_3820"]) / 100
+        for i in range(self.s_dict["led_size"]):
+            data[i] = (data[i] * self.output_current[i]) / self.s_dict["normal_current_mid"]
         data.shape = (8, 8)
         column_names = ['1', '2', '3', '4', '5', '6', '7', '8']
         row_names = ['1', '2', '3', '4', '5', '6', '7', '8']
