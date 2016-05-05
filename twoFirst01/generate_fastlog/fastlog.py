@@ -40,8 +40,28 @@ class MyWindow(QtGui.QMainWindow):
         self.actionLoadInputFile.connect(self.actionLoadInputFile, QtCore.SIGNAL('triggered()'),
                                              self.showInputFileDialog)
         self.connect(self.pushButton_flushimg, QtCore.SIGNAL('clicked()'), self.update)
+        self.connect(self.pushButton_gen, QtCore.SIGNAL('clicked()'), self.generateOutput)
         self.loadSettingfromJson()
         self.PWMshowinTable()
+    def scaleDownV(self,in_x,in_y,out_x,out_y):
+        temp_x = np.zeros(in_x * out_x)
+        temp_y = np.zeros(out_y * in_y)
+        for i in range(in_x):
+            for j in range(out_x):
+                temp_x[i*out_x + j] = self.input[i] /out_x
+        for i in range(out_x):
+            for j in range(in_x):
+                self.output[i] += temp_x[i*in_x + j]
+        for i in range(out_y):
+            for j in range(in_y):
+                self.output[i] += temp_x[i*in_y + j]
+
+
+
+        pass
+    def generateOutput(self):
+        self.scaleDownV(24,16,8,8)
+        pass
     def PWMshowinTable(self):
         for i in range(self.tableWidget_input.rowCount()):
             for j in range(self.tableWidget_input.columnCount()):
@@ -120,7 +140,7 @@ class MyWindow(QtGui.QMainWindow):
             self.statusBar().showMessage("file "+ filename +"is not a right file!!")
             return
         else:
-            self.statusBar().showMessage("load "+ filename +"!")
+            self.statusBar().showMessage("load "+ filename +" !")
             col_num = (row_len +2)/4
             print col_num
         row_num = 0
