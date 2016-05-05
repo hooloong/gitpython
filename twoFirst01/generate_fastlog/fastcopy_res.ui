@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dimming Debugger     DisConnect..</string>
+   <string>Fast Logo</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -27,26 +27,26 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>270</x>
       <y>10</y>
-      <width>381</width>
-      <height>291</height>
+      <width>501</width>
+      <height>311</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>PWMs</string>
+      <string>Input</string>
      </attribute>
-     <widget class="QTableWidget" name="tableWidget_PWM">
+     <widget class="QTableWidget" name="tableWidget_input">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>401</width>
-        <height>271</height>
+        <height>281</height>
        </rect>
       </property>
       <property name="rowCount">
@@ -410,9 +410,9 @@
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Currents</string>
+      <string>Output</string>
      </attribute>
-     <widget class="QTableWidget" name="tableWidget_Current">
+     <widget class="QTableWidget" name="tableWidget_Output">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -452,383 +452,14 @@
       <column/>
       <column/>
       <column/>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_5">
-     <attribute name="title">
-      <string>DC2DC</string>
-     </attribute>
-     <widget class="QTableWidget" name="tableWidget_dc2dc">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>401</width>
-        <height>271</height>
-       </rect>
-      </property>
-      <property name="rowCount">
-       <number>8</number>
-      </property>
-      <property name="columnCount">
-       <number>8</number>
-      </property>
-      <attribute name="horizontalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>45</number>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderHighlightSections">
-       <bool>false</bool>
-      </attribute>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <item row="0" column="0">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="0" column="1">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="0" column="2">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="0" column="3">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="0" column="4">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="0" column="5">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="0" column="6">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="0" column="7">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="1" column="0">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="1" column="1">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="1" column="2">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="1" column="3">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="1" column="4">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="1" column="5">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="1" column="6">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="1" column="7">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </item>
-      <item row="2" column="0">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="2" column="1">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="2" column="2">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="2" column="3">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="2" column="4">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="2" column="5">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="2" column="6">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="2" column="7">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="3" column="0">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="3" column="1">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="3" column="2">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="3" column="3">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="3" column="4">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="3" column="5">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="3" column="6">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="3" column="7">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="4" column="0">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="4" column="1">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="4" column="2">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="4" column="3">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="4" column="4">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="4" column="5">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="4" column="6">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="4" column="7">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="5" column="0">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="5" column="1">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="5" column="2">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="5" column="3">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="5" column="4">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="5" column="5">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="5" column="6">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="5" column="7">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="6" column="0">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="6" column="1">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="6" column="2">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="6" column="3">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="6" column="4">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="6" column="5">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="6" column="6">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="6" column="7">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="7" column="0">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="7" column="1">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="7" column="2">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="7" column="3">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="7" column="4">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="7" column="5">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="7" column="6">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="7" column="7">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
      </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_readpwm">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>40</y>
+      <x>780</x>
+      <y>30</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -837,186 +468,13 @@
      <string>ReadPWM</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_readcurrent">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>80</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>ReadCurrent</string>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>330</y>
-      <width>381</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="tab_3">
-     <attribute name="title">
-      <string>PWMs</string>
-     </attribute>
-     <widget class="QTableWidget" name="tableWidget_PWM_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>401</width>
-        <height>271</height>
-       </rect>
-      </property>
-      <property name="rowCount">
-       <number>8</number>
-      </property>
-      <property name="columnCount">
-       <number>8</number>
-      </property>
-      <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>45</number>
-      </attribute>
-      <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>21</number>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderHighlightSections">
-       <bool>false</bool>
-      </attribute>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_4">
-     <attribute name="title">
-      <string>Currents</string>
-     </attribute>
-     <widget class="QTableWidget" name="tableWidget_Current_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>401</width>
-        <height>271</height>
-       </rect>
-      </property>
-      <property name="rowCount">
-       <number>8</number>
-      </property>
-      <property name="columnCount">
-       <number>8</number>
-      </property>
-      <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>45</number>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderHighlightSections">
-       <bool>false</bool>
-      </attribute>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="pushButton_A1">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>350</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Algo_A1</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_A2">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>400</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Algo_A2</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_A3">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>450</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Algo_A3</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>310</y>
-      <width>491</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QTableWidget" name="tableWidget_Paras">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>251</width>
-      <height>321</height>
+      <width>241</width>
+      <height>291</height>
      </rect>
     </property>
     <row>
@@ -1043,24 +501,11 @@
      <string>Parameters:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_write">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>510</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>WriteChip</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_flushimg">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>640</y>
+      <x>780</x>
+      <y>70</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -1069,32 +514,12 @@
      <string>Flushimg</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_plotout">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>560</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Plot Out</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_plotin">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>180</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Plot In</string>
-    </property>
-   </widget>
+   <zorder>tabWidget</zorder>
+   <zorder>pushButton_readpwm</zorder>
+   <zorder>tableWidget_Paras</zorder>
+   <zorder>label</zorder>
+   <zorder>pushButton_flushimg</zorder>
+   <zorder>tableWidget_input</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1116,20 +541,19 @@
     <addaction name="actionSave_setting_file"/>
     <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menuSetting">
-    <property name="title">
-     <string>Setting</string>
-    </property>
-    <addaction name="actionConnect"/>
-    <addaction name="actionDisconnect"/>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuInput">
+    <property name="title">
+     <string>Input</string>
+    </property>
+    <addaction name="actionLoadInputFile"/>
+   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuSetting"/>
+   <addaction name="menuInput"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1156,6 +580,24 @@
   <action name="actionDisconnect">
    <property name="text">
     <string>Disconnect</string>
+   </property>
+  </action>
+  <action name="actionInputFile">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>InputFile</string>
+   </property>
+  </action>
+  <action name="actionInputFile_rl">
+   <property name="text">
+    <string>InputFile</string>
+   </property>
+  </action>
+  <action name="actionLoadInputFile">
+   <property name="text">
+    <string>LoadInputFile</string>
    </property>
   </action>
  </widget>
