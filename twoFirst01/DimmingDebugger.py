@@ -411,7 +411,7 @@ class MyWindow(QtGui.QMainWindow):
                      self.output_pwm[i] = self.pwm[i]
             else:
                 self.output_current[i] = self.s_dict["lowest_current_min"]
-                self.output_pwm[i] = 0xE00
+                self.output_pwm[i] = 0xE * self.pwm[i]
             # self.output_pwm[i] = (self.output_pwm[i] * reduce_pwm) / 100
         print self.output_current
         self.outputPWM()
