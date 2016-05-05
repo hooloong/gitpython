@@ -1,14 +1,8 @@
 __author__ = 'hooloongge'
 # -*- coding: utf-8 -*-
-import sys, math, random, time
-import ctypes as C
-import xmltodict
-import json
-import ConfigParser
+import sys, random,string,struct,json
 import numpy as np
-from PyQt4 import QtCore, QtGui, uic, Qwt5
-
-
+from PyQt4 import QtCore, QtGui, uic
 
 class MyWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -16,26 +10,25 @@ class MyWindow(QtGui.QMainWindow):
         uic.loadUi("fastcopy_res.ui", self)
         self.setWindowIcon(QtGui.QIcon("222.ico"))
         # self.setGeometry(300,300,810,640)
-        self.statusBar().showMessage('DisConnected to chip!!!')
+        self.statusBar().showMessage('Generated a fast logo array!!!')
         self.painter = QtGui.QPainter()
 
         self.s_dict = dict(defaultfilename="fc_parameters.json")
 
-        self.pwm = np.zeros(64, np.uint32)
+        self.input = np.zeros(512, np.uint32)
+        self.output = np.zeros(512, np.uint32)
+        self.rl_list = []
+        for i in range(512):
+            self.input[i] = random.randrange(100, 4095)
 
-        for i in range(64):
-            self.pwm[i] = random.randrange(100, 4095)
 
-
-        print self.pwm
+        print self.input
         # init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
-        for i in range(self.tableWidget_PWM.rowCount()):
-            for j in range(self.tableWidget_PWM.columnCount()):
+        for i in range(self.tableWidget_input.rowCount()):
+            for j in range(self.tableWidget_input.columnCount()):
                 newItemt = QtGui.QTableWidgetItem('0')
-                newItemt1 = QtGui.QTableWidgetItem('0')
-                self.tableWidget_PWM.setItem(i, j, newItemt)
-
+                self.tableWidget_input.setItem(i, j, newItemt)
 
 
         #end table init
@@ -48,20 +41,32 @@ class MyWindow(QtGui.QMainWindow):
                                              self.showInputFileDialog)
         self.connect(self.pushButton_flushimg, QtCore.SIGNAL('clicked()'), self.update)
         self.loadSettingfromJson()
+        self.PWMshowinTable()
+    def PWMshowinTable(self):
+        for i in range(self.tableWidget_input.rowCount()):
+            for j in range(self.tableWidget_input.columnCount()):
+                pwmdutytemp = "%X" % (self.input[i * self.tableWidget_input.columnCount() + j])
 
+                newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
+                self.tableWidget_input.setItem(i, j, newItemt)
+        for i in range(self.tableWidget_output.rowCount()):
+            for j in range(self.tableWidget_output.columnCount()):
+                currenttablevar = "%X" % (self.output[i * self.tableWidget_output.columnCount() + j])
 
+                newItemt = QtGui.QTableWidgetItem(currenttablevar)
+                self.tableWidget_output.setItem(i, j, newItemt)
 
     def paintEvent(self, envent):
         self.painter.begin(self)
         startposx = self.tableWidget_Paras.x()
         startposy = self.tableWidget_Paras.y() + self.tableWidget_Paras.height() + 60
-        for i in range(8):
-            for j in range(8):
-                var = self.pwm[j * self.tableWidget_Current.rowCount() + i]
+        for i in range( 16):
+            for j in range( 24):
+                var = self.input[i * 24 + j]
                 br = (var & 0xFFF) >> 4
                 color = QtGui.QColor(br, br, br)
                 self.painter.setBrush(color)
-                self.painter.drawRect(startposx + i * 40, startposy + j * 30, 40, 30)
+                self.painter.drawRect(startposx + j * 17, startposy + i * 17, 17, 17)
         self.painter.end()
 
 
@@ -93,7 +98,7 @@ class MyWindow(QtGui.QMainWindow):
             self.loadParaTable()
 
     def saveSettingfromJson(self):
-        settingfile = "parameters1.json"
+        settingfile = "fc_parameters.json"
         s_fp = open(settingfile, 'w+')
         if s_fp == False:
             print "error file!!!!"
@@ -105,10 +110,37 @@ class MyWindow(QtGui.QMainWindow):
 
     def showInputFileDialog(self):
         filename = QtGui.QFileDialog.getOpenFileName(self,'Open file','./')
-        # file = open(filename)
-        # data = file.read()
-        # self.textedit.setText(data)
+        with open(filename,'r') as f:
+            for line in f:
+                line = line.strip()
+                row_len = len(line)
+                break;
+            f.close()
+        if row_len != 95:
+            self.statusBar().showMessage("file "+ filename +"is not a right file!!")
+            return
+        else:
+            self.statusBar().showMessage("load "+ filename +"!")
+            col_num = (row_len +2)/4
+            print col_num
+        row_num = 0
 
+        with open(filename,'r') as f:
+            for line in f:
+                line = line.strip()
+                row_num += 1
+                line_num = line.split(' ')
+                self.rl_list = self.rl_list + line_num
+
+        print len(self.rl_list),row_num
+        num = 0
+        for it in self.rl_list:
+            self.input[num] = string.atoi(self.rl_list[num],base=16)
+            num = num +1
+        # print self.input
+        self.PWMshowinTable()
+        self.update()
+        # data = np.loadtxt(filename,dtype="string",delimiter=" ")
 
 
 
