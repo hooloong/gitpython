@@ -22,7 +22,7 @@ class MyWindow(QtGui.QMainWindow):
             self.input[i] = random.randrange(100, 4095)
 
 
-        print self.input
+        # print self.input
         # init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
         for i in range(self.tableWidget_input.rowCount()):
@@ -41,27 +41,79 @@ class MyWindow(QtGui.QMainWindow):
                                              self.showInputFileDialog)
         self.connect(self.pushButton_flushimg, QtCore.SIGNAL('clicked()'), self.update)
         self.connect(self.pushButton_gen, QtCore.SIGNAL('clicked()'), self.generateOutput)
+        self.connect(self.pushButton_curve, QtCore.SIGNAL('clicked()'), self.curveAdjust)
         self.loadSettingfromJson()
         self.PWMshowinTable()
-    def scaleDownV(self,in_x,in_y,out_x,out_y):
-        temp_x = np.zeros(in_x * out_x)
-        temp_y = np.zeros(out_y * in_y)
-        for i in range(in_x):
-            for j in range(out_x):
-                temp_x[i*out_x + j] = self.input[i] /out_x
-        for i in range(out_x):
-            for j in range(in_x):
-                self.output[i] += temp_x[i*in_x + j]
-        for i in range(out_y):
-            for j in range(in_y):
-                self.output[i] += temp_x[i*in_y + j]
+        #line scale down function for frcxb fw.
+    def scaleDownV(self,InWidth,OutWidth,InHeight,OutHeight):
+        scale_max_buf = 512
+        dwTempBuf = np.zeros(scale_max_buf, np.uint32)
+        dwTempBuf1 = np.zeros(scale_max_buf, np.uint32)
+        StartPhase = EndPhase = 0
+        wHPara0 = np.zeros(scale_max_buf, np.uint32)
+        wHpara1 = np.zeros(scale_max_buf, np.uint32)
+        wVPara0 = np.zeros(scale_max_buf, np.uint32)
+        wVpara1 = np.zeros(scale_max_buf, np.uint32)
+        wOldInWidth = wOldInHeight = wOldOutWidth = wOldOutHeight =0
+        Row = InPos = OutPos = i = dwDivd =0
+        # HScalar start ...
+        if InWidth > OutWidth > 0:
+            if InWidth != wOldInWidth and OutWidth != wOldOutWidth:
+                StartPhase = InPos =0
+                EndPhase = InWidth
+                for j in range(InWidth):
+                    if StartPhase + OutWidth < EndPhase:
+                        wHPara0[InPos] = OutWidth
+                        wHpara1[InPos] = 0
+                    else:
+                        wHPara0[InPos] = EndPhase - StartPhase
+                        wHpara1[InPos] = OutWidth - wHPara0[InPos]
+                        if wHpara1[InPos] == 0:
+                            wHpara1[InPos] == 0xFFFF
+                        EndPhase = EndPhase + InWidth
+                    StartPhase = StartPhase + OutWidth
+                    InPos = InPos +1
+                wOldInWidth = InWidth
+                wOldOutWidth = OutWidth
 
+            pInBuf = self.input
+            pHOutBuf  = dwTempBuf
+            pIs = 0
+            PHs = 0
+            for Row in range(InHeight):
+                OutPos = 0
+                pHOutBuf[PHs+0] = 0
+                for InPos in range(InWidth):
+                    pHOutBuf[PHs+OutPos] = pHOutBuf[PHs+OutPos] + wHPara0[InPos] * pInBuf[pIs+InPos]
+                    if wHpara1[InPos]:
+                        OutPos += 1
+                        if wHpara1[InPos] == 0xFFFF:
+                            pHOutBuf[PHs+OutPos] = 0
+                        else:
+                            pHOutBuf[PHs+OutPos] = wHpara1[InPos] * pInBuf[pIs+InPos]
+                pIs += InWidth
+                PHs += OutWidth
+        #Hscaler end ....
 
+        # Vscaler start ...
 
         pass
     def generateOutput(self):
-        self.scaleDownV(24,16,8,8)
+        self.scaleDownV(24,8,16,8)
         pass
+    def curveAdjust(self):
+        curve_start = self.s_dict["curve_start"]
+        curve_end = self.s_dict["pwm_max"]
+        curve_cof = self.s_dict["curve_cof"]
+        led_input_size =  self.s_dict["input_x"] * self.s_dict["input_y"]
+        for i in range(led_input_size):
+            if self.input[i]  < curve_end:
+                self.input[i] = self.input[i] * curve_cof /10 + curve_start
+            if  self.input[i] > curve_end:
+                self.input[i] = curve_end
+        self.PWMshowinTable()
+        self.update()
+
     def PWMshowinTable(self):
         for i in range(self.tableWidget_input.rowCount()):
             for j in range(self.tableWidget_input.columnCount()):
@@ -171,24 +223,6 @@ class MyWindow(QtGui.QMainWindow):
             event.accept()
         else:
             event.ignore()
-
-
-class Worker(QtCore.QThread):
-    def __init__(self, parent=None):
-        super(Worker, self).__init__(parent)
-        self.working = True
-        self.num = 0
-
-    def __del__(self):
-        self.working = False
-        self.wait()
-
-    def run(self):
-        while self.working == True:
-            file_str = 'File index {0}'.format(self.num)
-            self.num += 1
-            self.emit(SIGNAL('output(QString)'), file_str)
-            self.sleep(3)
 
 
 

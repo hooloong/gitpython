@@ -538,6 +538,22 @@
      <string>Flushimg</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_curve">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>150</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string extracomment="use curve paras to adjust pwm duties!"/>
+    </property>
+    <property name="text">
+     <string>CurveAdjust</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
