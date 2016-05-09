@@ -96,6 +96,30 @@ class MyWindow(QtGui.QMainWindow):
         #Hscaler end ....
 
         # Vscaler start ...
+        if InHeight > OutHeight  > 0:
+            if InHeight != wOldInHeight or OutHeight != wOldOutHeight:
+                StartPhase = InPos = 0
+                EndPhase = InHeight
+                for j in range(InHeight):
+                    if (StartPhase + OutHeight) < EndPhase:
+                        wVPara0[InPos] = OutHeight
+                        wVpara1[InPos] = 0
+                    else:
+                        wVPara0[InPos] = EndPhase - StartPhase
+                        wVpara1[InPos] = OutHeight - wVPara0[InPos]
+                        if wVpara1[InPos] == 0 :
+                            wVpara1[InPos] = 0xFFFF
+                        EndPhase += InHeight
+                    StartPhase += OutHeight
+                wOldInHeight = InHeight
+                wOldOutHeight = OutHeight
+            pHOutBuf = dwTempBuf
+            pVOutBuf = dwTempBuf1
+            dwDivd = InWidth * InHeight
+            for i in range(OutWidth):
+                pVOutBuf[i] = 0
+            for Row in range(InHeight):
+
 
         pass
     def generateOutput(self):
