@@ -49,35 +49,34 @@ class MyWindow(QtGui.QMainWindow):
         scale_max_buf = 24*16
         dwTempBuf = np.zeros(scale_max_buf, np.uint32)
         dwTempBuf1 = np.zeros(scale_max_buf, np.uint32)
-        StartPhase = EndPhase = 0
+
         wHPara0 = np.zeros(scale_max_buf, np.uint32)
         wHpara1 = np.zeros(scale_max_buf, np.uint32)
         wVPara0 = np.zeros(scale_max_buf, np.uint32)
         wVPara1 = np.zeros(scale_max_buf, np.uint32)
-        wOldInWidth = wOldInHeight = wOldOutWidth = wOldOutHeight =0
-        Row = InPos = OutPos = i = dwDivd =0
+
+
         # HScalar start ...
         if InWidth > OutWidth > 0:
-            if (InWidth != wOldInWidth) or (OutWidth != wOldOutWidth):
-                StartPhase = InPos =0
-                EndPhase = InWidth
-                for j in range(InWidth):
-                    if StartPhase + OutWidth < EndPhase:
-                        wHPara0[InPos] = OutWidth
-                        wHpara1[InPos] = 0
-                    else:
-                        wHPara0[InPos] = EndPhase - StartPhase
-                        wHpara1[InPos] = OutWidth - wHPara0[InPos]
-                        if wHpara1[InPos] == 0:
-                            wHpara1[InPos] == 0xFFFF
-                        EndPhase = EndPhase + InWidth
-                    StartPhase = StartPhase + OutWidth
-                    InPos = InPos +1
-                wOldInWidth = InWidth
-                wOldOutWidth = OutWidth
-            print wHPara0
-            print wHpara1
-            print "H para -0-1"
+            StartPhase = InPos =0
+            EndPhase = InWidth
+            print InWidth,OutWidth
+            for i in range(InWidth):
+                if (StartPhase + OutWidth) < EndPhase:
+                    wHPara0[InPos] = OutWidth
+                    wHpara1[InPos] = 0
+                else:
+                    wHPara0[InPos] = EndPhase - StartPhase
+                    wHpara1[InPos] = OutWidth - wHPara0[InPos]
+                    if wHpara1[InPos] == 0:
+                        wHpara1[InPos] = 0xFFFF
+                    EndPhase = EndPhase + InWidth
+                StartPhase = StartPhase + OutWidth
+                InPos = i+1
+
+            # print wHPara0
+            # print wHpara1
+            # print "H para -0-1"
             pInBuf = self.input.copy()
             pHOutBuf  = dwTempBuf
             pIs = 0
@@ -97,61 +96,60 @@ class MyWindow(QtGui.QMainWindow):
                 pIs += InWidth
                 PHs += OutWidth
         #Hscaler end ....
-        print "pHoutbuf"
-        print pHOutBuf
+        # print "pHoutbuf"
+        # print pHOutBuf,dwTempBuf
 
 
         # Vscaler start ...
         print InHeight,OutHeight
         if InHeight > OutHeight  > 0:
-            print "11111111111"
-            if (InHeight != wOldInHeight) or (OutHeight != wOldOutHeight):
-                StartPhase = InPos = 0
-                EndPhase = InHeight
-                for j in range(InHeight):
-                    if (StartPhase + OutHeight) < EndPhase:
-                        wVPara0[InPos] = OutHeight
-                        wVPara1[InPos] = 0
-                    else:
-                        wVPara0[InPos] = EndPhase - StartPhase
-                        wVPara1[InPos] = OutHeight - wVPara0[InPos]
-                        if wVPara1[InPos] == 0 :
-                            wVPara1[InPos] = 0xFFFF
-                        EndPhase += InHeight
-                    StartPhase += OutHeight
-                wOldInHeight = InHeight
-                wOldOutHeight = OutHeight
-            print "V para 0 -1"
-            print wVPara1,wVPara0
-            pHOutBuf = dwTempBuf
+            StartPhase = InPos = 0
+            EndPhase = InHeight
+            for j in range(InHeight):
+                if (StartPhase + OutHeight) < EndPhase:
+                    wVPara0[InPos] = OutHeight
+                    wVPara1[InPos] = 0
+                else:
+                    wVPara0[InPos] = EndPhase - StartPhase
+                    wVPara1[InPos] = OutHeight - wVPara0[InPos]
+                    if wVPara1[InPos] == 0 :
+                        wVPara1[InPos] = 0xFFFF
+                    EndPhase += InHeight
+                StartPhase += OutHeight
+                InPos = j+1
+
+            # print "V para 0 -1"
+            # print wVPara1,wVPara0
+            # pHOutBuf = dwTempBuf
             pVOutBuf = dwTempBuf1
             dwDivd = InWidth * InHeight
             for i in range(OutWidth):
                 pVOutBuf[i] = 0
-
+            pIs = 0
+            POs = 0
             for Row in range(InHeight):
                 for j in range(OutWidth):
-                    pVOutBuf[j] += wVPara0[Row] * pHOutBuf[j]
+                    pVOutBuf[pIs+j] += wVPara0[Row] * pHOutBuf[POs+j]
                 if wVPara1[Row] > 0 :
-                    for j in range(OutWidth):
-                        pVOutBuf[j] /= dwDivd
-                    pVOutBuf += OutWidth
+                    for i in range(OutWidth):
+                        pVOutBuf[pIs+i] /= dwDivd
+                    pIs += OutWidth
                     if wVPara1[Row] != 0xFFFF:
-                        for j in range(OutWidth):
-                            pVOutBuf[j] = wVPara1[Row] * pHOutBuf[j]
+                        for i in range(OutWidth):
+                            pVOutBuf[pIs+j] = wVPara1[Row] * pHOutBuf[ POs+j]
                     else:
-                        for j in range(OutWidth):
-                            pVOutBuf[j] = 0
-                pHOutBuf += OutWidth
+                        for i in range(OutWidth):
+                            pVOutBuf[pIs+j] = 0
+                POs += OutWidth
             for j in range(OutWidth*OutHeight):
-                self.output[j] = dwTempBuf1[j]
+                self.output[j] = pVOutBuf[j]
         print "output"
         print self.output
 
 
         pass
     def generateOutput(self):
-        self.scaleDownV(24,16,8,8)
+        self.scaleDownV(24,16,9,14)
         pass
     def curveAdjust(self):
         curve_start = self.s_dict["curve_start"]
