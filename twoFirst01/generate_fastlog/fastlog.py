@@ -53,7 +53,7 @@ class MyWindow(QtGui.QMainWindow):
         wHPara0 = np.zeros(scale_max_buf, np.uint32)
         wHpara1 = np.zeros(scale_max_buf, np.uint32)
         wVPara0 = np.zeros(scale_max_buf, np.uint32)
-        wVpara1 = np.zeros(scale_max_buf, np.uint32)
+        wVPara1 = np.zeros(scale_max_buf, np.uint32)
         wOldInWidth = wOldInHeight = wOldOutWidth = wOldOutHeight =0
         Row = InPos = OutPos = i = dwDivd =0
         # HScalar start ...
@@ -118,7 +118,24 @@ class MyWindow(QtGui.QMainWindow):
             dwDivd = InWidth * InHeight
             for i in range(OutWidth):
                 pVOutBuf[i] = 0
+
             for Row in range(InHeight):
+                for j in range(OutWidth):
+                    pVOutBuf[j] += wVPara0[Row] * pHOutBuf[j]
+                if wVPara1[Row] > 0 :
+                    for j in range(OutWidth):
+                        pVOutBuf[j] /= dwDivd
+                    pVOutBuf += OutWidth
+                    if wVPara1[Row] != 0xFFFF:
+                        for j in range(OutWidth):
+                            pVOutBuf[j] = wVPara1[Row] * pHOutBuf[j]
+                    else:
+                        for j in range(OutWidth):
+                            pVOutBuf[j] = 0
+                pHOutBuf += OutWidth
+            for j in range(OutWidth*OutHeight):
+                self.output[j] = dwTempBuf1[j]
+
 
 
         pass
