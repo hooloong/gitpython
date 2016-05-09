@@ -446,10 +446,10 @@
        </rect>
       </property>
       <property name="rowCount">
-       <number>8</number>
+       <number>16</number>
       </property>
       <property name="columnCount">
-       <number>8</number>
+       <number>24</number>
       </property>
       <attribute name="horizontalHeaderVisible">
        <bool>false</bool>
@@ -468,6 +468,30 @@
       <row/>
       <row/>
       <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
       <column/>
       <column/>
       <column/>
@@ -529,7 +553,7 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>190</y>
+      <y>300</y>
       <width>75</width>
       <height>23</height>
      </rect>

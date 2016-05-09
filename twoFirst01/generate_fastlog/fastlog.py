@@ -8,6 +8,7 @@ class MyWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
         uic.loadUi("fastcopy_res.ui", self)
+        self.gen_flag = False
         self.setWindowIcon(QtGui.QIcon("222.ico"))
         # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('Generated a fast logo array!!!')
@@ -22,16 +23,6 @@ class MyWindow(QtGui.QMainWindow):
             self.input[i] = random.randrange(100, 4095)
 
 
-        # print self.input
-        # init tablewidget
-        newItemt = QtGui.QTableWidgetItem('0')
-        for i in range(self.tableWidget_input.rowCount()):
-            for j in range(self.tableWidget_input.columnCount()):
-                newItemt = QtGui.QTableWidgetItem('0')
-                self.tableWidget_input.setItem(i, j, newItemt)
-
-
-        #end table init
         self.actionQuit.connect(self.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
         self.actionOpen_setting_file.connect(self.actionOpen_setting_file, QtCore.SIGNAL('triggered()'),
                                              self.loadSettingfromJson)
@@ -45,7 +36,7 @@ class MyWindow(QtGui.QMainWindow):
         self.loadSettingfromJson()
         self.PWMshowinTable()
         #line scale down function for frcxb fw.
-    def scaleDownV(self,InWidth,InHeight,OutWidth,OutHeight):
+    def scaleDownV(self,InWidth=24,InHeight=16,OutWidth=8,OutHeight=8):
         scale_max_buf = 24*16
         dwTempBuf = np.zeros(scale_max_buf, np.uint32)
         dwTempBuf1 = np.zeros(scale_max_buf, np.uint32)
@@ -149,7 +140,15 @@ class MyWindow(QtGui.QMainWindow):
 
         pass
     def generateOutput(self):
-        self.scaleDownV(24,16,9,14)
+        self.scaleDownV( self.s_dict["input_x"],self.s_dict["input_y"],self.s_dict["output_x"],self.s_dict["output_y"])
+        self.gen_flag = True
+        self.tableWidget_output.setRowCount(0)
+        self.tableWidget_output.setColumnCount(0)
+        self.tableWidget_output.setRowCount(self.s_dict["output_y"])
+        self.tableWidget_output.setColumnCount(self.s_dict["output_x"])
+        self.PWMshowinTable()
+        self.update()
+
         pass
     def curveAdjust(self):
         curve_start = self.s_dict["curve_start"]
@@ -182,6 +181,8 @@ class MyWindow(QtGui.QMainWindow):
         self.painter.begin(self)
         startposx = self.tableWidget_Paras.x()
         startposy = self.tableWidget_Paras.y() + self.tableWidget_Paras.height() + 60
+        output_x = startposx
+        output_y = startposy
         for i in range( 16):
             for j in range( 24):
                 var = self.input[i * 24 + j]
@@ -189,6 +190,17 @@ class MyWindow(QtGui.QMainWindow):
                 color = QtGui.QColor(br, br, br)
                 self.painter.setBrush(color)
                 self.painter.drawRect(startposx + j * 17, startposy + i * 17, 17, 17)
+                output_x = startposx + j * 17  +17 +10
+        if self.gen_flag:
+            offsetx = 408 /self.s_dict["output_x"]
+            offsety = 272/ self.s_dict["output_y"]
+            for i in range( self.s_dict["output_y"]):
+                for j in range( self.s_dict["output_x"]):
+                    var = self.output[i * self.s_dict["output_x"] + j]
+                    br = (var & 0xFFF) >> 4
+                    color = QtGui.QColor(br, br, br)
+                    self.painter.setBrush(color)
+                    self.painter.drawRect(output_x + j * offsetx, output_y + i * offsety, offsetx, offsety)
         self.painter.end()
 
 
