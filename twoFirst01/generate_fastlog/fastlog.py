@@ -45,8 +45,8 @@ class MyWindow(QtGui.QMainWindow):
         self.loadSettingfromJson()
         self.PWMshowinTable()
         #line scale down function for frcxb fw.
-    def scaleDownV(self,InWidth,OutWidth,InHeight,OutHeight):
-        scale_max_buf = 512
+    def scaleDownV(self,InWidth,InHeight,OutWidth,OutHeight):
+        scale_max_buf = 24*16
         dwTempBuf = np.zeros(scale_max_buf, np.uint32)
         dwTempBuf1 = np.zeros(scale_max_buf, np.uint32)
         StartPhase = EndPhase = 0
@@ -58,7 +58,7 @@ class MyWindow(QtGui.QMainWindow):
         Row = InPos = OutPos = i = dwDivd =0
         # HScalar start ...
         if InWidth > OutWidth > 0:
-            if InWidth != wOldInWidth and OutWidth != wOldOutWidth:
+            if (InWidth != wOldInWidth) or (OutWidth != wOldOutWidth):
                 StartPhase = InPos =0
                 EndPhase = InWidth
                 for j in range(InWidth):
@@ -75,11 +75,14 @@ class MyWindow(QtGui.QMainWindow):
                     InPos = InPos +1
                 wOldInWidth = InWidth
                 wOldOutWidth = OutWidth
-
-            pInBuf = self.input
+            print wHPara0
+            print wHpara1
+            print "H para -0-1"
+            pInBuf = self.input.copy()
             pHOutBuf  = dwTempBuf
             pIs = 0
             PHs = 0
+
             for Row in range(InHeight):
                 OutPos = 0
                 pHOutBuf[PHs+0] = 0
@@ -94,25 +97,32 @@ class MyWindow(QtGui.QMainWindow):
                 pIs += InWidth
                 PHs += OutWidth
         #Hscaler end ....
+        print "pHoutbuf"
+        print pHOutBuf
+
 
         # Vscaler start ...
+        print InHeight,OutHeight
         if InHeight > OutHeight  > 0:
-            if InHeight != wOldInHeight or OutHeight != wOldOutHeight:
+            print "11111111111"
+            if (InHeight != wOldInHeight) or (OutHeight != wOldOutHeight):
                 StartPhase = InPos = 0
                 EndPhase = InHeight
                 for j in range(InHeight):
                     if (StartPhase + OutHeight) < EndPhase:
                         wVPara0[InPos] = OutHeight
-                        wVpara1[InPos] = 0
+                        wVPara1[InPos] = 0
                     else:
                         wVPara0[InPos] = EndPhase - StartPhase
-                        wVpara1[InPos] = OutHeight - wVPara0[InPos]
-                        if wVpara1[InPos] == 0 :
-                            wVpara1[InPos] = 0xFFFF
+                        wVPara1[InPos] = OutHeight - wVPara0[InPos]
+                        if wVPara1[InPos] == 0 :
+                            wVPara1[InPos] = 0xFFFF
                         EndPhase += InHeight
                     StartPhase += OutHeight
                 wOldInHeight = InHeight
                 wOldOutHeight = OutHeight
+            print "V para 0 -1"
+            print wVPara1,wVPara0
             pHOutBuf = dwTempBuf
             pVOutBuf = dwTempBuf1
             dwDivd = InWidth * InHeight
@@ -135,12 +145,13 @@ class MyWindow(QtGui.QMainWindow):
                 pHOutBuf += OutWidth
             for j in range(OutWidth*OutHeight):
                 self.output[j] = dwTempBuf1[j]
-
+        print "output"
+        print self.output
 
 
         pass
     def generateOutput(self):
-        self.scaleDownV(24,8,16,8)
+        self.scaleDownV(24,16,8,8)
         pass
     def curveAdjust(self):
         curve_start = self.s_dict["curve_start"]
