@@ -2,6 +2,7 @@ __author__ = 'hooloongge'
 # -*- coding: utf-8 -*-
 import sys, random,string,struct,json
 import numpy as np
+import csv
 from PyQt4 import QtCore, QtGui, uic
 
 class MyWindow(QtGui.QMainWindow):
@@ -30,6 +31,8 @@ class MyWindow(QtGui.QMainWindow):
                                              self.saveSettingfromJson)
         self.actionLoadInputFile.connect(self.actionLoadInputFile, QtCore.SIGNAL('triggered()'),
                                              self.showInputFileDialog)
+        self.actionSaveToCSV.connect(self.actionSaveToCSV, QtCore.SIGNAL('triggered()'),
+                                             self.showSaveToCSVDialog)
         self.connect(self.pushButton_flushimg, QtCore.SIGNAL('clicked()'), self.update)
         self.connect(self.pushButton_gen, QtCore.SIGNAL('clicked()'), self.generateOutput)
         self.connect(self.pushButton_curve, QtCore.SIGNAL('clicked()'), self.curveAdjust)
@@ -243,7 +246,9 @@ class MyWindow(QtGui.QMainWindow):
             s_fp.close()
 
     def showInputFileDialog(self):
-        filename = QtGui.QFileDialog.getOpenFileName(self,'Open file','./')
+        filename = QtGui.QFileDialog.getOpenFileName(self,'Open file','./*.txt')
+        if filename.isEmpty():
+            return
         with open(filename,'r') as f:
             for line in f:
                 line = line.strip()
@@ -275,6 +280,30 @@ class MyWindow(QtGui.QMainWindow):
         self.PWMshowinTable()
         self.update()
         # data = np.loadtxt(filename,dtype="string",delimiter=" ")
+
+    def showSaveToCSVDialog(self):
+        if not self.gen_flag:
+            self.statusBar().showMessage(" Pls use the generate button firstly!!!!!!")
+            return
+        filename = QtGui.QFileDialog.getSaveFileName(self,'Open file','./*.csv')
+        if filename.isEmpty():
+            return
+        self.statusBar().showMessage("Save to "+ filename +" !")
+        self.outputz = np.zeros(self.s_dict["output_y"] * self.s_dict["output_x"], np.uint32)
+        self.outputz.shape = (self.s_dict["output_y"],self.s_dict["output_x"])
+        for i in range(self.s_dict["output_y"]):
+            for j in range(self.s_dict["output_x"]):
+                self.outputz[i][j] = self.output[self.s_dict["output_x"] * i +j]
+        print self.outputz
+        with open(filename,'w') as f:
+            writer = csv.writer(f,delimiter = ',')
+            for i in range(self.s_dict["output_y"]):
+                lrow = []
+                for j in range(self.s_dict["output_x"]):
+                    rowstr = "%#03x" % self.outputz[i][j]
+                    lrow.append(rowstr)
+                writer.writerow(lrow)
+
 
 
 

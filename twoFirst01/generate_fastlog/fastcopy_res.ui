@@ -566,7 +566,7 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>150</y>
+      <y>70</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -609,6 +609,8 @@
      <string>Input</string>
     </property>
     <addaction name="actionLoadInputFile"/>
+    <addaction name="actionSaveToCSV"/>
+    <addaction name="actionSaveToXLSX"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuInput"/>
@@ -656,6 +658,16 @@
   <action name="actionLoadInputFile">
    <property name="text">
     <string>LoadInputFile</string>
+   </property>
+  </action>
+  <action name="actionSaveToCSV">
+   <property name="text">
+    <string>SaveToCSV</string>
+   </property>
+  </action>
+  <action name="actionSaveToXLSX">
+   <property name="text">
+    <string>SaveToXLSX</string>
    </property>
   </action>
  </widget>
