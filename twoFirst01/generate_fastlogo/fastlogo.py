@@ -137,9 +137,6 @@ class MyWindow(QtGui.QMainWindow):
                 POs += OutWidth
             for j in range(OutWidth*OutHeight):
                 self.output[j] = pVOutBuf[j]
-        print "output"
-        print self.output
-
 
         pass
     def generateOutput(self):
@@ -303,8 +300,6 @@ class MyWindow(QtGui.QMainWindow):
                     rowstr = "%#03x" % self.outputz[i][j]
                     lrow.append(rowstr)
                 writer.writerow(lrow)
-
-
 
 
     def closeEvent(self, event):
