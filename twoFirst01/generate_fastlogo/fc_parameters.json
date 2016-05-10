@@ -2,7 +2,7 @@
     "parameters": {
         "input_x": 24,
         "input_y": 16,
-        "output_x":8,
+        "output_x":16,
         "output_y":8,
         "curve_start":256,
         "curve_cof":15,
