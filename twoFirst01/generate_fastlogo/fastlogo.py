@@ -285,7 +285,7 @@ class MyWindow(QtGui.QMainWindow):
         if not self.gen_flag:
             self.statusBar().showMessage(" Pls use the generate button firstly!!!!!!")
             return
-        filename = QtGui.QFileDialog.getSaveFileName(self,'Open file','./*.csv')
+        filename = QtGui.QFileDialog.getSaveFileName(self,'Save file','./*.csv')
         if filename.isEmpty():
             return
         self.statusBar().showMessage("Save to "+ filename +" !")
