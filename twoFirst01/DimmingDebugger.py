@@ -13,7 +13,9 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-
+# import cProfile
+# cProfile.run('main()')
+# import logging
 
 class MyWindow(QtGui.QMainWindow):
     def __init__(self):
