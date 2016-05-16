@@ -10,6 +10,9 @@ class MyWindow(QtGui.QMainWindow):
         super(MyWindow, self).__init__()
         uic.loadUi("fastcopy_res.ui", self)
         self.gen_flag = False
+        self.initFlag = False
+        self.parameters_vars = []
+        self.parameters_name = []
         self.setWindowIcon(QtGui.QIcon("222.ico"))
         # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('Generated a fast logo array!!!')
@@ -36,8 +39,20 @@ class MyWindow(QtGui.QMainWindow):
         self.connect(self.pushButton_flushimg, QtCore.SIGNAL('clicked()'), self.update)
         self.connect(self.pushButton_gen, QtCore.SIGNAL('clicked()'), self.generateOutput)
         self.connect(self.pushButton_curve, QtCore.SIGNAL('clicked()'), self.curveAdjust)
+        # self.tableWidget_Paras.currentItemChanged.connect(self.updateParas)
+        self.tableWidget_Paras.itemChanged.connect(self.updateParas)
         self.loadSettingfromJson()
         self.PWMshowinTable()
+        self.initFlag = True
+    def updateParas(self,item):
+        if not self.initFlag: return
+        if item != self.tableWidget_Paras.currentItem():
+            return
+        if self.parameters_name[item.row()] != "output_x" and  self.parameters_name[item.row()] != "output_y":
+            return
+        self.parameters_vars[item.row()] = int(item.text())
+        self.s_dict[self.parameters_name[item.row()]] = self.parameters_vars[item.row()]
+        print self.s_dict[self.parameters_name[item.row()]]
         #line scale down function for frcxb fw.
     def scaleDownV(self,InWidth=24,InHeight=16,OutWidth=8,OutHeight=8):
         scale_max_buf = 24*16
@@ -215,6 +230,8 @@ class MyWindow(QtGui.QMainWindow):
             str = "%d" % self.s_dict[key]
             newItemi = QtGui.QTableWidgetItem(str)
             self.tableWidget_Paras.setItem(j, 0, newItemi)
+            self.parameters_vars.append( self.s_dict[key])
+            self.parameters_name.append( key)
             i = i + 1
             j = j + 1
 
