@@ -18,7 +18,7 @@
         "led_x":8,
         "led_y":8,
         "led_size":64,
-        "dc_dc_size":8,
+        "dc_dc_size":4,
         "peak_current_max":127,
         "lowest_current_min": 14,
         "normal_current_mid": 62,
