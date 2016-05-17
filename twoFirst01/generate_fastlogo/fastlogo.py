@@ -151,7 +151,10 @@ class MyWindow(QtGui.QMainWindow):
                             pVOutBuf[pIs+j] = 0
                 POs += OutWidth
             for j in range(OutWidth*OutHeight):
-                self.output[j] = pVOutBuf[j]
+                if pVOutBuf[j] <  self.s_dict["curve_start"]:
+                    self.output[j] = self.s_dict["curve_start"]
+                else:
+                    self.output[j] = pVOutBuf[j]
 
         pass
     def generateOutput(self):
