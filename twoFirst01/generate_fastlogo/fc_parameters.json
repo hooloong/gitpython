@@ -4,8 +4,8 @@
         "input_y": 16,
         "output_x":16,
         "output_y":8,
-        "curve_start":256,
-        "curve_cof":15,
+        "curve_start":128,
+        "curve_cof":16,
         "pwm_max":4095,
         "scale_version": 1
     },
