@@ -277,7 +277,7 @@ class MyWindow(QtGui.QMainWindow):
             col_num = (row_len +2)/4
             print col_num
         row_num = 0
-
+        self.rl_list = []
         with open(filename,'r') as f:
             for line in f:
                 line = line.strip()
@@ -287,6 +287,8 @@ class MyWindow(QtGui.QMainWindow):
 
         print len(self.rl_list),row_num
         num = 0
+        self.input = np.zeros(512, np.uint32)
+        self.output = np.zeros(512, np.uint32)
         for it in self.rl_list:
             self.input[num] = string.atoi(self.rl_list[num],base=16)
             num = num +1
