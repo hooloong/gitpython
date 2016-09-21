@@ -8,7 +8,7 @@ import json
 import ConfigParser
 import numpy as np
 from dispmipsfunc import *
-from PyQt4 import QtCore, QtGui, uic, Qwt5
+from PyQt4 import QtCore, QtGui, uic#, Qwt5
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from mpl_toolkits.mplot3d import Axes3D
