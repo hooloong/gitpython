@@ -19,7 +19,7 @@ def Cfunc(fcn, argin, argout=None):
 BYTE = C.c_byte
 WORD = C.c_uint16
 DWORD = C.c_uint32
-BASIC_PAGE = 0x198A0000
+BASIC_PAGE = 0x19A00400
 TFCConnect2Chip = Cfunc(TFC.tfcConnInit,None,C.c_bool)
 tfcConnTerm = Cfunc(TFC.tfcConnTerm, None, None)
 tfcConnReinit = Cfunc(TFC.tfcConnReinit,None,C.c_bool)
@@ -63,5 +63,5 @@ if __name__ == "__main__":
     r =TFCConnect2Chip()
     if r:
         print("connect to chip")
-        a = TFC.tfcReadDword(0x198A0000,0xC0);
+        a = TFC.tfcReadDword(0x19A00400,0x08);
         print("c0: %x" % a)
