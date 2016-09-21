@@ -26,7 +26,8 @@ class MyWindow(QtGui.QMainWindow):
         self.statusBar().showMessage('DisConnected to chip!!!')
         self.painter = QtGui.QPainter()
 
-        self.s_dict = dict(defaultfilename="parameters.json")
+        #self.s_dict = dict(defaultfilename="parameters.json")
+        self.s_dict = dict(defaultfilename="parameters_m65.json")
         self.connectFlag = False
         self.pwm = np.zeros(64, np.uint32)
         # self.pwm *= 0xA00
