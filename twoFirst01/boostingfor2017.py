@@ -8,7 +8,7 @@ import json
 import ConfigParser
 import numpy as np
 from dispmipsfunc import *
-from PyQt4 import QtCore, QtGui, uic, Qwt5
+from PyQt4 import QtCore, QtGui, uic
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from mpl_toolkits.mplot3d import Axes3D
@@ -336,13 +336,15 @@ class MyWindow(QtGui.QMainWindow):
         # dc_mapping_3820_m70 = np.array(
         #     [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 4, 4, 4, 4,
         #      5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6], np.uint32)
-        dc_mapping_3820_m70 = np.array(
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,1, 2, 2,2,2,
-             2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3,3, 3, 3, 3,3, 3, 3, 3, 3, 3,3,3], np.uint32)
+        # dc_mapping_3820_m70 = np.array(
+        #     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,1, 2, 2,2,2,
+        #      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3,3, 3, 3, 3,3, 3, 3, 3, 3, 3,3,3], np.uint32)
         # dc_mapping_3820_m70.shape = (8, 8)
-
+        dc_mapping_3824_m65 = np.array(
+            [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1], np.uint32)
+        dc_mapping = dc_mapping_3824_m65
         for i in range(led_size):
-            tmp_i = dc_mapping_3820_m70[i]
+            tmp_i = dc_mapping[i]
             if self.pwm[i] > self.s_dict["peak_value_thr"]:
                 dc_peak_num[tmp_i] += 1
                 peak_sum += 1
@@ -358,14 +360,14 @@ class MyWindow(QtGui.QMainWindow):
         global_current_set = (global_gain * self.s_dict["peak_current_max"] ) / 100
 
         #self.current *= self.s_dict["normal_current_mid"]
-        self.current = np.ones(64, np.uint32)
+        self.current = np.ones(32, np.uint32)
         self.current =  self.current * (global_gain * self.s_dict["peak_current_max"] ) / 100
         print self.current
         for i in range(led_size):
             self.output_pwm[i] = self.pwm[i] * global_current_set   # scale the output brightness = pwm*current
         # print self.output_pwm
         for i in range(led_size):
-            tmp_i = dc_mapping_3820_m70[i]
+            tmp_i = dc_mapping[i]
             if self.output_pwm[i] > self.s_dict["peak_value_thr"] :
                 dc_max_sum[tmp_i][3] += self.output_pwm[i]
             elif self.output_pwm[i] > self.s_dict["medium_value_thr"]:
@@ -397,7 +399,7 @@ class MyWindow(QtGui.QMainWindow):
         print reduce_pwm_coef
         print self.output_pwm
         for i in range(led_size):
-            tmp_i = dc_mapping_3820_m70[i]
+            tmp_i = dc_mapping[i]
             if self.pwm[i] > self.s_dict["peak_value_thr"]:
                 reduce_pwm = reduce_pwm_coef[tmp_i][2]
                 self.output_pwm[i] = self.pwm[i]

@@ -2,8 +2,8 @@
     "parameters": {
         "power_max": 8386560,
         "power_max_percent": 60,
-        "peak_max_num": 40,
-        "peak_min_num": 16,
+        "peak_max_num": 22,
+        "peak_min_num": 8,
         "peak_max_global_gain": 100,
         "peak_min_global_gain": 47,
         "peak_value_thr":3840,
@@ -25,8 +25,8 @@
         "current_scale_3820": 150
     },
     "uisetting": {
-        "Chip_ip": "10.86.60.185",
-        "Chip_type":"FRCXB",
+        "Chip_ip": "10.86.60.216",
+        "Chip_type":"SX8",
         "Dim_debug_module": "2dd_boost",
         "Help":"Debug for peak brightness on AMS3824 chip",
         "Version": "version_0_1_build_160426",
