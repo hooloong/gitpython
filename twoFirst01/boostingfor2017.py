@@ -20,26 +20,32 @@ import matplotlib.pyplot as plt
 class MyWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
-        uic.loadUi("dimmingdebugger_res.ui", self)
+        uic.loadUi("dimmiming_boosting_2017_res.ui", self)
         self.setWindowIcon(QtGui.QIcon("222.ico"))
-        # self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnected to chip!!!')
         self.painter = QtGui.QPainter()
 
         #self.s_dict = dict(defaultfilename="parameters.json")
+        # self.setGeometry(300,300,810,640)
         self.s_dict = dict(defaultfilename="parameters_m65.json")
         self.connectFlag = False
         self.pwm = np.zeros(64, np.uint32)
+        self.loadSettingfromJson()
         # self.pwm *= 0xA00
         # self.pwm.dtype = np.uint32
-        for i in range(64):
+        self.totalsize = self.s_dict["led_size"]*2
+        for i in range(self.totalsize):
             self.pwm[i] = random.randrange(100, 4095)
-        self.current = np.ones(64, np.uint32)
-        self.output_pwm = np.zeros(64, np.uint32)
-        self.output_current = np.ones(64, np.uint32)
+        self.current = np.ones(self.totalsize, np.uint32)
+        self.output_pwm = np.zeros(self.totalsize, np.uint32)
+        self.output_current = np.ones(self.totalsize, np.uint32)
         print self.pwm
         # init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
+        self.tableWidget_PWM.setColumnCount(self.s_dict["led_x"])
+        self.tableWidget_PWM_2.setColumnCount(self.s_dict["led_x"])
+        self.tableWidget_Current.setColumnCount(self.s_dict["led_x"])
+        self.tableWidget_Current_2.setColumnCount(self.s_dict["led_x"])
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
                 newItemt = QtGui.QTableWidgetItem('0')
@@ -72,7 +78,7 @@ class MyWindow(QtGui.QMainWindow):
         self.actionSave_setting_file.connect(self.actionSave_setting_file, QtCore.SIGNAL('triggered()'),
                                              self.saveSettingfromJson)
 
-        self.loadSettingfromJson()
+        #self.loadSettingfromJson()
         self.PWMshowinTable()
 
 
@@ -127,7 +133,7 @@ class MyWindow(QtGui.QMainWindow):
             j = j + 1
 
     def loadSettingfromJson(self):
-        settingfile = "parameters.json"
+        settingfile = "parameters_m65.json"
         s_fp = open(settingfile, 'r')
         if s_fp == False:
             print "error file!!!!"
@@ -169,10 +175,10 @@ class MyWindow(QtGui.QMainWindow):
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
                 TFC.tfc2ddWriteDword(0x68, 0xA5)
-                TFC.tfc2ddWriteDword(0x6C, i * self.tableWidget_PWM.rowCount() + j)
+                TFC.tfc2ddWriteDword(0x6C, i * self.tableWidget_PWM.columnCount() + j)
                 time.sleep(0.05)
                 var = TFC.tfc2ddReadDword(0x68) >> 8;
-                self.pwm[i * self.tableWidget_PWM.rowCount() + j] = var & 0xFFF
+                self.pwm[i * self.tableWidget_PWM.columnCount() + j] = var & 0xFFF
                 pwmdutytemp = "%X" % (var & 0xFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM.setItem(i, j, newItemt)
@@ -185,12 +191,12 @@ class MyWindow(QtGui.QMainWindow):
         self.current =  self.current * self.s_dict["normal_current_mid"]
         for i in range(self.tableWidget_PWM.rowCount()):
             for j in range(self.tableWidget_PWM.columnCount()):
-                pwmdutytemp = "%X" % (self.pwm[i * self.tableWidget_PWM.rowCount() + j])
+                pwmdutytemp = "%X" % (self.pwm[i * self.tableWidget_PWM.columnCount() + j])
 
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM.setItem(i, j, newItemt)
 
-                currenttablevar = "%X" % (self.current[i * self.tableWidget_PWM.rowCount() + j])
+                currenttablevar = "%X" % (self.current[i * self.tableWidget_PWM.columnCount() + j])
 
                 newItemt = QtGui.QTableWidgetItem(currenttablevar)
                 self.tableWidget_Current.setItem(i, j, newItemt)
