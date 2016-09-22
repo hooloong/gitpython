@@ -33,7 +33,7 @@ class MyWindow(QtGui.QMainWindow):
         self.loadSettingfromJson()
         # self.pwm *= 0xA00
         # self.pwm.dtype = np.uint32
-        self.totalsize = self.s_dict["led_size"]*2
+        self.totalsize = self.s_dict["led_size"]
         for i in range(self.totalsize):
             self.pwm[i] = random.randrange(100, 4095)
         self.current = np.ones(self.totalsize, np.uint32)
@@ -86,9 +86,9 @@ class MyWindow(QtGui.QMainWindow):
         self.painter.begin(self)
         startposx = self.tableWidget_Paras.x()
         startposy = self.tableWidget_Paras.y() + self.tableWidget_Paras.height() + 60
-        for i in range(8):
+        for i in range(4):
             for j in range(8):
-                var = self.pwm[j * self.tableWidget_Current.rowCount() + i]
+                var = self.pwm[j * self.tableWidget_Current.columnCount() + i]
                 br = (var & 0xFFF) >> 4
                 color = QtGui.QColor(br, br, br)
                 self.painter.setBrush(color)
@@ -176,7 +176,7 @@ class MyWindow(QtGui.QMainWindow):
             for j in range(self.tableWidget_PWM.columnCount()):
                 TFC.tfc2ddWriteDword(0x68, 0xA5)
                 TFC.tfc2ddWriteDword(0x6C, i * self.tableWidget_PWM.columnCount() + j)
-                time.sleep(0.05)
+                time.sleep(0.1)
                 var = TFC.tfc2ddReadDword(0x68) >> 8;
                 self.pwm[i * self.tableWidget_PWM.columnCount() + j] = var & 0xFFF
                 pwmdutytemp = "%X" % (var & 0xFFF)
