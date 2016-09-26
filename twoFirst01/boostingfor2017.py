@@ -27,7 +27,7 @@ class MyWindow(QtGui.QMainWindow):
 
         #self.s_dict = dict(defaultfilename="parameters.json")
         # self.setGeometry(300,300,810,640)
-        self.s_dict = dict(defaultfilename="parameters_m65.json")
+        self.s_dict = dict(defaultfilename="parameters_m70.json")
         self.connectFlag = False
         self.pwm = np.zeros(64, np.uint32)
         self.loadSettingfromJson()
@@ -36,9 +36,9 @@ class MyWindow(QtGui.QMainWindow):
         self.totalsize = self.s_dict["led_size"]
         for i in range(self.totalsize):
             self.pwm[i] = random.randrange(100, 4095)
-        self.current = np.ones(self.totalsize, np.uint32)
-        self.output_pwm = np.zeros(self.totalsize, np.uint32)
-        self.output_current = np.ones(self.totalsize, np.uint32)
+        self.current = np.ones(64, np.uint32)
+        self.output_pwm = np.zeros(64, np.uint32)
+        self.output_current = np.ones(64, np.uint32)
         print self.pwm
         # init tablewidget
         newItemt = QtGui.QTableWidgetItem('0')
@@ -133,7 +133,7 @@ class MyWindow(QtGui.QMainWindow):
             j = j + 1
 
     def loadSettingfromJson(self):
-        settingfile = "parameters_m65.json"
+        settingfile = "parameters_m70.json"
         s_fp = open(settingfile, 'r')
         if s_fp == False:
             print "error file!!!!"
@@ -221,7 +221,7 @@ class MyWindow(QtGui.QMainWindow):
     def outputCurrent(self):
         for i in range(self.tableWidget_Current_2.rowCount()):
             for j in range(self.tableWidget_Current_2.columnCount()):
-                var = self.output_current[i * self.tableWidget_Current.rowCount() + j]
+                var = self.output_current[i * self.tableWidget_Current.columnCount() + j]
                 pwmdutytemp = "%X" % (var & 0xFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_Current_2.setItem(i, j, newItemt)
@@ -230,7 +230,7 @@ class MyWindow(QtGui.QMainWindow):
     def outputPWM(self):
         for i in range(self.tableWidget_PWM_2.rowCount()):
             for j in range(self.tableWidget_PWM_2.columnCount()):
-                var = self.output_pwm[i * self.tableWidget_PWM_2.rowCount() + j]
+                var = self.output_pwm[i * self.tableWidget_PWM_2.columnCount() + j]
                 pwmdutytemp = "%X" % (var & 0xFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.tableWidget_PWM_2.setItem(i, j, newItemt)
@@ -327,6 +327,7 @@ class MyWindow(QtGui.QMainWindow):
         led_x = self.s_dict["led_x"]
         led_y = self.s_dict["led_y"]
         led_size = led_x * led_y
+        print led_size,led_x,led_y
         dc_size = self.s_dict["dc_dc_size"]
         dc_max_sum = np.zeros((8, 5), np.uint32)
         reduce_pwm_coef = np.ones((8, 3), np.uint32)
@@ -342,7 +343,9 @@ class MyWindow(QtGui.QMainWindow):
         # dc_mapping_3820_m70.shape = (8, 8)
         dc_mapping_3824_m65 = np.array(
             [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1], np.uint32)
-        dc_mapping = dc_mapping_3824_m65
+        dc_mapping_3824_m70 = np.array(
+            [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1], np.uint32)
+        dc_mapping = dc_mapping_3824_m70
         for i in range(led_size):
             tmp_i = dc_mapping[i]
             if self.pwm[i] > self.s_dict["peak_value_thr"]:
@@ -416,7 +419,6 @@ class MyWindow(QtGui.QMainWindow):
                      self.output_pwm[i] = self.pwm[i]
             elif self.pwm[i] > self.s_dict["low_value_thr"]:
                 reduce_pwm = reduce_pwm_coef[tmp_i][0]
-                self.output_current[i] = self.current[i] * reduce_pwm / 100
                 if self.output_current[i] < self.s_dict["lowest_current_min"]:
                     self.output_pwm[i] = self.pwm[i] * (2 * self.s_dict["lowest_current_min"] - self.output_current[i]) / \
                                      self.s_dict["lowest_current_min"]
@@ -428,6 +430,7 @@ class MyWindow(QtGui.QMainWindow):
             else:
                 self.output_current[i] = self.s_dict["lowest_current_min"]
                 self.output_pwm[i] = 0xE * self.pwm[i]
+                self.output_current[i] = self.current[i] * reduce_pwm / 100
             # self.output_pwm[i] = (self.output_pwm[i] * reduce_pwm) / 100
         print self.output_current
         self.outputPWM()
@@ -459,11 +462,11 @@ class MyWindow(QtGui.QMainWindow):
         ax.w_yaxis.set_ticklabels(row_names)
         ax.set_xlabel('led_x')
         ax.set_ylabel('led_y')
-        ax.set_zlabel('Brightness')
         plt.show()
 
     def CreateNewPlotDailog_1(self):
         data = self.output_pwm.copy()
+        ax.set_zlabel('Brightness')
         # data = (data * self.s_dict["current_scale_3820"]) / 100
         for i in range(self.s_dict["led_size"]):
             data[i] = (data[i] * self.output_current[i]) / self.s_dict["normal_current_mid"]

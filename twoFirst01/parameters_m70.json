@@ -1,0 +1,38 @@
+{
+    "parameters": {
+        "power_max": 8386560,
+        "power_max_percent": 60,
+        "peak_max_num": 32,
+        "peak_min_num": 8,
+        "peak_max_global_gain": 100,
+        "peak_min_global_gain": 47,
+        "peak_value_thr":3840,
+        "low_value_thr":256,
+        "medium_value_thr":2048,
+        "limit_cof":25,
+        "limit_pwm_adjust":3800,
+        "limit_cof_1":10,
+        "limit_cof_2":20,
+        "limit_cof_3":30,
+        "limit_cof_4":40,
+        "led_x":4,
+        "led_y":8,
+        "led_size":32,
+        "dc_dc_size":2,
+        "peak_current_max":239,
+        "lowest_current_min": 2,
+        "normal_current_mid": 114,
+        "current_scale_3820": 150
+
+    },
+    "uisetting": {
+         "platform_set":"2017 M70",
+        "Chip_ip": "10.86.60.216",
+        "Chip_type":"SX8",
+        "Dim_debug_module": "2dd_boost",
+        "Help":"Debug for peak brightness on AMS3824 chip",
+        "Version": "version_0_1_build_160426",
+        "Author": "hooloong",
+        "mail": "hooloong_ge@sigmadesigns.com"
+    }
+}
