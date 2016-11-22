@@ -92,7 +92,7 @@ class MyWindow(QtGui.QMainWindow):
                 br = (var & 0xFFF) >> 4
                 color = QtGui.QColor(br, br, br)
                 self.painter.setBrush(color)
-                self.painter.drawRect(startposx + i * 40, startposy + j * 30, 40, 30)
+                self.painter.drawRect(startposx + i * 80, startposy + j * 30, 80, 30)
         self.painter.end()
 
     def connectChip(self):
@@ -466,7 +466,6 @@ class MyWindow(QtGui.QMainWindow):
 
     def CreateNewPlotDailog_1(self):
         data = self.output_pwm.copy()
-        ax.set_zlabel('Brightness')
         # data = (data * self.s_dict["current_scale_3820"]) / 100
         for i in range(self.s_dict["led_size"]):
             data[i] = (data[i] * self.output_current[i]) / self.s_dict["normal_current_mid"]
@@ -475,6 +474,7 @@ class MyWindow(QtGui.QMainWindow):
         row_names = ['1', '2', '3', '4', '5', '6', '7', '8']
         fig = plt.figure()
         ax = Axes3D(fig)
+        ax.set_zlabel('Brightness')
         lx = len(data[0])  # Work out matrix dimensions
         ly = len(data[:, 0])
         xpos = np.arange(0, lx, 1)  # Set up a mesh of positions
