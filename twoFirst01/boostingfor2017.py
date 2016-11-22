@@ -27,7 +27,7 @@ class MyWindow(QtGui.QMainWindow):
 
         #self.s_dict = dict(defaultfilename="parameters.json")
         # self.setGeometry(300,300,810,640)
-        self.s_dict = dict(defaultfilename="parameters_m70.json")
+        self.s_dict = dict(defaultfilename="parameters_m50.json")
         self.connectFlag = False
         self.pwm = np.zeros(64, np.uint32)
         self.loadSettingfromJson()
@@ -93,6 +93,9 @@ class MyWindow(QtGui.QMainWindow):
                 color = QtGui.QColor(br, br, br)
                 self.painter.setBrush(color)
                 self.painter.drawRect(startposx + i * 80, startposy + j * 30, 80, 30)
+        config_read = ConfigParser.RawConfigParser()
+        config_read.read("ChipDebugger.INI")
+        eth_ip = config_read.get("Connection", "Ethernet.IP")
         self.painter.end()
 
     def connectChip(self):
@@ -100,7 +103,6 @@ class MyWindow(QtGui.QMainWindow):
         config_read.read("ChipDebugger.INI")
         eth_ip = config_read.get("Connection", "Ethernet.IP")
         self.connectFlag = TFC.TFCConnect2Chip()
-        print("tfcConnInit returns ", self.connectFlag)
         if self.connectFlag:
             print("Connect to chip!!! ")
             self.statusBar().showMessage('"Connect to chip!!!')
@@ -133,7 +135,7 @@ class MyWindow(QtGui.QMainWindow):
             j = j + 1
 
     def loadSettingfromJson(self):
-        settingfile = "parameters_m70.json"
+        settingfile = "parameters_m50.json"
         s_fp = open(settingfile, 'r')
         if s_fp == False:
             print "error file!!!!"
@@ -254,9 +256,10 @@ class MyWindow(QtGui.QMainWindow):
         dc_mapping_3824_m65 = np.array(
             [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1], np.uint32)
         # dc_mapping_3820_m70.shape = (8, 8)
-
+        dc_mapping_3820_m50 = np.array(
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], np.uint32)
         for i in range(led_size):
-            tmp_i = dc_mapping_3820_m70[i]
+            tmp_i = dc_mapping_3820_m50[i]
             if self.pwm[i] > self.s_dict["peak_value_thr"]:
                 dc_peak_num[tmp_i] += 1
                 peak_sum += 1
