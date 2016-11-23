@@ -340,6 +340,8 @@ class MyWindow(QtGui.QMainWindow):
             [72, 77, 87, 97, 107, 117, 127, 137, 147, 157, 167, 177, 187, 197, 207, 217], np.uint32)
         dc_init_current_list_m50_2 =  np.array(
             [72, 77, 87, 97, 107, 117, 127, 137, 147, 157, 167, 177, 187, 197, 207, 217], np.uint32)
+        dc_current_step = 10
+        dc_curren_step_end = 5
         dc_pwm_hist = np.zeros((2, 16), np.uint32)
         dc_pwm_hist_cor = np.zeros((2, 16), np.uint32)
         dc_mapping_3820_m50 = np.array(
