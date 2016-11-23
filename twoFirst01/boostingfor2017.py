@@ -341,7 +341,7 @@ class MyWindow(QtGui.QMainWindow):
         dc_init_current_list_m50_2 =  np.array(
             [72, 77, 87, 97, 107, 117, 127, 137, 147, 157, 167, 177, 187, 197, 207, 217], np.uint32)
         dc_pwm_hist = np.zeros((2, 16), np.uint32)
-
+        dc_pwm_hist_cor = np.zeros((2, 16), np.uint32)
         dc_mapping_3820_m50 = np.array(
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], np.uint32)
         dc_mapping = dc_mapping_3820_m50
@@ -352,6 +352,11 @@ class MyWindow(QtGui.QMainWindow):
                 peak_sum += 1
             dc_pwm_hist[tmp_i][self.pwm[i]/0x100] += self.pwm[i]
         print dc_pwm_hist
+        for st in range(16):
+            for en in range(st,16,1):
+                dc_pwm_hist_cor[0][st] += dc_pwm_hist[0][en]
+                dc_pwm_hist_cor[1][st] += dc_pwm_hist[1][en]
+        print dc_pwm_hist_cor
         if peak_sum >= self.s_dict["peak_max_num"]:
             global_gain = self.s_dict["peak_min_global_gain"]
         elif peak_sum <= self.s_dict["peak_min_num"]:
