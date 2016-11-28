@@ -337,9 +337,9 @@ class MyWindow(QtGui.QMainWindow):
         reduce_pwm_coef *= 100
         dc_peak_num = np.zeros(8, np.uint32)
         dc_init_current_list_m50_1 =  np.array(
-            [72, 77, 87, 97, 107, 117, 127, 137, 147, 157, 167, 177, 187, 197, 207, 217], np.uint32)
+            [72, 82, 92, 102, 112, 122, 132, 142, 152, 162, 172, 182, 192, 202, 212, 217], np.uint32)
         dc_init_current_list_m50_2 =  np.array(
-            [72, 77, 87, 97, 107, 117, 127, 137, 147, 157, 167, 177, 187, 197, 207, 217], np.uint32)
+            [72, 82, 92, 102, 112, 122, 132, 142, 152, 162, 172, 182, 192, 202, 212, 217], np.uint32)
         dc_pwm_hist = np.zeros((2, 16), np.uint32)
 
         dc_mapping_3820_m50 = np.array(
@@ -352,6 +352,18 @@ class MyWindow(QtGui.QMainWindow):
                 peak_sum += 1
             dc_pwm_hist[tmp_i][self.pwm[i]/0x100] += self.pwm[i]
         print dc_pwm_hist
+        dc_pwm_hist_temp_up = np.zeros((2, 16), np.uint32)
+        dc_pwm_hist_temp_down = np.zeros((2, 16), np.uint32)
+        for i in range(led_size/dc_size):
+            for j in range(0,i,1):
+                dc_pwm_hist_temp_up[0][i] += dc_pwm_hist[0][j]
+                dc_pwm_hist_temp_up[1][i] += dc_pwm_hist[1][j]
+            for j in range(i,led_size/dc_size,1):
+                dc_pwm_hist_temp_down[0][i] += dc_pwm_hist[0][j]
+                dc_pwm_hist_temp_down[1][i] += dc_pwm_hist[1][j]
+        print dc_pwm_hist_temp_up
+        print dc_pwm_hist_temp_down
+        print "11111"
         if peak_sum >= self.s_dict["peak_max_num"]:
             global_gain = self.s_dict["peak_min_global_gain"]
         elif peak_sum <= self.s_dict["peak_min_num"]:
@@ -362,11 +374,39 @@ class MyWindow(QtGui.QMainWindow):
                                                                     self.s_dict["peak_max_num"] - self.s_dict[
                                                                         "peak_min_num"])
         global_current_set = (global_gain * self.s_dict["peak_current_max"]) / 100
-
+        print global_current_set,peak_sum,dc_peak_num
+        dc_current_list_num = 15
+        for i in range(15,-1,-1):
+            if dc_init_current_list_m50_1[i] > global_current_set:
+                dc_init_current_list_m50_1[i] = global_current_set
+            if dc_init_current_list_m50_2[i] > global_current_set:
+                dc_init_current_list_m50_2[i] = global_current_set
+            else:
+                dc_current_list_num = i
+                break
+            dc_current_list_num = 0
+        print dc_current_list_num,dc_init_current_list_m50_1,dc_init_current_list_m50_2
+        if dc_current_list_num == 0:
+            self.current = np.ones(32, np.uint32)
+            self.current = dc_init_current_list_m50_1[0]
         # self.current *= self.s_dict["normal_current_mid"]
-        self.current = np.ones(32, np.uint32)
-        self.current = self.current * (global_gain * self.s_dict["peak_current_max"]) / 100
+        else:
+            self.current = np.ones(32, np.uint32)
+            self.current = self.current * (global_gain * self.s_dict["peak_current_max"]) / 100
         print self.current
+        for i in range(led_size/dc_size):
+            dc_sum_power_max_1 = dc_pwm_hist[0][i] * dc_init_current_list_m50_1[i]
+            dc_sum_power_max_2 = dc_pwm_hist[1][i] * dc_init_current_list_m50_2[i]
+
+        print dc_sum_power_max_1,dc_sum_power_max_2
+        power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] / 100
+        print power_max
+        dc_current_list_num_1 = dc_current_list_num-1
+        dc_current_list_num_2 = dc_current_list_num-1
+        steps = 10
+        # while(power_max < dc_sum_power_max_1):
+        #
+        #     reduce_num_1 =
         for i in range(led_size):
             self.output_pwm[i] = self.pwm[i] * global_current_set  # scale the output brightness = pwm*current
         # print self.output_pwm
@@ -383,7 +423,7 @@ class MyWindow(QtGui.QMainWindow):
             dc_max_sum[tmp_i][4] += self.output_pwm[i]
 
         print dc_peak_num, peak_sum, global_gain, dc_max_sum
-        power_max = self.s_dict["power_max"] * self.s_dict["power_max_percent"] / 100
+
         for i in range(dc_size):
             if dc_max_sum[i][4] > power_max:
                 reduce_pwm_sum = dc_max_sum[i][4] - power_max
