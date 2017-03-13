@@ -1,0 +1,26 @@
+
+#!/usr/bin/env python
+import Gnuplot
+
+gp = Gnuplot.Gnuplot()
+gp('set terminal png')
+gp('set terminal png size 1280,800')
+gp('set output "multi.png"')
+gp('set xrange [-1:1]')
+gp('set size 1,1')
+gp('set origin 0,0')
+gp('set multiplot')
+gp('set size 0.5,0.5')
+gp('set origin 0,0.5')
+gp.plot('x*x')
+gp('set size 0.5,0.5')
+gp('set origin 0.5,0.5')
+gp.plot('sin(x)')
+gp('set size 0.5,0.5')
+gp('set origin 0,0')
+gp.plot('1/x')
+gp('set size 0.5,0.5')
+gp('set origin 0.5,0')
+gp.plot('x*x*x')
+gp('unset multiplot')
+gp('reset')
