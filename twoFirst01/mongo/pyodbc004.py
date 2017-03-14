@@ -77,6 +77,21 @@ fields = cursor.execute(SQL)
 end_time = time.time()
 #for i in connection.cursor().description:
 print cursor.description
+# for i in fields:
+#     print i
+
+print end_time-start_time
+
+SQL = 'select * from page order by pagetype'
+start_time = time.time()
+
+fields = cursor.execute(SQL)
+
+#connection.cursor().commit()
+
+end_time = time.time()
+#for i in connection.cursor().description:
+print cursor.description
 for i in fields:
     print i
 
