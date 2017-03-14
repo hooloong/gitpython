@@ -271,7 +271,7 @@ if __name__ == "__main__":
          ),
     ]
 
-    pypyodbc.DEBUG = 0
+    pypyodbc.DEBUG = 1
     DSN_list = pypyodbc.dataSources()
     print (DSN_list)
 
