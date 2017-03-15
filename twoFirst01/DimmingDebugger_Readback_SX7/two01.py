@@ -10,7 +10,7 @@ try:
     SREG_MEM_ADDR = 0x19A005C4
     SREG_MEM_WRITEINDEX = 0x19A005C8 # [15:0] count; [31:16] size, unit byte;
     #TFC = C.WinDLL( r"D:\HiDTV\SVP_FUSION\Bin_SX7\TFCAPI.dll" )
-    TFC = C.WinDLL( r"TFCAPI.dll" )
+    TFC = C.WinDLL( r"..\TFCAPI.dll" )
 except:
     # bin_FRCXB
     print "FRCXB"
