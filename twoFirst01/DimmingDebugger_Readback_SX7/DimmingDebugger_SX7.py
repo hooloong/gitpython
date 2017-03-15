@@ -159,7 +159,7 @@ class MyWindow(QtGui.QMainWindow):
 
     def connectChip(self):
         config_read = ConfigParser.RawConfigParser()
-        config_read.read("ChipDebugger.INI")
+        config_read.read("..\ChipDebugger.INI")
         eth_ip = config_read.get("Connection", "Ethernet.IP")
         self.connectFlag = TFC.TFCConnect2Chip()
         print("tfcConnInit returns ", self.connectFlag)
