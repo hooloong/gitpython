@@ -8,7 +8,7 @@ from PyQt4.QtSql import QSqlTableModel
 def createConnection():
     db = QtSql.QSqlDatabase.addDatabase("QSQLITE")
 
-    db.setDatabaseName("test0.db")
+    db.setDatabaseName("D:\\testing.db")
 
     db.open()
 
@@ -16,10 +16,10 @@ def createConnection():
 def createTable():
     q = QtSql.QSqlQuery()
     q.exec_("create table if not exists t1 (f1 integer primary key,f2 varchar(20))")
-    q.exec_("delete from t1")
+    #q.exec_("delete from t1")
 
     q.exec_(u"insert into t1 values(1,'我')")
-    q.exec_(u"insert into t1 values(2,'我')")
+    q.exec_(u"insert into t1 values(2,'你你你')")
     q.exec_("commit")
 
 
@@ -28,12 +28,11 @@ class Model(QSqlTableModel):
         # type: (object) -> object
         QSqlTableModel.__init__(self, parent)
 
-        self.setTable("t1")
+        self.setTable("Tab")
 
         self.select()
 
         self.setEditStrategy(QSqlTableModel.OnManualSubmit)
-
 
 class TestWidget(QtGui.QWidget):
     def __init__(self):
@@ -48,7 +47,7 @@ class TestWidget(QtGui.QWidget):
 if __name__ == "__main__":
     a = QtGui.QApplication(sys.argv)
     createConnection()
-    createTable()
+    # createTable()
     w = TestWidget()
     w.show()
     sys.exit(a.exec_())
