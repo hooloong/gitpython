@@ -18,7 +18,7 @@ class MyWindow(QtGui.QMainWindow):
         self.statusBar().showMessage('Generated a fast logo array!!!')
         self.painter = QtGui.QPainter()
 
-        self.s_dict = dict(defaultfilename="fc_parameters.json")
+        self.s_dict = dict(defaultfilename="fc_parameters_fore.json")
 
         self.input = np.zeros(512, np.uint32)
         self.output = np.zeros(512, np.uint32)
@@ -42,6 +42,10 @@ class MyWindow(QtGui.QMainWindow):
         # self.tableWidget_Paras.currentItemChanged.connect(self.updateParas)
         self.tableWidget_Paras.itemChanged.connect(self.updateParas)
         self.loadSettingfromJson()
+        self.tableWidget_input.setRowCount(0)
+        self.tableWidget_input.setColumnCount(0)
+        self.tableWidget_input.setRowCount(self.s_dict["input_y"])
+        self.tableWidget_input.setColumnCount(self.s_dict["input_x"])
         self.PWMshowinTable()
         self.initFlag = True
     def updateParas(self,item):
@@ -151,7 +155,10 @@ class MyWindow(QtGui.QMainWindow):
                             pVOutBuf[pIs+j] = 0
                 POs += OutWidth
             for j in range(OutWidth*OutHeight):
-                self.output[j] = pVOutBuf[j]
+                if pVOutBuf[j] <  self.s_dict["curve_start"]:
+                    self.output[j] = self.s_dict["curve_start"]
+                else:
+                    self.output[j] = pVOutBuf[j]
 
         pass
     def generateOutput(self):
@@ -198,14 +205,14 @@ class MyWindow(QtGui.QMainWindow):
         startposy = self.tableWidget_Paras.y() + self.tableWidget_Paras.height() + 60
         output_x = startposx
         output_y = startposy
-        for i in range( 16):
-            for j in range( 24):
-                var = self.input[i * 24 + j]
+        for i in range( 8):
+            for j in range( 16):
+                var = self.input[i * 16 + j]
                 br = (var & 0xFFF) >> 4
                 color = QtGui.QColor(br, br, br)
                 self.painter.setBrush(color)
-                self.painter.drawRect(startposx + j * 17, startposy + i * 17, 17, 17)
-                output_x = startposx + j * 17  +17 +10
+                self.painter.drawRect(startposx + j * 24, startposy + i * 24, 24, 24)
+                output_x = startposx + j * 24  +24 +10
         if self.gen_flag:
             offsetx = 408 /self.s_dict["output_x"]
             offsety = 272/ self.s_dict["output_y"]
@@ -269,7 +276,7 @@ class MyWindow(QtGui.QMainWindow):
                 row_len = len(line)
                 break;
             f.close()
-        if row_len != 95:
+        if row_len != 63:
             self.statusBar().showMessage("file "+ filename +"is not a right file!!")
             return
         else:
@@ -277,7 +284,7 @@ class MyWindow(QtGui.QMainWindow):
             col_num = (row_len +2)/4
             print col_num
         row_num = 0
-
+        self.rl_list = []
         with open(filename,'r') as f:
             for line in f:
                 line = line.strip()
@@ -287,6 +294,8 @@ class MyWindow(QtGui.QMainWindow):
 
         print len(self.rl_list),row_num
         num = 0
+        self.input = np.zeros(512, np.uint32)
+        self.output = np.zeros(512, np.uint32)
         for it in self.rl_list:
             self.input[num] = string.atoi(self.rl_list[num],base=16)
             num = num +1
