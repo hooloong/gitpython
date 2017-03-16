@@ -67,7 +67,6 @@ for i in fields:
 
 print end_time-start_time
 
-
 SQL = 'select * from register'
 start_time = time.time()
 
@@ -98,3 +97,17 @@ for i in fields:
 
 print end_time-start_time
 
+SQL = 'select * from page where id=137'
+start_time = time.time()
+
+fields = cursor.execute(SQL)
+
+#connection.cursor().commit()
+
+end_time = time.time()
+#for i in connection.cursor().description:
+print cursor.description
+for i in fields:
+    print i
+
+print end_time-start_time
