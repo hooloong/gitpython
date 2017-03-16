@@ -243,7 +243,7 @@ class MyWindow(QtGui.QMainWindow):
             j = j + 1
 
     def loadSettingfromJson(self):
-        settingfile = "fc_parameters.json"
+        settingfile = "fc_parameters_fore.json"
         s_fp = open(settingfile, 'r')
         if s_fp == False:
             print "error file!!!!"
