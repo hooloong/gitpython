@@ -67,6 +67,7 @@ for i in fields:
 
 print end_time-start_time
 
+
 SQL = 'select * from register'
 start_time = time.time()
 
@@ -96,3 +97,4 @@ for i in fields:
     print i
 
 print end_time-start_time
+
