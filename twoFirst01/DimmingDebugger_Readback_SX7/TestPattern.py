@@ -27,7 +27,8 @@ class TestPatternWindow(QtGui.QMainWindow):
 
         self.curpat= np.zeros(64, np.uint32)
         self.pat_size = 64
-
+        for i in range(64):
+            self.curpat[i] = random.randrange(100, 4095)
         self.connect(self.ui.pushButton_readpanel, QtCore.SIGNAL('clicked()'), self.getpanelinfofromchip)
         self.ui.tableWidget_pattern.itemChanged.connect(self.updatepatts)
         self.DataShowiInTable()
@@ -122,8 +123,10 @@ class TestPatternWindow(QtGui.QMainWindow):
         # testing patt
         for i in range(self.ui.tableWidget_pattern.rowCount()):
             for j in range(self.ui.tableWidget_pattern.columnCount()):
-                pwmdutytemp = "%X" % (self.curpat[i * self.ui.tableWidget_pattern.columnCount() + j])
-                newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
+                # pwmdutytemp = "%X" % (self.curpat[i * self.ui.tableWidget_pattern.columnCount() + j])
+                newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
+                        self.ui.tableWidget_pattern.columnCount() + j],3,16,QtCore.QChar(" ")).toUpper())
+                newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
                 self.ui.tableWidget_pattern.setItem(i, j, newItemt)
 
 if __name__ == "__main__":
