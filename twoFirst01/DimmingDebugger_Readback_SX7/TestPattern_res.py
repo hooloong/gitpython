@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Tue Mar 21 15:26:48 2017
+# Created: Tue Mar 21 20:39:22 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -276,7 +276,7 @@ class Ui_Form_TestPattern(object):
         self.tableWidget_pattern.verticalHeader().setVisible(False)
         self.tableWidget_pattern.verticalHeader().setHighlightSections(True)
         self.label_paneinfo_1 = QtGui.QLabel(Form_TestPattern)
-        self.label_paneinfo_1.setGeometry(QtCore.QRect(430, 10, 311, 31))
+        self.label_paneinfo_1.setGeometry(QtCore.QRect(430, 10, 401, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)

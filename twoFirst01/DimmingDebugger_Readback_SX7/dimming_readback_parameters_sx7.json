@@ -4,21 +4,21 @@
     },
     "panel_info": {
         "registers":[
-          {"name": "mapping_id","address": "0x19A005DC","bit_start":24, "bit_end":31},
-          {"name": "boosting_type","address": "0x19A005B8","bit_start":0, "bit_end":2},
+          {"name": "mapping_id","address": "0x19A005D0","bit_start":24, "bit_end":31},
+          {"name": "boosting_type","address": "0x19A004B8","bit_start":0, "bit_end":2},
           {"name": "testing_pat_en","address": "0x19A005C0","bit_start":2, "bit_end":3},
           {"name": "testing_pat_ctrl","address": "0x19A005F8","bit_start":0, "bit_end":31}
         ],
         "boosting_type":["No boosting","Zero Dimming","Boosting 3824","Boosting 3820","Boosting Lite"],
-        "LED output":[
-          {"name": "DDIMING__2_6_LEDS","mapping_id": 10,"led_x":2, "lexy_y":6},
-          {"name": "DDIMING__2_5_LEDS","mapping_id": 12,"led_x":2, "lexy_y":5},
-          {"name": "DDIMING__2_8_LEDS","mapping_id": 15,"led_x":2, "lexy_y":8},
-          {"name": "DDIMING__8_8_LEDS","mapping_id": 16,"led_x":8, "lexy_y":8},
-          {"name": "DDIMING__4_8_LEDS","mapping_id": 22,"led_x":4, "lexy_y":8},
-          {"name": "DDIMING__2_7_LEDS","mapping_id": 25,"led_x":2, "lexy_y":7},
-          {"name": "DDIMING__4_12_LEDS","mapping_id": 26,"led_x":4, "lexy_y":12},
-          {"name": "DDIMING__0_0_LEDS","mapping_id": 100,"led_x":1, "lexy_y":1}
+        "led_output":[
+          {"name": "DDIMING__2_6_LEDS","mapping_id": 10,"led_x":2, "led_y":6},
+          {"name": "DDIMING__2_5_LEDS","mapping_id": 12,"led_x":2, "led_y":5},
+          {"name": "DDIMING__2_8_LEDS","mapping_id": 15,"led_x":2, "led_y":8},
+          {"name": "DDIMING__8_8_LEDS","mapping_id": 16,"led_x":8, "led_y":8},
+          {"name": "DDIMING__4_8_LEDS","mapping_id": 22,"led_x":4, "led_y":8},
+          {"name": "DDIMING__2_7_LEDS","mapping_id": 25,"led_x":2, "led_y":7},
+          {"name": "DDIMING__4_12_LEDS","mapping_id": 26,"led_x":4, "led_y":12},
+          {"name": "DDIMING__0_0_LEDS","mapping_id": 100,"led_x":1, "led_y":1}
         ],
         "hist_input":"16x8",
         "hdr_support": "YES"

@@ -44,13 +44,11 @@ class MyWindow(QtGui.QMainWindow):
         self.formHist = HistWindow()
         self.ui.tabWidget.insertTab(1, self.formHist, u"Hist")
 
+        self.s_dict = dict(defaultfilename="dimming_readback_parameters_sx7.json")
+        self.loadSettingfromJson()
+        self.connectFlag = False
         self.formTestPattern = TestPatternWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
-
-        self.s_dict = dict(defaultfilename="dimming_readback_parameters_sx7.json")
-
-        self.connectFlag = False
-
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
         self.connect(self.ui.actionDisconnect, QtCore.SIGNAL('triggered()'), self.disconnectChip)
         self.ui.actionQuit.connect(self.ui.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
@@ -59,9 +57,11 @@ class MyWindow(QtGui.QMainWindow):
         self.ui.actionSave_setting_file.connect(self.ui.actionSave_setting_file, QtCore.SIGNAL('triggered()'),
                                              self.saveSettingfromJson)
 
-        self.loadSettingfromJson()
+        self.setPanelInfo()
 
-
+    def setPanelInfo(self):
+        self.formTestPattern.setSettingDict(self.s_dict)
+        pass
     def connectChip(self):
         config_read = ConfigParser.RawConfigParser()
         config_read.read("ChipDebugger.INI")
@@ -69,6 +69,7 @@ class MyWindow(QtGui.QMainWindow):
         self.connectFlag = TFC.TFCConnect2Chip()
         self.formPWMs.setConnectFlag(self.connectFlag)
         self.formHist.setConnectFlag(self.connectFlag)
+        self.formTestPattern.setConnectFlag(self.connectFlag)
         print("tfcConnInit returns ", self.connectFlag)
         if self.connectFlag:
             print("Connect to chip!!! ")
@@ -86,6 +87,7 @@ class MyWindow(QtGui.QMainWindow):
         self.connectFlag = False
         self.formPWMs.setConnectFlag(self.connectFlag)
         self.formHist.setConnectFlag(self.connectFlag)
+        self.formTestPattern.setConnectFlag(self.connectFlag)
         TFC.tfcConnTerm()
         self.setWindowTitle("Dimming Debugger     DisConnect..")
 
