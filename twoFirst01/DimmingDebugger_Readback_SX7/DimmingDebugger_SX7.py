@@ -47,7 +47,8 @@ class MyWindow(QtGui.QMainWindow):
         self.formTestPattern = TestPatternWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
 
-        self.s_dict = dict(defaultfilename="parameters_SX7.json")
+        self.s_dict = dict(defaultfilename="dimming_readback_parameters_sx7.json")
+
         self.connectFlag = False
 
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
@@ -89,20 +90,21 @@ class MyWindow(QtGui.QMainWindow):
         self.setWindowTitle("Dimming Debugger     DisConnect..")
 
     def loadSettingfromJson(self):
-        settingfile = "parameters.json"
+        settingfile = "dimming_readback_parameters_sx7.json"
         s_fp = open(settingfile, 'r')
         if s_fp == False:
             print "error file!!!!"
         else:
             self.s_setjson = json.load(s_fp)
             s_fp.close()
-            self.s_dict = self.s_setjson["parameters"]
+            self.s_dict = self.s_setjson["panel_info"]
             # print self.s_setjson
-            # print self.s_dict
+            print self.s_dict["registers"][0]["address"]
+
             # self.loadParaTable()
 
     def saveSettingfromJson(self):
-        settingfile = "parameters1.json"
+        settingfile = "dimming_readback_parameters_sx7_1.json"
         s_fp = open(settingfile, 'w+')
         if s_fp == False:
             print "error file!!!!"

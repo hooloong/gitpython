@@ -16,9 +16,9 @@
   <widget class="QPushButton" name="pushButton_addpattern">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>50</y>
-     <width>111</width>
+     <x>270</x>
+     <y>60</y>
+     <width>121</width>
      <height>41</height>
     </rect>
    </property>
@@ -39,8 +39,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>10</y>
+     <x>150</x>
+     <y>160</y>
      <width>71</width>
      <height>41</height>
     </rect>
@@ -53,10 +53,13 @@
     </font>
    </property>
    <property name="minimum">
-    <number>0</number>
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
    </property>
    <property name="value">
-    <number>0</number>
+    <number>1</number>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_savepatToFile">
@@ -65,10 +68,10 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>110</y>
-     <width>75</width>
-     <height>23</height>
+     <x>30</x>
+     <y>10</y>
+     <width>91</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -81,9 +84,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>130</x>
      <y>60</y>
-     <width>75</width>
+     <width>91</width>
      <height>41</height>
     </rect>
    </property>
@@ -98,8 +101,8 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>60</y>
-     <width>75</width>
+     <y>10</y>
+     <width>91</width>
      <height>41</height>
     </rect>
    </property>
@@ -110,8 +113,8 @@
   <widget class="QLabel" name="label_patindex">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
+     <x>20</x>
+     <y>170</y>
      <width>121</width>
      <height>31</height>
     </rect>
@@ -127,12 +130,12 @@
     <string>Pattern Index:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_readpattern">
+  <widget class="QPushButton" name="pushButton_readpanel">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>270</x>
      <y>10</y>
-     <width>111</width>
+     <width>121</width>
      <height>41</height>
     </rect>
    </property>
@@ -144,7 +147,7 @@
     </font>
    </property>
    <property name="text">
-    <string>ReadPat</string>
+    <string>GetPanelInfo</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_loadpatfromFile">
@@ -154,9 +157,9 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>110</y>
-     <width>75</width>
-     <height>23</height>
+     <y>60</y>
+     <width>91</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -166,18 +169,18 @@
   <widget class="QPlainTextEdit" name="plainTextEdi_pats">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>10</y>
-     <width>361</width>
-     <height>441</height>
+     <x>430</x>
+     <y>40</y>
+     <width>371</width>
+     <height>581</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label_patdelay">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>470</y>
+     <x>20</x>
+     <y>590</y>
      <width>251</width>
      <height>31</height>
     </rect>
@@ -199,8 +202,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>470</y>
+     <x>290</x>
+     <y>590</y>
      <width>61</width>
      <height>31</height>
     </rect>
@@ -213,18 +216,21 @@
     </font>
    </property>
    <property name="minimum">
-    <number>0</number>
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>500</number>
    </property>
    <property name="value">
-    <number>0</number>
+    <number>1</number>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_delpattern">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>90</y>
-     <width>111</width>
+     <x>270</x>
+     <y>120</y>
+     <width>121</width>
      <height>40</height>
     </rect>
    </property>
@@ -242,9 +248,9 @@
   <widget class="QPushButton" name="pushButton_sendpattochip">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>460</y>
-     <width>111</width>
+     <x>220</x>
+     <y>250</y>
+     <width>181</width>
      <height>40</height>
     </rect>
    </property>
@@ -262,9 +268,9 @@
   <widget class="QPushButton" name="pushButton_savecurrentpat">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>130</y>
-     <width>111</width>
+     <x>270</x>
+     <y>170</y>
+     <width>121</width>
      <height>40</height>
     </rect>
    </property>
@@ -282,9 +288,9 @@
   <widget class="QPushButton" name="pushButton_readfromchip">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>460</y>
-     <width>131</width>
+     <x>20</x>
+     <y>250</y>
+     <width>171</width>
      <height>40</height>
     </rect>
    </property>
@@ -303,8 +309,8 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>140</y>
-     <width>69</width>
+     <y>110</y>
+     <width>91</width>
      <height>22</height>
     </rect>
    </property>
@@ -312,8 +318,8 @@
   <widget class="QTableWidget" name="tableWidget_pattern">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>180</y>
+     <x>20</x>
+     <y>310</y>
      <width>381</width>
      <height>261</height>
     </rect>
@@ -675,6 +681,26 @@
      <string>6</string>
     </property>
    </item>
+  </widget>
+  <widget class="QLabel" name="label_paneinfo_1">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>10</y>
+     <width>311</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>PanelInfo: 16,  LEDX:=4  and LEDY =8</string>
+   </property>
   </widget>
  </widget>
  <resources/>

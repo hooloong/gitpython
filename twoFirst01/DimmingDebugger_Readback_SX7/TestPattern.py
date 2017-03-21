@@ -8,14 +8,7 @@ import numpy as np
 from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, uic  # ,Qwt5
 from TestPattern_res import *
-# from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-# from matplotlib.figure import Figure
-# from mpl_toolkits.mplot3d import Axes3D
-# import matplotlib.pyplot as plt
-# import ctypes as C
-# import cProfile
-# cProfile.run('main()')
-# import logging
+
 
 class TestPatternWindow(QtGui.QMainWindow):
 
