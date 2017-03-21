@@ -17,15 +17,32 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.ui = Ui_Form_TestPattern()
         self.ui.setupUi(self)
         self.connectFlag = False
+        self.initFlag = False
         self.regs_mapping_addr =[ 0x19A005DC,0xFF000000,24]
         self.regs_boostype_addr = [0x19A005B8, 0x3, 0]
         self.testing_pat_en_addr = [0x19A005C0, 0xC, 2]
         self.testing_pat_ctrl_addr = [0x19A005F8, 0xFFFFFFFF, 0]
         self.panel_info = {}
         self.debugregisters= {u"mapping_id":22,u"boosting_type":2,u"testing_pat_en":1,u"led_x":4,u"led_y":8}
+
+        self.curpat= np.zeros(64, np.uint32)
+        self.pat_size = 64
+
         self.connect(self.ui.pushButton_readpanel, QtCore.SIGNAL('clicked()'), self.getpanelinfofromchip)
+        self.ui.tableWidget_pattern.itemChanged.connect(self.updatepatts)
+        self.DataShowiInTable()
 
 
+
+
+    def updatepatts(self,item):
+        if not self.initFlag: return
+        if item != self.ui.tableWidget_pattern.currentItem():
+            return
+        print item.row(),item.column()
+        # self.parameters_vars[item.row()] = int(item.text())
+        # self.s_dict[self.parameters_name[item.row()]] = self.parameters_vars[item.row()]
+        # print self.s_dict[self.parameters_name[item.row()]]
     def setConnectFlag(self, flag):
         self.connectFlag = flag
         print flag
@@ -66,7 +83,9 @@ class TestPatternWindow(QtGui.QMainWindow):
         if self.connectFlag is False:
             QtGui.QMessageBox.information(self, "warning", ("Please connect to chip first!!!\n Setting->Connect"))
             return
-
+        """
+        update panel info label
+        """
         self.debugregisters["mapping_id"] = (TFC.tfcReadDword(self.regs_mapping_addr[0], 0x0) \
                                              & self.regs_mapping_addr[1]) >> self.regs_mapping_addr[2]
         self.debugregisters["boosting_type"] = (TFC.tfcReadDword(self.regs_boostype_addr[0], 0x0) \
@@ -80,11 +99,32 @@ class TestPatternWindow(QtGui.QMainWindow):
                 print ledtype["name"]
                 self.debugregisters[u"led_x"] = ledtype["led_x"]
                 self.debugregisters[u"led_y"] = ledtype["led_y"]
-        self.ui.label_paneinfo_1.setText("Panel is %s! LEDX=%d, LEDY=%d." % ( \
+        self.ui.label_paneinfo_1.setText("Panel is %s!   LEDX=%d, LEDY=%d." % ( \
             self.panel_info["boosting_type"][self.debugregisters["boosting_type"]],\
             self.debugregisters[u"led_x"] , self.debugregisters[u"led_y"] ))
-        pass
+        """
+        update the current pattern table widget
+        """
 
+        self.pat_size = self.debugregisters[u"led_x"] * self.debugregisters[u"led_y"]
+        self.curpat = np.zeros(self.pat_size, np.uint32)
+        self.reStruTable()
+        self.DataShowiInTable()
+        self.initFlag = True
+        pass
+    def reStruTable(self):
+        self.ui.tableWidget_pattern.clear()
+        self.ui.tableWidget_pattern.setRowCount(self.debugregisters[u"led_y"])
+        self.ui.tableWidget_pattern.setColumnCount(self.debugregisters[u"led_x"])
+
+        pass
+    def DataShowiInTable(self):
+        # testing patt
+        for i in range(self.ui.tableWidget_pattern.rowCount()):
+            for j in range(self.ui.tableWidget_pattern.columnCount()):
+                pwmdutytemp = "%X" % (self.curpat[i * self.ui.tableWidget_pattern.columnCount() + j])
+                newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
+                self.ui.tableWidget_pattern.setItem(i, j, newItemt)
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

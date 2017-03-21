@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Tue Mar 21 20:39:22 2017
+# Created: Tue Mar 21 20:52:40 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -432,5 +432,5 @@ class Ui_Form_TestPattern(object):
         item = self.tableWidget_pattern.item(7, 7)
         item.setText(_translate("Form_TestPattern", "6", None))
         self.tableWidget_pattern.setSortingEnabled(__sortingEnabled)
-        self.label_paneinfo_1.setText(_translate("Form_TestPattern", "PanelInfo: 16,  LEDX:=4  and LEDY =8", None))
+        self.label_paneinfo_1.setText(_translate("Form_TestPattern", "No panel info!!", None))
 
