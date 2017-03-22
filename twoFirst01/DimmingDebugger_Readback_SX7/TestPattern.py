@@ -37,7 +37,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         if not self.initFlag: return
         if item != self.ui.tableWidget_pattern.currentItem():
             return
-        print item.row(),item.column()
+        print item.row(),item.column(),item.text.toInt()
         # self.parameters_vars[item.row()] = int(item.text())
         # self.s_dict[self.parameters_name[item.row()]] = self.parameters_vars[item.row()]
         # print self.s_dict[self.parameters_name[item.row()]]
