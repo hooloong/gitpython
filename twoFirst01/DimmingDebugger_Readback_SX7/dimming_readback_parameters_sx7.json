@@ -1,13 +1,17 @@
 {
     "parameters": {
-        "version": "20170321"
+        "version": "20170321",
+        "platform": "SX7"
     },
     "panel_info": {
         "registers":[
           {"name": "mapping_id","address": "0x19A005D0","bit_start":24, "bit_end":31},
           {"name": "boosting_type","address": "0x19A004B8","bit_start":0, "bit_end":2},
           {"name": "testing_pat_en","address": "0x19A005C0","bit_start":2, "bit_end":3},
-          {"name": "testing_pat_ctrl","address": "0x19A005F8","bit_start":0, "bit_end":31}
+          {"name": "testing_pat_ctrl","address": "0x19A005F8","bit_start":0, "bit_end":31},
+          {"name": "panel_id","address": "0x195603C0","bit_start":0, "bit_end":7},
+          {"name": "database_version","address": "0x195603C8","bit_start":0, "bit_end":31},
+          {"name": "hist_led","address": "0x19A005E0","bit_start":0, "bit_end":31}
         ],
         "boosting_type":["No boosting","Zero Dimming","Boosting 3824","Boosting 3820","Boosting Lite"],
         "led_output":[
@@ -18,6 +22,7 @@
           {"name": "DDIMING__4_8_LEDS","mapping_id": 22,"led_x":4, "led_y":8},
           {"name": "DDIMING__2_7_LEDS","mapping_id": 25,"led_x":2, "led_y":7},
           {"name": "DDIMING__4_12_LEDS","mapping_id": 26,"led_x":4, "led_y":12},
+          {"name": "DDIMING__2_9_LEDS","mapping_id": 43,"led_x":2, "led_y":9},
           {"name": "DDIMING__0_0_LEDS","mapping_id": 100,"led_x":1, "led_y":1}
         ],
         "hist_input":"16x8",

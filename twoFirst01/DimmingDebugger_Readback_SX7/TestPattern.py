@@ -3,7 +3,7 @@ __author__ = 'hooloongge'
 import sys, math, random, time
 import ctypes as C
 import two01 as TFC
-# import xmltodict
+
 import numpy as np
 from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, uic  # ,Qwt5
@@ -32,9 +32,6 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_readpanel, QtCore.SIGNAL('clicked()'), self.getpanelinfofromchip)
         self.ui.tableWidget_pattern.itemChanged.connect(self.updatepatts)
         self.DataShowiInTable()
-
-
-
 
     def updatepatts(self,item):
         if not self.initFlag: return
@@ -125,7 +122,7 @@ class TestPatternWindow(QtGui.QMainWindow):
             for j in range(self.ui.tableWidget_pattern.columnCount()):
                 # pwmdutytemp = "%X" % (self.curpat[i * self.ui.tableWidget_pattern.columnCount() + j])
                 newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
-                        self.ui.tableWidget_pattern.columnCount() + j],3,16,QtCore.QChar(" ")).toUpper())
+                self.ui.tableWidget_pattern.columnCount() + j],3,16,QtCore.QChar(" ")).toUpper())
                 newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
                 self.ui.tableWidget_pattern.setItem(i, j, newItemt)
 
