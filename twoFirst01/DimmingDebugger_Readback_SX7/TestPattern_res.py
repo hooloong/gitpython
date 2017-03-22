@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Tue Mar 21 20:52:40 2017
+# Created: Wed Mar 22 20:07:32 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,18 +35,6 @@ class Ui_Form_TestPattern(object):
         font.setWeight(75)
         self.pushButton_addpattern.setFont(font)
         self.pushButton_addpattern.setObjectName(_fromUtf8("pushButton_addpattern"))
-        self.spinBox_patselect = QtGui.QSpinBox(Form_TestPattern)
-        self.spinBox_patselect.setEnabled(True)
-        self.spinBox_patselect.setGeometry(QtCore.QRect(150, 160, 71, 41))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        font.setBold(True)
-        font.setWeight(75)
-        self.spinBox_patselect.setFont(font)
-        self.spinBox_patselect.setMinimum(1)
-        self.spinBox_patselect.setMaximum(100)
-        self.spinBox_patselect.setProperty("value", 1)
-        self.spinBox_patselect.setObjectName(_fromUtf8("spinBox_patselect"))
         self.pushButton_savepatToFile = QtGui.QPushButton(Form_TestPattern)
         self.pushButton_savepatToFile.setEnabled(True)
         self.pushButton_savepatToFile.setGeometry(QtCore.QRect(30, 10, 91, 41))
@@ -139,6 +127,16 @@ class Ui_Form_TestPattern(object):
         self.comboBox_listpats.setObjectName(_fromUtf8("comboBox_listpats"))
         self.tableWidget_pattern = QtGui.QTableWidget(Form_TestPattern)
         self.tableWidget_pattern.setGeometry(QtCore.QRect(20, 310, 381, 261))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Arial Black"))
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.tableWidget_pattern.setFont(font)
+        self.tableWidget_pattern.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.tableWidget_pattern.setAutoFillBackground(False)
+        self.tableWidget_pattern.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
+        self.tableWidget_pattern.setInputMethodHints(QtCore.Qt.ImhDigitsOnly|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhUppercaseOnly)
         self.tableWidget_pattern.setRowCount(8)
         self.tableWidget_pattern.setColumnCount(8)
         self.tableWidget_pattern.setObjectName(_fromUtf8("tableWidget_pattern"))
@@ -283,6 +281,10 @@ class Ui_Form_TestPattern(object):
         font.setWeight(75)
         self.label_paneinfo_1.setFont(font)
         self.label_paneinfo_1.setObjectName(_fromUtf8("label_paneinfo_1"))
+        self.lineEdit_index = QtGui.QLineEdit(Form_TestPattern)
+        self.lineEdit_index.setGeometry(QtCore.QRect(140, 170, 61, 21))
+        self.lineEdit_index.setReadOnly(True)
+        self.lineEdit_index.setObjectName(_fromUtf8("lineEdit_index"))
 
         self.retranslateUi(Form_TestPattern)
         QtCore.QMetaObject.connectSlotsByName(Form_TestPattern)
@@ -433,4 +435,5 @@ class Ui_Form_TestPattern(object):
         item.setText(_translate("Form_TestPattern", "6", None))
         self.tableWidget_pattern.setSortingEnabled(__sortingEnabled)
         self.label_paneinfo_1.setText(_translate("Form_TestPattern", "No panel info!!", None))
+        self.lineEdit_index.setText(_translate("Form_TestPattern", "TEMP", None))
 
