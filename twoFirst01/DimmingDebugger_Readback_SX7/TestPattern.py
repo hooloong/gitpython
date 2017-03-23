@@ -9,7 +9,7 @@ from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, uic  # ,Qwt5
 from TestPattern_res import *
 
-
+proper_digit="0123456789ABCDEFabcdef"
 class TestPatternWindow(QtGui.QMainWindow):
 
     def __init__(self):
@@ -32,15 +32,33 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_readpanel, QtCore.SIGNAL('clicked()'), self.getpanelinfofromchip)
         self.ui.tableWidget_pattern.itemChanged.connect(self.updatepatts)
         self.DataShowiInTable()
+    def isproperdigit(self,strinput):
+        if len(strinput) == 0 or len(strinput) >3:
+            return  False
+        for c in strinput:
+            if c not in proper_digit:
+                return False
+        return True
 
     def updatepatts(self,item):
         if not self.initFlag: return
         if item != self.ui.tableWidget_pattern.currentItem():
             return
         print item.row(),item.column()
-        # self.parameters_vars[item.row()] = int(item.text())
-        # self.s_dict[self.parameters_name[item.row()]] = self.parameters_vars[item.row()]
-        # print self.s_dict[self.parameters_name[item.row()]]
+        stringitem = "%s" % item.text()
+        isright = self.isproperdigit(stringitem)
+        i = item.row()
+        j = item.column()
+        if isright is True:
+            self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
+
+        newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
+                             self.ui.tableWidget_pattern.columnCount() + j],
+                                    3, 16, QtCore.QChar(" ")).toUpper())
+        newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        self.ui.tableWidget_pattern.setItem(i, j, newItemt)
+        print stringitem
+        # self.DataShowiInTable()
     def setConnectFlag(self, flag):
         self.connectFlag = flag
         print flag
