@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Wed Mar 22 20:07:32 2017
+# Created: Fri Mar 24 16:48:26 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -80,14 +80,14 @@ class Ui_Form_TestPattern(object):
         self.label_patdelay.setObjectName(_fromUtf8("label_patdelay"))
         self.spinBox_patdelays = QtGui.QSpinBox(Form_TestPattern)
         self.spinBox_patdelays.setEnabled(True)
-        self.spinBox_patdelays.setGeometry(QtCore.QRect(290, 590, 61, 31))
+        self.spinBox_patdelays.setGeometry(QtCore.QRect(290, 590, 81, 31))
         font = QtGui.QFont()
         font.setPointSize(15)
         font.setBold(True)
         font.setWeight(75)
         self.spinBox_patdelays.setFont(font)
         self.spinBox_patdelays.setMinimum(1)
-        self.spinBox_patdelays.setMaximum(500)
+        self.spinBox_patdelays.setMaximum(9999)
         self.spinBox_patdelays.setProperty("value", 1)
         self.spinBox_patdelays.setObjectName(_fromUtf8("spinBox_patdelays"))
         self.pushButton_delpattern = QtGui.QPushButton(Form_TestPattern)
@@ -128,7 +128,7 @@ class Ui_Form_TestPattern(object):
         self.tableWidget_pattern = QtGui.QTableWidget(Form_TestPattern)
         self.tableWidget_pattern.setGeometry(QtCore.QRect(20, 310, 381, 261))
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Arial Black"))
+        font.setFamily(_fromUtf8("Times New Roman"))
         font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
