@@ -11,6 +11,7 @@ from TestPattern_res import *
 
 proper_digit="0123456789ABCDEFabcdef"
 TOTAL_PATS_LIMIT = 100
+MANUAL_TESTING_PATS_ADDR = 0x91834B40
 class TestPatternWindow(QtGui.QMainWindow):
 
     def __init__(self):
@@ -25,6 +26,8 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.regs_boostype_addr = [0x19A005B8, 0x3, 0]
         self.testing_pat_en_addr = [0x19A005C0, 0xC, 2]
         self.testing_pat_ctrl_addr = [0x19A005F8, 0xFFFFFFFF, 0]
+        self.manual_testpat_addr = [0x19A004D0,0xFFFFFFF,0]
+        self.manual_buff_addr = MANUAL_TESTING_PATS_ADDR
         self.panel_info = {}
         self.debugregisters= {u"mapping_id":22,u"boosting_type":2,u"testing_pat_en":1,u"led_x":4,u"led_y":8}
 
@@ -55,6 +58,7 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.ui.pushButton_sendpattochip.setText("Sending")
 
     def sendpats(self):
+
         pass
 
     def isproperdigit(self,strinput):
@@ -143,6 +147,12 @@ class TestPatternWindow(QtGui.QMainWindow):
                 self.testing_pat_ctrl_addr[0] = int(regs["address"],16)
                 self.testing_pat_ctrl_addr[1] = self.generateMask(regs["bit_start"],regs["bit_end"])
                 self.testing_pat_ctrl_addr[2] = regs["bit_start"]
+            if regs["name"] == "manual_pats_addr":
+                self.manual_testpat_addr[0] = int(regs["address"],16)
+                self.manual_testpat_addr[1] = self.generateMask(regs["bit_start"],regs["bit_end"])
+                self.manual_testpat_addr[2] = regs["bit_start"]
+
+        pass
     def generateMask(self,a,b):
         if(a > 31 or b> 31):
             return 0xFFFFFFFF
@@ -166,7 +176,9 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.debugregisters["boosting_type"] = (TFC.tfcReadDword(self.regs_boostype_addr[0], 0x0) \
                                              & self.regs_boostype_addr[1]) >> self.regs_boostype_addr[2]
         # print self.debugregisters["mapping_id"],self.debugregisters["boosting_type"]
-
+        self.manual_buff_addr = (TFC.tfcReadDword(self.manual_testpat_addr[0], 0x0) \
+                                             & self.manual_testpat_addr[1]) << 4
+        print  hex(self.manual_buff_addr)
         temps = ""
         for ledtype in self.panel_info["led_output"]:
             # print ledtype
