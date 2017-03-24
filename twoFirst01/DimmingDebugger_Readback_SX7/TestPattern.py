@@ -117,7 +117,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.ui.tableWidget_pattern.setItem(i, j, newItemt)
 
         for i in range(self.pat_size):
-            self.headpartupdate()
+            # self.headpartupdate()
             self.curtmpppat[(6+self.pat_size)*self.current_edit_frame +6+i] = self.curpat[i]
         # print stringitem
         # self.DataShowiInTable()
@@ -200,6 +200,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.reStruTable()
         self.DataShowiInTable()
         self.initFlag = True
+        self.headpartupdate()
         pass
     def reStruTable(self):
         self.ui.tableWidget_pattern.clear()
