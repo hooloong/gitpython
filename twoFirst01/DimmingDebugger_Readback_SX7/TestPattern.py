@@ -124,12 +124,14 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
 
         if self.islowerdigit(stringitem) is True or isright is False:
-            newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
+            # newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
+            #                      self.ui.tableWidget_pattern.columnCount() + j],
+            #                             3, 16, QtCore.QChar(" ")).toUpper())
+            # newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+            # self.ui.tableWidget_pattern.setItem(i, j, newItemt)
+            self.ui.tableWidget_pattern.currentItem().setText(QtCore.QString("%1").arg(self.curpat[i * \
                                  self.ui.tableWidget_pattern.columnCount() + j],
                                         3, 16, QtCore.QChar(" ")).toUpper())
-            newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
-            self.ui.tableWidget_pattern.setItem(i, j, newItemt)
-
         for i in range(self.pat_size):
             # self.headpartupdate()
             self.curtmpppat[(self.pat_size)*self.current_edit_frame +6+i] = self.curpat[i]
