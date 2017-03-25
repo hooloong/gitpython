@@ -61,7 +61,9 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.ui.pushButton_sendpattochip.setText("Sending")
 
     def sendpats(self):
-        print self.curtmpppat
+        for i in range(self.pat_size+6):
+            tmps = "%X" % self.curtmpppat[i]
+            print tmps
         pass
 
     def isproperdigit(self,strinput):
