@@ -152,7 +152,7 @@
     <rect>
      <x>20</x>
      <y>590</y>
-     <width>251</width>
+     <width>281</width>
      <height>31</height>
     </rect>
    </property>
@@ -164,7 +164,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Curretn Pat delay time(second):</string>
+    <string>Current Pat delay time(s):</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="spinBox_patdelays">
@@ -173,7 +173,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>320</x>
      <y>590</y>
      <width>81</width>
      <height>31</height>

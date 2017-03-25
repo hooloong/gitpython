@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Fri Mar 24 16:48:26 2017
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -71,7 +70,7 @@ class Ui_Form_TestPattern(object):
         self.plainTextEdi_pats.setGeometry(QtCore.QRect(430, 40, 371, 581))
         self.plainTextEdi_pats.setObjectName(_fromUtf8("plainTextEdi_pats"))
         self.label_patdelay = QtGui.QLabel(Form_TestPattern)
-        self.label_patdelay.setGeometry(QtCore.QRect(20, 590, 251, 31))
+        self.label_patdelay.setGeometry(QtCore.QRect(20, 590, 281, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -80,7 +79,7 @@ class Ui_Form_TestPattern(object):
         self.label_patdelay.setObjectName(_fromUtf8("label_patdelay"))
         self.spinBox_patdelays = QtGui.QSpinBox(Form_TestPattern)
         self.spinBox_patdelays.setEnabled(True)
-        self.spinBox_patdelays.setGeometry(QtCore.QRect(290, 590, 81, 31))
+        self.spinBox_patdelays.setGeometry(QtCore.QRect(320, 590, 81, 31))
         font = QtGui.QFont()
         font.setPointSize(15)
         font.setBold(True)
@@ -298,7 +297,7 @@ class Ui_Form_TestPattern(object):
         self.label_patindex.setText(_translate("Form_TestPattern", "Pattern Index:", None))
         self.pushButton_readpanel.setText(_translate("Form_TestPattern", "GetPanelInfo", None))
         self.pushButton_loadpatfromFile.setText(_translate("Form_TestPattern", "LoadfromFile", None))
-        self.label_patdelay.setText(_translate("Form_TestPattern", "Curretn Pat delay time(second):", None))
+        self.label_patdelay.setText(_translate("Form_TestPattern", "Current Pat delay time(s):", None))
         self.pushButton_delpattern.setText(_translate("Form_TestPattern", "DelPat", None))
         self.pushButton_sendpattochip.setText(_translate("Form_TestPattern", "SendToChip", None))
         self.pushButton_savecurrentpat.setText(_translate("Form_TestPattern", "SaveCurPat", None))

@@ -10,6 +10,7 @@ from PyQt4 import QtCore, QtGui, uic  # ,Qwt5
 from TestPattern_res import *
 
 proper_digit="0123456789ABCDEFabcdef"
+low_digit="abcdef"
 TOTAL_PATS_LIMIT = 100
 MANUAL_TESTING_PATS_ADDR = 0x91834B40
 class TestPatternWindow(QtGui.QMainWindow):
@@ -40,11 +41,13 @@ class TestPatternWindow(QtGui.QMainWindow):
 
         self.connect(self.ui.pushButton_readpanel, QtCore.SIGNAL('clicked()'), self.getpanelinfofromchip)
         self.ui.tableWidget_pattern.itemChanged.connect(self.updatepatts)
+        # self.ui.tableWidget_pattern.cellChanged.connect(self.updatepatts_1)
         self.connect(self.ui.pushButton_sendpattochip, QtCore.SIGNAL('pressed()'), self.changeText_sending)
         self.connect(self.ui.pushButton_sendpattochip, QtCore.SIGNAL('clicked()'), self.sendpats)
 
 
-
+        self.wi_row = 255
+        self.wi_col = 255
         self.DataShowiInTable()
 
     def paintEvent(self, envent):
@@ -58,7 +61,7 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.ui.pushButton_sendpattochip.setText("Sending")
 
     def sendpats(self):
-
+        print self.curtmpppat
         pass
 
     def isproperdigit(self,strinput):
@@ -68,6 +71,11 @@ class TestPatternWindow(QtGui.QMainWindow):
             if c not in proper_digit:
                 return False
         return True
+    def islowerdigit(self,strinput):
+        for c in strinput:
+            if c in low_digit:
+                return True
+        return False
     def headpartupdate(self):
         """
         generate the 6 uint16 head part
@@ -100,8 +108,11 @@ class TestPatternWindow(QtGui.QMainWindow):
 
     def updatepatts(self,item):
         if not self.initFlag: return
+        # if self.wi_col != item.column() or self.wi_row !=  item.row():
+        #     return
         if item != self.ui.tableWidget_pattern.currentItem():
             return
+        print item.text()
         # print item.row(),item.column()
         stringitem = "%s" % item.text()
         isright = self.isproperdigit(stringitem)
@@ -110,21 +121,46 @@ class TestPatternWindow(QtGui.QMainWindow):
         if isright is True:
             self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
 
-        newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
-                             self.ui.tableWidget_pattern.columnCount() + j],
-                                    3, 16, QtCore.QChar(" ")).toUpper())
-        newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
-        self.ui.tableWidget_pattern.setItem(i, j, newItemt)
+        if self.islowerdigit(stringitem) is True or isright is False:
+            newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
+                                 self.ui.tableWidget_pattern.columnCount() + j],
+                                        3, 16, QtCore.QChar(" ")).toUpper())
+            newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+            self.ui.tableWidget_pattern.setItem(i, j, newItemt)
+
+        for i in range(self.pat_size):
+            # self.headpartupdate()
+            self.curtmpppat[(self.pat_size)*self.current_edit_frame +6+i] = self.curpat[i]
+        # print stringitem
+        # self.DataShowiInTable()
+        # self.update()
+    def updatepatts_1(self,i,j):
+        if not self.initFlag: return
+        # if self.wi_col == j and self.wi_row == i: return
+        self.wi_col = j
+        self.wi_row = i
+        item = self.ui.tableWidget_pattern.currentItem()
+        print item.text(),i,j
+        stringitem = "%s" % item.text()
+        isright = self.isproperdigit(stringitem)
+        if isright is True:
+            self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
+        else:
+            newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
+                                 self.ui.tableWidget_pattern.columnCount() + j],
+                                        3, 16, QtCore.QChar(" ")).toUpper())
+            newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+            self.ui.tableWidget_pattern.setItem(i, j, newItemt)
 
         for i in range(self.pat_size):
             # self.headpartupdate()
             self.curtmpppat[(6+self.pat_size)*self.current_edit_frame +6+i] = self.curpat[i]
-        # print stringitem
-        # self.DataShowiInTable()
-        self.update()
+
     def setConnectFlag(self, flag):
         self.connectFlag = flag
         # print flag
+        # for tesing ,force to TRUE
+        self.connectFlag = True
 
     def setSettingDict(self, panel):
         self.panel_info = panel
