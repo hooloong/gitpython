@@ -118,8 +118,8 @@ class TestPatternWindow(QtGui.QMainWindow):
         # print item.row(),item.column()
         stringitem = "%s" % item.text()
         isright = self.isproperdigit(stringitem)
-        # i = item.row()
-        # j = item.column()
+        i = item.row()
+        j = item.column()
         if isright is True:
             self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
 
