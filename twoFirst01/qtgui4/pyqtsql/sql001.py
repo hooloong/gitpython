@@ -9,7 +9,9 @@ from PyQt4.QtSql import QSqlTableModel
 
 def createConnection():
     db = QtSql.QSqlDatabase.addDatabase("QSQLITE")
-
+    list =  QtSql.QSqlDatabase.drivers()
+    for c in list:
+        print c
     db.setDatabaseName("D:\\testing.db")
 
     db.open()
