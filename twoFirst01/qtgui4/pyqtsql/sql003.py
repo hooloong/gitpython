@@ -9,7 +9,7 @@ from PyQt4.QtSql import QSqlTableModel
 
 def createConnection():
     db = QtSql.QSqlDatabase.addDatabase("QODBC")
-    connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing.mdb'
+    connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing7.mdb'
     db.setDatabaseName(connection_string)
 
     db.open()
@@ -30,8 +30,8 @@ class Model(QSqlTableModel):
         # type: (object) -> object
         QSqlTableModel.__init__(self, parent)
 
-        self.setTable("page")
-
+        # self.setTable("register")
+        self.setTable("register")
         self.select()
 
         self.setEditStrategy(QSqlTableModel.OnManualSubmit)
