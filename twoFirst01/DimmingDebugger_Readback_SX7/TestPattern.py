@@ -225,7 +225,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connectFlag = flag
         print flag
         # for tesing ,force to TRUE
-        # self.connectFlag = True
+        self.connectFlag = True
 
     def setSettingDict(self, panel):
         self.panel_info = panel
@@ -322,11 +322,19 @@ class TestPatternWindow(QtGui.QMainWindow):
                 newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
                 self.ui.tableWidget_pattern.setItem(i, j, newItemt)
     def printoutallpats(self):
-        tmps = ""
-        for i in range((self.pat_size + 6)* (self.total_manual_pat+1)):
-            if i%((self.pat_size + 6)) == 0:
-                tmps += "\n"
-            tmps += "%X  " % self.curtmpppat[i]
+        if self.total_manual_pat == 0:
+            QtGui.QMessageBox.information(self, "warning", ("Please Add a new pattern!"))
+            return
+        tmps = "Total pattern: %d   \n" % self.total_manual_pat
+
+        for j in range(1,self.total_manual_pat+1):
+            tmps += "Current No. %d  \n" % self.curtmpppat[j*(self.pat_size + 6) +3]
+            tmps += "Delay Time: %d Seconds  \n" % (int(self.curtmpppat[j * (self.pat_size + 6) + 4] +
+                                                (self.curtmpppat[j * (self.pat_size + 6) + 5] << 16) )/60)
+            for i in range(6,(self.pat_size + 6)):
+                tmps += "%3X  " % self.curtmpppat[j*(self.pat_size + 6) +i]
+            tmps += "\n"
+            tmps += "-------------------------------------------\n"
         # totalpatlist = ["%X" % i for i in self.curtmpppat[0:((self.pat_size+6))*self.total_manual_pat]]
         # tmps.join([ i for i in totalpatlist])
         print tmps

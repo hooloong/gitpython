@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Mon Mar 27 18:51:59 2017
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -199,7 +198,7 @@ class Ui_Form_TestPattern(object):
         self.tableWidget_pattern.verticalHeader().setVisible(False)
         self.tableWidget_pattern.verticalHeader().setHighlightSections(True)
         self.label_paneinfo_1 = QtGui.QLabel(Form_TestPattern)
-        self.label_paneinfo_1.setGeometry(QtCore.QRect(440, 0, 401, 31))
+        self.label_paneinfo_1.setGeometry(QtCore.QRect(450, 0, 401, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -207,10 +206,9 @@ class Ui_Form_TestPattern(object):
         self.label_paneinfo_1.setFont(font)
         self.label_paneinfo_1.setObjectName(_fromUtf8("label_paneinfo_1"))
         self.verticalLayoutWidget = QtGui.QWidget(Form_TestPattern)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(240, 10, 181, 261))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(240, 10, 196, 261))
         self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.pushButton_readpanel = QtGui.QPushButton(self.verticalLayoutWidget)
         font = QtGui.QFont()
@@ -260,11 +258,20 @@ class Ui_Form_TestPattern(object):
         self.pushButton_printallpats.setFont(font)
         self.pushButton_printallpats.setObjectName(_fromUtf8("pushButton_printallpats"))
         self.verticalLayout.addWidget(self.pushButton_printallpats)
+        self.checkBox_bls = QtGui.QCheckBox(self.verticalLayoutWidget)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.checkBox_bls.setFont(font)
+        self.checkBox_bls.setCheckable(True)
+        self.checkBox_bls.setChecked(True)
+        self.checkBox_bls.setObjectName(_fromUtf8("checkBox_bls"))
+        self.verticalLayout.addWidget(self.checkBox_bls)
         self.gridLayoutWidget = QtGui.QWidget(Form_TestPattern)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 10, 221, 101))
         self.gridLayoutWidget.setObjectName(_fromUtf8("gridLayoutWidget"))
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.pushButton_next = QtGui.QPushButton(self.gridLayoutWidget)
         self.pushButton_next.setEnabled(True)
@@ -286,7 +293,6 @@ class Ui_Form_TestPattern(object):
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(10, 120, 221, 151))
         self.verticalLayoutWidget_2.setObjectName(_fromUtf8("verticalLayoutWidget_2"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.verticalLayoutWidget_2)
-        self.verticalLayout_2.setMargin(0)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.label_patindex = QtGui.QLabel(self.verticalLayoutWidget_2)
         font = QtGui.QFont()
@@ -454,6 +460,7 @@ class Ui_Form_TestPattern(object):
         self.pushButton_savecurrentpat.setText(_translate("Form_TestPattern", "SaveCurPat", None))
         self.pushButton_sendpattochip.setText(_translate("Form_TestPattern", "SendToChip", None))
         self.pushButton_printallpats.setText(_translate("Form_TestPattern", "PrintoutAllPats", None))
+        self.checkBox_bls.setText(_translate("Form_TestPattern", "Set VBO blue Screen", None))
         self.pushButton_next.setText(_translate("Form_TestPattern", "NEXT", None))
         self.pushButton_savepatToFile.setText(_translate("Form_TestPattern", "SaveToFile", None))
         self.pushButton_prev.setText(_translate("Form_TestPattern", "PREV", None))
