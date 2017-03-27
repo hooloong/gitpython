@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Mon Mar 27 17:41:25 2017
+# Created: Mon Mar 27 18:51:59 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -28,7 +28,7 @@ class Ui_Form_TestPattern(object):
         Form_TestPattern.setObjectName(_fromUtf8("Form_TestPattern"))
         Form_TestPattern.resize(870, 708)
         self.plainTextEdi_pats = QtGui.QPlainTextEdit(Form_TestPattern)
-        self.plainTextEdi_pats.setGeometry(QtCore.QRect(440, 40, 371, 581))
+        self.plainTextEdi_pats.setGeometry(QtCore.QRect(450, 30, 371, 581))
         self.plainTextEdi_pats.setObjectName(_fromUtf8("plainTextEdi_pats"))
         self.label_patdelay = QtGui.QLabel(Form_TestPattern)
         self.label_patdelay.setGeometry(QtCore.QRect(20, 590, 281, 31))
@@ -252,14 +252,14 @@ class Ui_Form_TestPattern(object):
         self.pushButton_sendpattochip.setFont(font)
         self.pushButton_sendpattochip.setObjectName(_fromUtf8("pushButton_sendpattochip"))
         self.verticalLayout.addWidget(self.pushButton_sendpattochip)
-        self.pushButton_readfromchip = QtGui.QPushButton(self.verticalLayoutWidget)
+        self.pushButton_printallpats = QtGui.QPushButton(self.verticalLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_readfromchip.setFont(font)
-        self.pushButton_readfromchip.setObjectName(_fromUtf8("pushButton_readfromchip"))
-        self.verticalLayout.addWidget(self.pushButton_readfromchip)
+        self.pushButton_printallpats.setFont(font)
+        self.pushButton_printallpats.setObjectName(_fromUtf8("pushButton_printallpats"))
+        self.verticalLayout.addWidget(self.pushButton_printallpats)
         self.gridLayoutWidget = QtGui.QWidget(Form_TestPattern)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 10, 221, 101))
         self.gridLayoutWidget.setObjectName(_fromUtf8("gridLayoutWidget"))
@@ -453,7 +453,7 @@ class Ui_Form_TestPattern(object):
         self.pushButton_delpattern.setText(_translate("Form_TestPattern", "DelPat", None))
         self.pushButton_savecurrentpat.setText(_translate("Form_TestPattern", "SaveCurPat", None))
         self.pushButton_sendpattochip.setText(_translate("Form_TestPattern", "SendToChip", None))
-        self.pushButton_readfromchip.setText(_translate("Form_TestPattern", "ReadFromChip", None))
+        self.pushButton_printallpats.setText(_translate("Form_TestPattern", "PrintoutAllPats", None))
         self.pushButton_next.setText(_translate("Form_TestPattern", "NEXT", None))
         self.pushButton_savepatToFile.setText(_translate("Form_TestPattern", "SaveToFile", None))
         self.pushButton_prev.setText(_translate("Form_TestPattern", "PREV", None))

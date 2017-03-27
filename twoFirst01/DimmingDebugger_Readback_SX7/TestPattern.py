@@ -24,6 +24,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.test_pat_en = False
         self.edit_status = {"TEMP":0}
         self.current_edit_frame = self.edit_status["TEMP"]
+        self.total_manual_pat = 0
         self.regs_mapping_addr =[ 0x19A005DC,0xFF000000,24]
         self.regs_boostype_addr = [0x19A005B8, 0x3, 0]
         self.testing_pat_en_addr = [0x19A005C0, 0x30, 4]
@@ -48,6 +49,10 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_sendpattochip, QtCore.SIGNAL('clicked()'), self.sendpats)
         self.connect(self.ui.pushButton_disable, QtCore.SIGNAL('clicked()'), self.disablemanualpats)
         self.connect(self.ui.pushButton_enable, QtCore.SIGNAL('clicked()'), self.enablemanualpats)
+        self.connect(self.ui.pushButton_addpattern, QtCore.SIGNAL('clicked()'), self.addonepat)
+        self.connect(self.ui.spinBox_patdelays, QtCore.SIGNAL('valueChanged(int)'), self.patdelaytimechange)
+        self.connect(self.ui.pushButton_printallpats, QtCore.SIGNAL('clicked()'), self.printoutallpats)
+
         self.wi_row = 255
         self.wi_col = 255
         self.DataShowiInTable()
@@ -56,7 +61,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         if self.current_edit_frame == 0:
             self.ui.lineEdit_index.setText("TEMP")
         else:
-            self.ui.lineEdit_index.setText("%d" % self.current_edit_frame)
+            self.ui.lineEdit_index.setText("current:%d   //   total:%d" % (self.current_edit_frame,self.total_manual_pat))
 
     def changeText_sending(self):
         if self.connectFlag is True:
@@ -89,6 +94,26 @@ class TestPatternWindow(QtGui.QMainWindow):
             TFC.tfcWriteDwordMask(self.testing_pat_en_addr[0], 0, self.testing_pat_en_addr[1], 0)
             TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], 0)
         self.test_pat_en = flag
+
+    def patdelaytimechange(self):
+        self.patdelaytime = self.ui.spinBox_patdelays.value() * 60
+        self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 4] = self.patdelaytime & 0xFFFF
+        self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 5] = (self.patdelaytime >> 16) & 0xFFFF
+        print self.patdelaytime
+        pass
+
+    def addonepat(self):
+        if self.current_edit_frame >= 100:
+            print "pattern is over flow!!"
+            return
+        self.current_edit_frame += 1
+        self.total_manual_pat += 1
+        self.headpartupdate()
+        for i in range(self.pat_size):
+            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 6+i] = self.curpat[i]
+
+
+        pass
 
     def sendpats(self):
         sss = ""
@@ -296,6 +321,16 @@ class TestPatternWindow(QtGui.QMainWindow):
                 self.ui.tableWidget_pattern.columnCount() + j],3,16,QtCore.QChar(" ")).toUpper())
                 newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
                 self.ui.tableWidget_pattern.setItem(i, j, newItemt)
+    def printoutallpats(self):
+        tmps = ""
+        for i in range((self.pat_size + 6)* (self.total_manual_pat+1)):
+            if i%((self.pat_size + 6)) == 0:
+                tmps += "\n"
+            tmps += "%X  " % self.curtmpppat[i]
+        # totalpatlist = ["%X" % i for i in self.curtmpppat[0:((self.pat_size+6))*self.total_manual_pat]]
+        # tmps.join([ i for i in totalpatlist])
+        print tmps
+        pass
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

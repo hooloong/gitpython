@@ -16,8 +16,8 @@
   <widget class="QPlainTextEdit" name="plainTextEdi_pats">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>40</y>
+     <x>450</x>
+     <y>30</y>
      <width>371</width>
      <height>581</height>
     </rect>
@@ -560,7 +560,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_readfromchip">
+     <widget class="QPushButton" name="pushButton_printallpats">
       <property name="font">
        <font>
         <pointsize>12</pointsize>
@@ -569,7 +569,7 @@
        </font>
       </property>
       <property name="text">
-       <string>ReadFromChip</string>
+       <string>PrintoutAllPats</string>
       </property>
      </widget>
     </item>
