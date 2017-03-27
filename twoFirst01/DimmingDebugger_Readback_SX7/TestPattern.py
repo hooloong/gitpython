@@ -46,8 +46,8 @@ class TestPatternWindow(QtGui.QMainWindow):
         # self.ui.tableWidget_pattern.cellChanged.connect(self.updatepatts_1)
         self.connect(self.ui.pushButton_sendpattochip, QtCore.SIGNAL('pressed()'), self.changeText_sending)
         self.connect(self.ui.pushButton_sendpattochip, QtCore.SIGNAL('clicked()'), self.sendpats)
-
-
+        self.connect(self.ui.pushButton_disable, QtCore.SIGNAL('clicked()'), self.disablemanualpats)
+        self.connect(self.ui.pushButton_enable, QtCore.SIGNAL('clicked()'), self.enablemanualpats)
         self.wi_row = 255
         self.wi_col = 255
         self.DataShowiInTable()
@@ -61,6 +61,22 @@ class TestPatternWindow(QtGui.QMainWindow):
     def changeText_sending(self):
         if self.connectFlag is True:
             self.ui.pushButton_sendpattochip.setText("Sending")
+
+    def enablemanualpats(self):
+        if self.connectFlag is False: return
+        if self.test_pat_en is False:
+            TFC.tfcWriteDwordMask(self.testing_pat_en_addr[0], 0, self.testing_pat_en_addr[1],\
+                                  self.testing_pat_en_addr[1])
+            self.test_pat_en = True
+        pass
+
+    def disablemanualpats(self):
+        if self.connectFlag is False: return
+        if self.test_pat_en is True:
+            TFC.tfcWriteDwordMask(self.testing_pat_en_addr[0], 0, self.testing_pat_en_addr[1], 0)
+            self.test_pat_en = False
+        pass
+
 
     def enableTestingPats(self,flag):
         if self.connectFlag is False: return

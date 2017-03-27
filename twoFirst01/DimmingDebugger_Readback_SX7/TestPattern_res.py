@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Mon Mar 27 17:35:10 2017
+# Created: Mon Mar 27 17:41:25 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -283,7 +283,7 @@ class Ui_Form_TestPattern(object):
         self.pushButton_loadpatfromFile.setObjectName(_fromUtf8("pushButton_loadpatfromFile"))
         self.gridLayout.addWidget(self.pushButton_loadpatfromFile, 1, 0, 1, 1)
         self.verticalLayoutWidget_2 = QtGui.QWidget(Form_TestPattern)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(10, 120, 221, 101))
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(10, 120, 221, 151))
         self.verticalLayoutWidget_2.setObjectName(_fromUtf8("verticalLayoutWidget_2"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_2.setMargin(0)
@@ -306,6 +306,9 @@ class Ui_Form_TestPattern(object):
         self.pushButton_disable = QtGui.QPushButton(self.verticalLayoutWidget_2)
         self.pushButton_disable.setObjectName(_fromUtf8("pushButton_disable"))
         self.verticalLayout_2.addWidget(self.pushButton_disable)
+        self.pushButton_enable = QtGui.QPushButton(self.verticalLayoutWidget_2)
+        self.pushButton_enable.setObjectName(_fromUtf8("pushButton_enable"))
+        self.verticalLayout_2.addWidget(self.pushButton_enable)
 
         self.retranslateUi(Form_TestPattern)
         QtCore.QMetaObject.connectSlotsByName(Form_TestPattern)
@@ -458,4 +461,5 @@ class Ui_Form_TestPattern(object):
         self.label_patindex.setText(_translate("Form_TestPattern", "Pattern Index:", None))
         self.lineEdit_index.setText(_translate("Form_TestPattern", "TEMP", None))
         self.pushButton_disable.setText(_translate("Form_TestPattern", "DisManualPats", None))
+        self.pushButton_enable.setText(_translate("Form_TestPattern", "EnManualPats", None))
 

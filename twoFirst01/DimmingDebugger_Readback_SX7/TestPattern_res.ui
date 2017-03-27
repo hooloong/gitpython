@@ -633,7 +633,7 @@
      <x>10</x>
      <y>120</y>
      <width>221</width>
-     <height>101</height>
+     <height>151</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -668,6 +668,13 @@
      <widget class="QPushButton" name="pushButton_disable">
       <property name="text">
        <string>DisManualPats</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_enable">
+      <property name="text">
+       <string>EnManualPats</string>
       </property>
      </widget>
     </item>
