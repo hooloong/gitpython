@@ -90,7 +90,7 @@ def tfcReadMemDword(addr):
 
 TFC.tfcWriteMemDword = Cfunc(TFC.tfcWriteMemDword, (DWORD, DWORD))
 def tfcWriteMemDword(addr,val):
-    return TFC.tfcReadMemDword(DWORD(addr,val))
+    return TFC.tfcWriteMemDword(DWORD(addr),DWORD(val))
 
 if __name__ == "__main__":
     print("Version: %s" % tfcGetVersion())

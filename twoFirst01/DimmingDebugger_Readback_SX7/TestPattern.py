@@ -66,6 +66,15 @@ class TestPatternWindow(QtGui.QMainWindow):
             tmps = "%X" % self.curtmpppat[i]
             sss += " " + tmps
         print sss
+        if self.current_edit_frame == 0:
+            print("send one temp frame data!")
+            for i in range(self.pat_size + 6):
+                if 0== i%2:
+                    addr_up = MANUAL_TESTING_PATS_ADDR + (i/2)*4
+                    val = self.curtmpppat[i]+ (self.curtmpppat[i+1] <<16)
+                    TFC.tfcWriteMemDword(addr_up,val)
+                    print hex(addr_up),hex(val)
+        self.ui.pushButton_sendpattochip.setText("SendToChip")
         pass
 
     def isproperdigit(self,strinput):
@@ -75,6 +84,7 @@ class TestPatternWindow(QtGui.QMainWindow):
             if c not in proper_digit:
                 return False
         return True
+
     def islowerdigit(self,strinput):
         for c in strinput:
             if c in low_digit:
@@ -140,6 +150,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         # print stringitem
         # self.DataShowiInTable()
         # self.update()
+
     def updatepatts_1(self,i,j):
         if not self.initFlag: return
         # if self.wi_col == j and self.wi_row == i: return
@@ -164,9 +175,9 @@ class TestPatternWindow(QtGui.QMainWindow):
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
-        # print flag
+        print flag
         # for tesing ,force to TRUE
-        self.connectFlag = True
+        # self.connectFlag = True
 
     def setSettingDict(self, panel):
         self.panel_info = panel
