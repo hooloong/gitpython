@@ -13,134 +13,10 @@
   <property name="windowTitle">
    <string>Form_TestPattern</string>
   </property>
-  <widget class="QPushButton" name="pushButton_addpattern">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>60</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>AddPat</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_savepatToFile">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>10</y>
-     <width>91</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>SaveToFile</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_prev">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>60</y>
-     <width>91</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PREV</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_next">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>10</y>
-     <width>91</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>NEXT</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_patindex">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>170</y>
-     <width>121</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Pattern Index:</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_readpanel">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>10</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>GetPanelInfo</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_loadpatfromFile">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>60</y>
-     <width>91</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>LoadfromFile</string>
-   </property>
-  </widget>
   <widget class="QPlainTextEdit" name="plainTextEdi_pats">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>440</x>
      <y>40</y>
      <width>371</width>
      <height>581</height>
@@ -194,96 +70,6 @@
    </property>
    <property name="value">
     <number>1</number>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_delpattern">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>120</y>
-     <width>121</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>DelPat</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_sendpattochip">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>250</y>
-     <width>181</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>SendToChip</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_savecurrentpat">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>170</y>
-     <width>121</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>SaveCurPat</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_readfromchip">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>250</y>
-     <width>171</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>ReadFromChip</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboBox_listpats">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>110</y>
-     <width>91</width>
-     <height>22</height>
-    </rect>
    </property>
   </widget>
   <widget class="QTableWidget" name="tableWidget_pattern">
@@ -676,8 +462,8 @@
   <widget class="QLabel" name="label_paneinfo_1">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>10</y>
+     <x>440</x>
+     <y>0</y>
      <width>401</width>
      <height>31</height>
     </rect>
@@ -693,21 +479,199 @@
     <string>No panel info!!</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_index">
+  <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>170</y>
-     <width>61</width>
-     <height>21</height>
+     <x>240</x>
+     <y>10</y>
+     <width>181</width>
+     <height>261</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TEMP</string>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButton_readpanel">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>GetPanelInfo</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_addpattern">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>AddPat</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_delpattern">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>DelPat</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_savecurrentpat">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>SaveCurPat</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_sendpattochip">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>SendToChip</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_readfromchip">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>ReadFromChip</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>221</width>
+     <height>101</height>
+    </rect>
    </property>
-   <property name="readOnly">
-    <bool>true</bool>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QPushButton" name="pushButton_next">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>NEXT</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="pushButton_savepatToFile">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>SaveToFile</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="pushButton_prev">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>PREV</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushButton_loadpatfromFile">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>LoadfromFile</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>221</width>
+     <height>101</height>
+    </rect>
    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_patindex">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Pattern Index:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_index">
+      <property name="text">
+       <string>TEMP</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox_listpats"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_disable">
+      <property name="text">
+       <string>DisManualPats</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
