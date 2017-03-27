@@ -45,8 +45,10 @@ class MyWindow(QtGui.QMainWindow):
         self.ui.tabWidget.insertTab(1, self.formHist, u"Hist")
 
         self.s_dict = dict(defaultfilename="dimming_readback_parameters_sx7.json")
-        self.loadSettingfromJson()
+
         self.connectFlag = False
+        self.bConnectionTried = False
+        self.loadSettingfromJson()
         self.formTestPattern = TestPatternWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
@@ -62,11 +64,31 @@ class MyWindow(QtGui.QMainWindow):
     def setPanelInfo(self):
         self.formTestPattern.setSettingDict(self.s_dict)
         pass
+    def modifyIP(self, config_read):
+        eth_ip = config_read.get("Connection", "Ethernet.IP")
+        ip_addr, ok = QtGui.QInputDialog.getText(self, 'IP', 'Enter IP address:', text=eth_ip)
+        if ok is False:
+            return False
+        elif ip_addr.isEmpty():
+            QtGui.QMessageBox.information(self, "warning", ("Please enter IP address !!!"))
+            return False
+        elif ip_addr != eth_ip:
+            try:
+                config_read.set("Connection", "Ethernet.IP", ip_addr)
+                config_read.write(open("ChipDebugger.INI", "r+"))
+            except Exception, e:
+                QtGui.QMessageBox.information(self, "Warning", str(e))
+                return False
+        return True
     def connectChip(self):
         config_read = ConfigParser.RawConfigParser()
         config_read.read("ChipDebugger.INI")
+        if self.bConnectionTried is False:
+            if self.modifyIP(config_read) is False:
+                return
         eth_ip = config_read.get("Connection", "Ethernet.IP")
         self.connectFlag = TFC.TFCConnect2Chip()
+        self.bConnectionTried = True
         self.formPWMs.setConnectFlag(self.connectFlag)
         self.formHist.setConnectFlag(self.connectFlag)
         self.formTestPattern.setConnectFlag(self.connectFlag)
