@@ -52,7 +52,8 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_addpattern, QtCore.SIGNAL('clicked()'), self.addonepat)
         self.connect(self.ui.spinBox_patdelays, QtCore.SIGNAL('valueChanged(int)'), self.patdelaytimechange)
         self.connect(self.ui.pushButton_printallpats, QtCore.SIGNAL('clicked()'), self.printoutallpats)
-
+        self.connect(self.ui.pushButton_savepatToFile, QtCore.SIGNAL('clicked()'), self.savetofile)
+        self.connect(self.ui.pushButton_loadpatfromFile, QtCore.SIGNAL('clicked()'), self.loadfromfile)
         self.wi_row = 255
         self.wi_col = 255
         self.DataShowiInTable()
@@ -339,6 +340,33 @@ class TestPatternWindow(QtGui.QMainWindow):
             tmps += "-------------------------------------------\n"
         self.ui.plainTextEdi_pats.setPlainText(tmps)
         pass
+    def savetofile(self):
+        # file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "/", "bin files(*.bin *.txt)")
+        dfile = QtGui.QFileDialog.getSaveFileName(self,"Save File dialog", "./", "bin files(*.bin *.txt)")
+        if dfile:
+            print dfile
+        else:
+            return
+
+        dfile = str(dfile)
+        try:
+            self.curtmpppat.tofile(dfile)
+        except Exception, e:
+            print e
+
+
+
+    def loadfromfile(self):
+        file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "./", "bin files(*.bin *.txt)")
+        if file:
+            print file
+        else:
+            return
+        file = str(file)
+        try:
+            self.curtmpppat =  np.fromfile(file, dtype=np.uint16)
+        except Exception, e:
+            print e
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
