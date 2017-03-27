@@ -21,13 +21,15 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.ui.setupUi(self)
         self.connectFlag = False
         self.initFlag = False
+        self.test_pat_en = False
         self.edit_status = {"TEMP":0}
         self.current_edit_frame = self.edit_status["TEMP"]
         self.regs_mapping_addr =[ 0x19A005DC,0xFF000000,24]
         self.regs_boostype_addr = [0x19A005B8, 0x3, 0]
-        self.testing_pat_en_addr = [0x19A005C0, 0xC, 2]
+        self.testing_pat_en_addr = [0x19A005C0, 0x30, 4]
         self.testing_pat_ctrl_addr = [0x19A005F8, 0xFFFFFFFF, 0]
         self.manual_testpat_addr = [0x19A004D0,0xFFFFFFF,0]
+        self.manual_panel_bls = [0x19080004, 0xFFFFFFF, 0]
         self.manual_buff_addr = MANUAL_TESTING_PATS_ADDR
         self.panel_info = {}
         self.debugregisters= {u"mapping_id":22,u"boosting_type":2,u"testing_pat_en":1,u"led_x":4,u"led_y":8}
@@ -60,6 +62,18 @@ class TestPatternWindow(QtGui.QMainWindow):
         if self.connectFlag is True:
             self.ui.pushButton_sendpattochip.setText("Sending")
 
+    def enableTestingPats(self,flag):
+        if self.connectFlag is False: return
+        if flag is True:
+            TFC.tfcWriteDwordMask(self.testing_pat_ctrl_addr[0], 0, self.testing_pat_ctrl_addr[1],
+                                  0xC80F000C)
+            TFC.tfcWriteDwordMask(self.testing_pat_en_addr[0], 0, self.testing_pat_en_addr[1],  self.testing_pat_en_addr[1])
+            TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], self.manual_panel_bls[1])
+        else:
+            TFC.tfcWriteDwordMask(self.testing_pat_en_addr[0], 0, self.testing_pat_en_addr[1], 0)
+            TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], 0)
+        self.test_pat_en = flag
+
     def sendpats(self):
         sss = ""
         for i in range(self.pat_size+6):
@@ -75,6 +89,7 @@ class TestPatternWindow(QtGui.QMainWindow):
                     TFC.tfcWriteMemDword(addr_up,val)
                     print hex(addr_up),hex(val)
         self.ui.pushButton_sendpattochip.setText("SendToChip")
+        self.enableTestingPats(True)
         pass
 
     def isproperdigit(self,strinput):
@@ -102,16 +117,16 @@ class TestPatternWindow(QtGui.QMainWindow):
         :return:
         """
         if self.current_edit_frame == 0:
-            self.curtmpppat[0] = 0x3132
-            self.curtmpppat[1] = 0x3334
+            self.curtmpppat[0] = 0x3334
+            self.curtmpppat[1] = 0x3132
             self.curtmpppat[2] = 1
             self.curtmpppat[3] = 1
             self.curtmpppat[4] = 0xFFFF
             self.curtmpppat[5] = 0xFFFF
             return
         else:
-            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 0] = 0x3132
-            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 1] = 0x3334
+            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 0] = 0x3334
+            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 1] = 0x3132
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 2] = self.current_edit_frame
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 3] = self.current_edit_frame
             self.patdelaytime = self.ui.spinBox_patdelays.value() * 60
@@ -136,20 +151,12 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
 
         if self.islowerdigit(stringitem) is True or isright is False:
-            # newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curpat[i * \
-            #                      self.ui.tableWidget_pattern.columnCount() + j],
-            #                             3, 16, QtCore.QChar(" ")).toUpper())
-            # newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
-            # self.ui.tableWidget_pattern.setItem(i, j, newItemt)
             self.ui.tableWidget_pattern.currentItem().setText(QtCore.QString("%1").arg(self.curpat[i * \
                                  self.ui.tableWidget_pattern.columnCount() + j],
                                         3, 16, QtCore.QChar(" ")).toUpper())
         for i in range(self.pat_size):
             # self.headpartupdate()
             self.curtmpppat[(self.pat_size)*self.current_edit_frame +6+i] = self.curpat[i]
-        # print stringitem
-        # self.DataShowiInTable()
-        # self.update()
 
     def updatepatts_1(self,i,j):
         if not self.initFlag: return
@@ -204,7 +211,10 @@ class TestPatternWindow(QtGui.QMainWindow):
                 self.manual_testpat_addr[0] = int(regs["address"],16)
                 self.manual_testpat_addr[1] = self.generateMask(regs["bit_start"],regs["bit_end"])
                 self.manual_testpat_addr[2] = regs["bit_start"]
-
+            if regs["name"] == "manual_panel_bls":
+                self.manual_panel_bls[0] = int(regs["address"],16)
+                self.manual_panel_bls[1] = self.generateMask(regs["bit_start"],regs["bit_end"])
+                self.manual_panel_bls[2] = regs["bit_start"]
         pass
     def generateMask(self,a,b):
         if(a > 31 or b> 31):
