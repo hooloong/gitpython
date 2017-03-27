@@ -8,7 +8,9 @@ try:
     SREG_LOG_DEBUG = 0x19A005C0
     SBIT_LOG_DEBUG = 0x00000003
     SREG_MEM_ADDR = 0x19A005C4
+
     SREG_MEM_WRITEINDEX = 0x19A005C8 # [15:0] count; [31:16] size, unit byte;
+
     #TFC = C.WinDLL( r"D:\HiDTV\SVP_FUSION\Bin_SX7\TFCAPI.dll" )
     TFC = C.WinDLL( r"..\TFCAPI.dll" )
 except:
@@ -86,6 +88,10 @@ TFC.tfcReadMemDword = Cfunc(TFC.tfcReadMemDword, (DWORD, ), (DWORD))
 def tfcReadMemDword(addr):
     return TFC.tfcReadMemDword(DWORD(addr))
 
+TFC.tfcWriteMemDword = Cfunc(TFC.tfcWriteMemDword, (DWORD, DWORD))
+def tfcWriteMemDword(addr,val):
+    return TFC.tfcReadMemDword(DWORD(addr,val))
+
 if __name__ == "__main__":
     print("Version: %s" % tfcGetVersion())
 
@@ -94,3 +100,5 @@ if __name__ == "__main__":
         print("connect to chip")
         a = TFC.tfcReadDword(BASIC_PAGE,0xC0);
         print("c0: %x" % a)
+        TFC.tfcWriteMemDword(0x91834B40,0xAA55A5A5)
+        print hex(TFC.tfcReadMemDword(0x91834B40))
