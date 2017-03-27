@@ -330,6 +330,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         # totalpatlist = ["%X" % i for i in self.curtmpppat[0:((self.pat_size+6))*self.total_manual_pat]]
         # tmps.join([ i for i in totalpatlist])
         print tmps
+        self.ui.plainTextEdi_pats.setPlainText(tmps)
         pass
 
 if __name__ == "__main__":
