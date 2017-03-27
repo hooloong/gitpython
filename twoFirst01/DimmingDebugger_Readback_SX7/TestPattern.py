@@ -60,9 +60,10 @@ class TestPatternWindow(QtGui.QMainWindow):
     def paintEvent(self, envent):
         if self.current_edit_frame == 0:
             self.ui.lineEdit_index.setText("TEMP")
+            self.ui.lineEdit_totalpat.setText("Total is 0")
         else:
-            self.ui.lineEdit_index.setText("current:%d   //   total:%d" % (self.current_edit_frame,self.total_manual_pat))
-
+            self.ui.lineEdit_index.setText("Current:%d" % (self.current_edit_frame))
+            self.ui.lineEdit_totalpat.setText("Total:%d" % (self.total_manual_pat))
     def changeText_sending(self):
         if self.connectFlag is True:
             self.ui.pushButton_sendpattochip.setText("Sending")
@@ -112,15 +113,14 @@ class TestPatternWindow(QtGui.QMainWindow):
         for i in range(self.pat_size):
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 6+i] = self.curpat[i]
 
-
         pass
 
     def sendpats(self):
-        sss = ""
-        for i in range(self.pat_size+6):
-            tmps = "%X" % self.curtmpppat[i]
-            sss += " " + tmps
-        print sss
+        # sss = ""
+        # for i in range(self.pat_size+6):
+        #     tmps = "%X" % self.curtmpppat[i]
+        #     sss += " " + tmps
+        # print sss
         if self.current_edit_frame == 0:
             print("send one temp frame data!")
             for i in range(self.pat_size + 6):
@@ -332,12 +332,11 @@ class TestPatternWindow(QtGui.QMainWindow):
             tmps += "Delay Time: %d Seconds  \n" % (int(self.curtmpppat[j * (self.pat_size + 6) + 4] +
                                                 (self.curtmpppat[j * (self.pat_size + 6) + 5] << 16) )/60)
             for i in range(6,(self.pat_size + 6)):
+                if (i-6) % self.debugregisters[u"led_x"] == 0:
+                    tmps += "\n"
                 tmps += "%3X  " % self.curtmpppat[j*(self.pat_size + 6) +i]
             tmps += "\n"
             tmps += "-------------------------------------------\n"
-        # totalpatlist = ["%X" % i for i in self.curtmpppat[0:((self.pat_size+6))*self.total_manual_pat]]
-        # tmps.join([ i for i in totalpatlist])
-        print tmps
         self.ui.plainTextEdi_pats.setPlainText(tmps)
         pass
 
