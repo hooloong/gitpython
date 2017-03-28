@@ -58,6 +58,9 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.checkBox_bls, QtCore.SIGNAL('clicked()'), self.setbluescreen)
         self.connect(self.ui.pushButton_prev, QtCore.SIGNAL('clicked()'), self.prevpat)
         self.connect(self.ui.pushButton_next, QtCore.SIGNAL('clicked()'), self.nextpat)
+        self.connect(self.ui.comboBox_listpats, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
+        self.ui.comboBox_listpats.clear()
+        self.ui.comboBox_listpats.addItem("TEMP")
 
         self.wi_row = 255
         self.wi_col = 255
@@ -119,7 +122,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         # self.current_edit_frame += 1
         self.total_manual_pat += 1
         self.current_edit_frame = self.total_manual_pat
-
+        self.ui.comboBox_listpats.addItem(" ==%d== " % self.total_manual_pat )
         for i in range(self.pat_size):
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 6+i] = self.curpat[i]
         self.headpartupdate()
@@ -251,7 +254,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connectFlag = flag
         print flag
         # for tesing ,force to TRUE
-        # self.connectFlag = True
+        self.connectFlag = True
 
     def setSettingDict(self, panel):
         self.panel_info = panel
@@ -335,7 +338,11 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.initFlag = True
         self.headpartupdate()
         pass
-
+    def refreshcombox(self):
+        self.ui.comboBox_listpats.clear()
+        self.ui.comboBox_listpats.addItem("TEMP")
+        for i in range(1,self.total_manual_pat+1):
+            self.ui.comboBox_listpats.addItem(" ==%d== " % i)
     def reStruTable(self):
         self.ui.tableWidget_pattern.clear()
         self.ui.tableWidget_pattern.setRowCount(self.debugregisters[u"led_y"])
@@ -434,6 +441,8 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.curpat[i] = self.curtmpppat[i+6]
         self.reStruTable()
         self.DataShowiInTable()
+        self.refreshcombox()
+
 
     def setbluescreen(self):
         if self.connectFlag is False: return
@@ -441,7 +450,10 @@ class TestPatternWindow(QtGui.QMainWindow):
             TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], self.manual_panel_bls[1])
         else:
             TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], 0)
-
+    def refreshspinbox(self,pos):
+        self.ui.spinBox_patdelays.setValue(((self.curtmpppat[pos] << 16) + self.curtmpppat[pos + 1])/60)
+        # print ((self.curtmpppat[pos] << 16) + self.curtmpppat[pos + 1])/60
+        # self.ui.spinBox_patdelays.setValue(99)
     def nextpat(self):
         if self.current_edit_frame < self.total_manual_pat:
             self.current_edit_frame += 1
@@ -449,6 +461,8 @@ class TestPatternWindow(QtGui.QMainWindow):
             return
         for i in range(0,self.pat_size):
             self.curpat[i] = self.curtmpppat[(self.pat_size + 6)*self.current_edit_frame+i+6]
+        lowpos = (self.pat_size + 6)*self.current_edit_frame+4
+        self.refreshspinbox(lowpos)
         self.DataShowiInTable()
         pass
 
@@ -459,6 +473,20 @@ class TestPatternWindow(QtGui.QMainWindow):
             return
         for i in range(0,self.pat_size):
             self.curpat[i] = self.curtmpppat[(self.pat_size + 6)*self.current_edit_frame+i+6]
+        lowpos = (self.pat_size + 6)*self.current_edit_frame+4
+        self.refreshspinbox(lowpos)
+        self.DataShowiInTable()
+        pass
+
+    def comboxchange(self):
+        if  self.initFlag is False: return
+        index = self.ui.comboBox_listpats.currentIndex()
+        print index
+        self.current_edit_frame = index
+        for i in range(0,self.pat_size):
+            self.curpat[i] = self.curtmpppat[(self.pat_size + 6)*self.current_edit_frame+i+6]
+        lowpos = (self.pat_size + 6)*self.current_edit_frame+4
+        self.refreshspinbox(lowpos)
         self.DataShowiInTable()
         pass
 
