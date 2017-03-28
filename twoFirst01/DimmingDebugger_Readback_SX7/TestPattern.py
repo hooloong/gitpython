@@ -13,6 +13,7 @@ proper_digit="0123456789ABCDEFabcdef"
 low_digit="abcdef"
 TOTAL_PATS_LIMIT = 100
 MANUAL_TESTING_PATS_ADDR = 0x91834B40
+
 class TestPatternWindow(QtGui.QMainWindow):
 
     def __init__(self):
@@ -54,6 +55,8 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_printallpats, QtCore.SIGNAL('clicked()'), self.printoutallpats)
         self.connect(self.ui.pushButton_savepatToFile, QtCore.SIGNAL('clicked()'), self.savetofile)
         self.connect(self.ui.pushButton_loadpatfromFile, QtCore.SIGNAL('clicked()'), self.loadfromfile)
+        self.connect(self.ui.checkBox_bls, QtCore.SIGNAL('clicked()'), self.setbluescreen)
+
         self.wi_row = 255
         self.wi_col = 255
         self.DataShowiInTable()
@@ -61,10 +64,11 @@ class TestPatternWindow(QtGui.QMainWindow):
     def paintEvent(self, envent):
         if self.current_edit_frame == 0:
             self.ui.lineEdit_index.setText("TEMP")
-            self.ui.lineEdit_totalpat.setText("Total is 0")
+            # self.ui.lineEdit_totalpat.setText("Total is 0")
         else:
             self.ui.lineEdit_index.setText("Current:%d" % (self.current_edit_frame))
-            self.ui.lineEdit_totalpat.setText("Total:%d" % (self.total_manual_pat))
+        self.ui.lineEdit_totalpat.setText("Total:%d" % (self.total_manual_pat))
+
     def changeText_sending(self):
         if self.connectFlag is True:
             self.ui.pushButton_sendpattochip.setText("Sending")
@@ -91,7 +95,8 @@ class TestPatternWindow(QtGui.QMainWindow):
             TFC.tfcWriteDwordMask(self.testing_pat_ctrl_addr[0], 0, self.testing_pat_ctrl_addr[1],
                                   0xC80F000C)
             TFC.tfcWriteDwordMask(self.testing_pat_en_addr[0], 0, self.testing_pat_en_addr[1],  self.testing_pat_en_addr[1])
-            TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], self.manual_panel_bls[1])
+            if self.ui.checkBox_bls.isChecked():
+                TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], self.manual_panel_bls[1])
         else:
             TFC.tfcWriteDwordMask(self.testing_pat_en_addr[0], 0, self.testing_pat_en_addr[1], 0)
             TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], 0)
@@ -105,23 +110,26 @@ class TestPatternWindow(QtGui.QMainWindow):
         pass
 
     def addonepat(self):
+        if self.initFlag is False: return
         if self.current_edit_frame >= 100:
             print "pattern is over flow!!"
             return
         self.current_edit_frame += 1
         self.total_manual_pat += 1
-        self.headpartupdate()
+
         for i in range(self.pat_size):
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 6+i] = self.curpat[i]
-
+        self.headpartupdate()
         pass
 
     def sendpats(self):
         # sss = ""
-        # for i in range(self.pat_size+6):
+        # for i in range((self.pat_size+6) * self.total_manual_pat):
         #     tmps = "%X" % self.curtmpppat[i]
         #     sss += " " + tmps
         # print sss
+        if self.connectFlag is False: return
+        if self.initFlag is False:return
         if self.current_edit_frame == 0:
             print("send one temp frame data!")
             for i in range(self.pat_size + 6):
@@ -129,7 +137,14 @@ class TestPatternWindow(QtGui.QMainWindow):
                     addr_up = MANUAL_TESTING_PATS_ADDR + (i/2)*4
                     val = self.curtmpppat[i]+ (self.curtmpppat[i+1] <<16)
                     TFC.tfcWriteMemDword(addr_up,val)
-                    print hex(addr_up),hex(val)
+                    # print hex(addr_up),hex(val)
+        else:
+            print("send %d frames data!" % self.total_manual_pat)
+            for i in range(self.pat_size + 6,(self.pat_size + 6)*self.total_manual_pat+1):
+                if 0== i%2:
+                    addr_up = MANUAL_TESTING_PATS_ADDR + ((i-(self.pat_size + 6))/2)*4
+                    val = self.curtmpppat[i]+ (self.curtmpppat[i+1] <<16)
+                    TFC.tfcWriteMemDword(addr_up,val)
         self.ui.pushButton_sendpattochip.setText("SendToChip")
         self.enableTestingPats(True)
         pass
@@ -147,6 +162,12 @@ class TestPatternWindow(QtGui.QMainWindow):
             if c in low_digit:
                 return True
         return False
+
+    def updatethenumnerofhead(self):
+        for i in range(1,self.total_manual_pat+1):
+            self.curtmpppat[(6 + self.pat_size) * i + 2] = self.total_manual_pat
+        pass
+
     def headpartupdate(self):
         """
         generate the 6 uint16 head part
@@ -172,8 +193,10 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 2] = self.current_edit_frame
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 3] = self.current_edit_frame
             self.patdelaytime = self.ui.spinBox_patdelays.value() * 60
-            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 4] = self.patdelaytime & 0xFFFF
-            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 5] = (self.patdelaytime >> 16) & 0xFFFF
+            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 5] = self.patdelaytime & 0xFFFF
+            self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 4] = (self.patdelaytime >> 16) & 0xFFFF
+            if self.total_manual_pat > 0:
+                self.updatethenumnerofhead()
             return
 
 
@@ -197,8 +220,7 @@ class TestPatternWindow(QtGui.QMainWindow):
                                  self.ui.tableWidget_pattern.columnCount() + j],
                                         3, 16, QtCore.QChar(" ")).toUpper())
         for i in range(self.pat_size):
-            # self.headpartupdate()
-            self.curtmpppat[(self.pat_size)*self.current_edit_frame +6+i] = self.curpat[i]
+            self.curtmpppat[(self.pat_size+6)*self.current_edit_frame +6+i] = self.curpat[i]
 
     def updatepatts_1(self,i,j):
         if not self.initFlag: return
@@ -226,7 +248,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connectFlag = flag
         print flag
         # for tesing ,force to TRUE
-        self.connectFlag = True
+        # self.connectFlag = True
 
     def setSettingDict(self, panel):
         self.panel_info = panel
@@ -302,17 +324,19 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.pat_size = self.debugregisters[u"led_x"] * self.debugregisters[u"led_y"]
         self.curpat = np.zeros(self.pat_size, np.uint32)
         self.curtmpppat = np.zeros((self.pat_size + 6)*TOTAL_PATS_LIMIT, np.uint16)
+        self.total_manual_pat = 0
         self.reStruTable()
         self.DataShowiInTable()
         self.initFlag = True
         self.headpartupdate()
         pass
+
     def reStruTable(self):
         self.ui.tableWidget_pattern.clear()
         self.ui.tableWidget_pattern.setRowCount(self.debugregisters[u"led_y"])
         self.ui.tableWidget_pattern.setColumnCount(self.debugregisters[u"led_x"])
-
         pass
+
     def DataShowiInTable(self):
         # testing patt
         for i in range(self.ui.tableWidget_pattern.rowCount()):
@@ -330,8 +354,8 @@ class TestPatternWindow(QtGui.QMainWindow):
 
         for j in range(1,self.total_manual_pat+1):
             tmps += "Current No. %d  \n" % self.curtmpppat[j*(self.pat_size + 6) +3]
-            tmps += "Delay Time: %d Seconds  \n" % (int(self.curtmpppat[j * (self.pat_size + 6) + 4] +
-                                                (self.curtmpppat[j * (self.pat_size + 6) + 5] << 16) )/60)
+            tmps += "Delay Time: %d Seconds  \n" % (int((self.curtmpppat[j * (self.pat_size + 6) + 4] <<16) +
+                                                self.curtmpppat[j * (self.pat_size + 6) + 5]  )/60)
             for i in range(6,(self.pat_size + 6)):
                 if (i-6) % self.debugregisters[u"led_x"] == 0:
                     tmps += "\n"
@@ -340,6 +364,16 @@ class TestPatternWindow(QtGui.QMainWindow):
             tmps += "-------------------------------------------\n"
         self.ui.plainTextEdi_pats.setPlainText(tmps)
         pass
+
+    def findthepatsize(self):
+        ret = 32
+        for i in range(1,512):
+            if self.curtmpppat[i] == 0x3334:
+                ret = i-6
+                break
+        return ret
+        pass
+
     def savetofile(self):
         # file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "/", "bin files(*.bin *.txt)")
         dfile = QtGui.QFileDialog.getSaveFileName(self,"Save File dialog", "./", "bin files(*.bin *.txt)")
@@ -367,6 +401,41 @@ class TestPatternWindow(QtGui.QMainWindow):
             self.curtmpppat =  np.fromfile(file, dtype=np.uint16)
         except Exception, e:
             print e
+        if self.curtmpppat[0] != 0x3334:
+            QtGui.QMessageBox.information(self, "warning", ("Please load correct file!\n current buffer has been clear."))
+            self.total_manual_pat =0
+            self.current_edit_frame = 0
+            return
+        self.pat_size = self.findthepatsize()
+        if self.pat_size % 2 == 1:
+            QtGui.QMessageBox.information(self, "warning", ("Please load correct file!\n current buffer has been clear."))
+            self.total_manual_pat =0
+            self.current_edit_frame = 0
+            return
+        if self.pat_size == 32 or self.pat_size == 48 or self.pat_size == 28:
+            self.debugregisters[u"led_x"] = 4
+        elif self.pat_size == 64:
+            self.debugregisters[u"led_x"] = 8
+        elif self.pat_size <= 18:
+            self.debugregisters[u"led_x"] = 2
+        else:
+            self.debugregisters[u"led_x"] = 8
+        self.debugregisters[u"led_y"] =  self.pat_size /self.debugregisters[u"led_x"]
+
+        self.total_manual_pat = self.curtmpppat[(6 + self.pat_size)  + 2]
+        self.current_edit_frame = 0
+        self.initFlag = True
+        for i in range(0,self.pat_size):
+            self.curpat[i] = self.curtmpppat[i]
+        self.reStruTable()
+        self.DataShowiInTable()
+
+    def setbluescreen(self):
+        if self.connectFlag is False: return
+        if self.ui.checkBox_bls.isChecked():
+            TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], self.manual_panel_bls[1])
+        else:
+            TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], 0)
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
