@@ -56,6 +56,8 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_savepatToFile, QtCore.SIGNAL('clicked()'), self.savetofile)
         self.connect(self.ui.pushButton_loadpatfromFile, QtCore.SIGNAL('clicked()'), self.loadfromfile)
         self.connect(self.ui.checkBox_bls, QtCore.SIGNAL('clicked()'), self.setbluescreen)
+        self.connect(self.ui.pushButton_prev, QtCore.SIGNAL('clicked()'), self.prevpat)
+        self.connect(self.ui.pushButton_next, QtCore.SIGNAL('clicked()'), self.nextpat)
 
         self.wi_row = 255
         self.wi_col = 255
@@ -104,8 +106,8 @@ class TestPatternWindow(QtGui.QMainWindow):
 
     def patdelaytimechange(self):
         self.patdelaytime = self.ui.spinBox_patdelays.value() * 60
-        self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 4] = self.patdelaytime & 0xFFFF
-        self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 5] = (self.patdelaytime >> 16) & 0xFFFF
+        self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 5] = self.patdelaytime & 0xFFFF
+        self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 4] = (self.patdelaytime >> 16) & 0xFFFF
         print self.patdelaytime
         pass
 
@@ -114,8 +116,9 @@ class TestPatternWindow(QtGui.QMainWindow):
         if self.current_edit_frame >= 100:
             print "pattern is over flow!!"
             return
-        self.current_edit_frame += 1
+        # self.current_edit_frame += 1
         self.total_manual_pat += 1
+        self.current_edit_frame = self.total_manual_pat
 
         for i in range(self.pat_size):
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 6+i] = self.curpat[i]
@@ -295,6 +298,8 @@ class TestPatternWindow(QtGui.QMainWindow):
         if self.connectFlag is False:
             QtGui.QMessageBox.information(self, "warning", ("Please connect to chip first!!!\n Setting->Connect"))
             return
+        if self.initFlag is True:
+            return
         """
         update panel info label
         """
@@ -350,10 +355,10 @@ class TestPatternWindow(QtGui.QMainWindow):
         if self.total_manual_pat == 0:
             QtGui.QMessageBox.information(self, "warning", ("Please Add a new pattern!"))
             return
-        tmps = "Total pattern: %d   \n" % self.total_manual_pat
+        tmps = "Total pattern: %d  \n" % self.total_manual_pat
 
         for j in range(1,self.total_manual_pat+1):
-            tmps += "Current No. %d  \n" % self.curtmpppat[j*(self.pat_size + 6) +3]
+            tmps += "Current No. %d  / %d \n" % (self.curtmpppat[j*(self.pat_size + 6) +3], self.curtmpppat[j*(self.pat_size + 6) +2])
             tmps += "Delay Time: %d Seconds  \n" % (int((self.curtmpppat[j * (self.pat_size + 6) + 4] <<16) +
                                                 self.curtmpppat[j * (self.pat_size + 6) + 5]  )/60)
             for i in range(6,(self.pat_size + 6)):
@@ -426,7 +431,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.current_edit_frame = 0
         self.initFlag = True
         for i in range(0,self.pat_size):
-            self.curpat[i] = self.curtmpppat[i]
+            self.curpat[i] = self.curtmpppat[i+6]
         self.reStruTable()
         self.DataShowiInTable()
 
@@ -436,6 +441,26 @@ class TestPatternWindow(QtGui.QMainWindow):
             TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], self.manual_panel_bls[1])
         else:
             TFC.tfcWriteDwordMask(self.manual_panel_bls[0], 0, self.manual_panel_bls[1], 0)
+
+    def nextpat(self):
+        if self.current_edit_frame < self.total_manual_pat:
+            self.current_edit_frame += 1
+        else:
+            return
+        for i in range(0,self.pat_size):
+            self.curpat[i] = self.curtmpppat[(self.pat_size + 6)*self.current_edit_frame+i+6]
+        self.DataShowiInTable()
+        pass
+
+    def prevpat(self):
+        if self.current_edit_frame > 0:
+            self.current_edit_frame -= 1
+        else:
+            return
+        for i in range(0,self.pat_size):
+            self.curpat[i] = self.curtmpppat[(self.pat_size + 6)*self.current_edit_frame+i+6]
+        self.DataShowiInTable()
+        pass
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
