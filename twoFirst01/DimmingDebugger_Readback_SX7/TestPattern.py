@@ -51,6 +51,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_disable, QtCore.SIGNAL('clicked()'), self.disablemanualpats)
         self.connect(self.ui.pushButton_enable, QtCore.SIGNAL('clicked()'), self.enablemanualpats)
         self.connect(self.ui.pushButton_addpattern, QtCore.SIGNAL('clicked()'), self.addonepat)
+        self.connect(self.ui.pushButton_delpat, QtCore.SIGNAL('clicked()'), self.dellastonepat)
         self.connect(self.ui.spinBox_patdelays, QtCore.SIGNAL('valueChanged(int)'), self.patdelaytimechange)
         self.connect(self.ui.pushButton_printallpats, QtCore.SIGNAL('clicked()'), self.printoutallpats)
         self.connect(self.ui.pushButton_savepatToFile, QtCore.SIGNAL('clicked()'), self.savetofile)
@@ -126,6 +127,23 @@ class TestPatternWindow(QtGui.QMainWindow):
         for i in range(self.pat_size):
             self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 6+i] = self.curpat[i]
         self.headpartupdate()
+        pass
+
+    def dellastonepat(self):
+        if self.initFlag is False: return
+        if self.total_manual_pat < 1:
+            print "pattern is clear!!"
+            return
+        # self.current_edit_frame += 1
+        self.total_manual_pat -= 1
+        self.current_edit_frame = self.total_manual_pat
+        self.ui.comboBox_listpats.removeItem(self.total_manual_pat +1)
+        for i in range(self.pat_size):
+            self.curpat[i] = self.curtmpppat[(6 + self.pat_size) * self.current_edit_frame + 6+i]
+        self.headpartupdate()
+        lowpos = (self.pat_size + 6)*self.current_edit_frame+4
+        self.refreshspinbox(lowpos)
+        self.DataShowiInTable()
         pass
 
     def sendpats(self):
@@ -371,7 +389,7 @@ class TestPatternWindow(QtGui.QMainWindow):
             for i in range(6,(self.pat_size + 6)):
                 if (i-6) % self.debugregisters[u"led_x"] == 0:
                     tmps += "\n"
-                tmps += "%3X  " % self.curtmpppat[j*(self.pat_size + 6) +i]
+                tmps += " %4X " % self.curtmpppat[j*(self.pat_size + 6) +i]
             tmps += "\n"
             tmps += "-------------------------------------------\n"
         self.ui.plainTextEdi_pats.setPlainText(tmps)

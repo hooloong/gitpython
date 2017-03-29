@@ -581,7 +581,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_delpattern">
+       <widget class="QPushButton" name="pushButton_delpat">
         <property name="font">
          <font>
           <pointsize>12</pointsize>
@@ -591,20 +591,6 @@
         </property>
         <property name="text">
          <string>DelPat</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_savecurrentpat">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>SaveCurPat</string>
         </property>
        </widget>
       </item>

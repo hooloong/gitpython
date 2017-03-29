@@ -2,7 +2,8 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created: Wed Mar 29 11:09:03 2017
+#      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -190,6 +191,7 @@ class Ui_Form_TestPattern(object):
         self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(20, 10, 411, 281))
         self.horizontalLayoutWidget_3.setObjectName(_fromUtf8("horizontalLayoutWidget_3"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_3)
+        self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.verticalLayout_2 = QtGui.QVBoxLayout()
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -262,22 +264,14 @@ class Ui_Form_TestPattern(object):
         self.pushButton_addpattern.setFont(font)
         self.pushButton_addpattern.setObjectName(_fromUtf8("pushButton_addpattern"))
         self.verticalLayout.addWidget(self.pushButton_addpattern)
-        self.pushButton_delpattern = QtGui.QPushButton(self.horizontalLayoutWidget_3)
+        self.pushButton_delpat = QtGui.QPushButton(self.horizontalLayoutWidget_3)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_delpattern.setFont(font)
-        self.pushButton_delpattern.setObjectName(_fromUtf8("pushButton_delpattern"))
-        self.verticalLayout.addWidget(self.pushButton_delpattern)
-        self.pushButton_savecurrentpat = QtGui.QPushButton(self.horizontalLayoutWidget_3)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_savecurrentpat.setFont(font)
-        self.pushButton_savecurrentpat.setObjectName(_fromUtf8("pushButton_savecurrentpat"))
-        self.verticalLayout.addWidget(self.pushButton_savecurrentpat)
+        self.pushButton_delpat.setFont(font)
+        self.pushButton_delpat.setObjectName(_fromUtf8("pushButton_delpat"))
+        self.verticalLayout.addWidget(self.pushButton_delpat)
         self.pushButton_sendpattochip = QtGui.QPushButton(self.horizontalLayoutWidget_3)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -309,6 +303,7 @@ class Ui_Form_TestPattern(object):
         self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(20, 570, 411, 51))
         self.horizontalLayoutWidget_4.setObjectName(_fromUtf8("horizontalLayoutWidget_4"))
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_4)
+        self.horizontalLayout_5.setMargin(0)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
         self.label_patdelay = QtGui.QLabel(self.horizontalLayoutWidget_4)
         font = QtGui.QFont()
@@ -479,8 +474,7 @@ class Ui_Form_TestPattern(object):
         self.pushButton_enable.setText(_translate("Form_TestPattern", "EnManualPats", None))
         self.pushButton_readpanel.setText(_translate("Form_TestPattern", "GetPanelInfo", None))
         self.pushButton_addpattern.setText(_translate("Form_TestPattern", "AddPat", None))
-        self.pushButton_delpattern.setText(_translate("Form_TestPattern", "DelPat", None))
-        self.pushButton_savecurrentpat.setText(_translate("Form_TestPattern", "SaveCurPat", None))
+        self.pushButton_delpat.setText(_translate("Form_TestPattern", "DelPat", None))
         self.pushButton_sendpattochip.setText(_translate("Form_TestPattern", "SendToChip", None))
         self.pushButton_printallpats.setText(_translate("Form_TestPattern", "PrintoutAllPats", None))
         self.checkBox_bls.setText(_translate("Form_TestPattern", "Set VBO blue Screen", None))
