@@ -28,6 +28,7 @@ class Ui_Form_Dimpages(object):
         Form_Dimpages.resize(1012, 744)
         self.tableWidget_curpage = QtGui.QTableWidget(Form_Dimpages)
         self.tableWidget_curpage.setGeometry(QtCore.QRect(170, 0, 601, 507))
+        self.tableWidget_curpage.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
         self.tableWidget_curpage.setObjectName(_fromUtf8("tableWidget_curpage"))
         self.tableWidget_curpage.setColumnCount(4)
         self.tableWidget_curpage.setRowCount(16)

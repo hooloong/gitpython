@@ -22,6 +22,9 @@
      <height>507</height>
     </rect>
    </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::SingleSelection</enum>
+   </property>
    <attribute name="horizontalHeaderCascadingSectionResizes">
     <bool>true</bool>
    </attribute>
@@ -453,7 +456,7 @@ border-color: rgb(0, 0, 0);</string>
     <string notr="true">color: rgb(0, 0, 255);</string>
    </property>
    <property name="text">
-    <string>0x19A00400</string>
+    <string>19A00400</string>
    </property>
   </widget>
  </widget>
