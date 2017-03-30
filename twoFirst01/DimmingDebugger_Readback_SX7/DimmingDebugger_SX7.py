@@ -8,7 +8,7 @@ import json
 import ConfigParser
 import numpy as np
 from dispmipsfunc import *
-from PyQt4 import QtCore, QtGui, uic  # ,Qwt5
+from PyQt4 import QtCore, QtGui,QtSql, uic  # ,Qwt5
 # import dimmingdebugger_res_sx7
 from dimmingdebugger_res_sx7 import *
 from PWMs import *
