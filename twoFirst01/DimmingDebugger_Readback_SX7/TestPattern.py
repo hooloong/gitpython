@@ -11,7 +11,7 @@ from TestPattern_res import *
 
 proper_digit="0123456789ABCDEFabcdef"
 low_digit="abcdef"
-TOTAL_PATS_LIMIT = 100
+TOTAL_PATS_LIMIT = 200
 MANUAL_TESTING_PATS_ADDR = 0x91834B40
 
 class TestPatternWindow(QtGui.QMainWindow):
@@ -117,7 +117,7 @@ class TestPatternWindow(QtGui.QMainWindow):
 
     def addonepat(self):
         if self.initFlag is False: return
-        if self.current_edit_frame >= 100:
+        if self.current_edit_frame >= 99:
             print "pattern is over flow!!"
             return
         # self.current_edit_frame += 1
