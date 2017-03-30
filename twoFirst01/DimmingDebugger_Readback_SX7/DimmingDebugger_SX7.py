@@ -14,6 +14,7 @@ from dimmingdebugger_res_sx7 import *
 from PWMs import *
 from Hist import *
 from TestPattern import *
+from Dimpages import *
 # from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 # from matplotlib.figure import Figure
 # from mpl_toolkits.mplot3d import Axes3D
@@ -50,7 +51,9 @@ class MyWindow(QtGui.QMainWindow):
         self.bConnectionTried = False
         self.loadSettingfromJson()
         self.formTestPattern = TestPatternWindow()
+        self.formDimpages = DimPagesWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
+        self.ui.tabWidget.insertTab(3, self.formDimpages, u"DimPages")
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
         self.connect(self.ui.actionDisconnect, QtCore.SIGNAL('triggered()'), self.disconnectChip)
         self.ui.actionQuit.connect(self.ui.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
@@ -92,6 +95,7 @@ class MyWindow(QtGui.QMainWindow):
         self.formPWMs.setConnectFlag(self.connectFlag)
         self.formHist.setConnectFlag(self.connectFlag)
         self.formTestPattern.setConnectFlag(self.connectFlag)
+        self.formDimpages.setConnectFlag(self.connectFlag)
         print("tfcConnInit returns ", self.connectFlag)
         if self.connectFlag:
             print("Connect to chip!!! ")
