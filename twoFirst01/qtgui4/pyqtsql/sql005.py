@@ -6,7 +6,6 @@ from PyQt4.QtSql import QSqlTableModel
 # import Rtf2TXT as RTF
 
 
-
 def createConnection():
     db = QtSql.QSqlDatabase.addDatabase("QODBC")
     connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing7.mdb'
@@ -44,12 +43,37 @@ def printoutpage():
     addr2 = q.record().indexOf("ShadowRegVal")
     addr3 = q.record().indexOf("ShadowRegMask")
     # print addr1,addr2,addr3
-    dimpageid = 0
+    dimpageid_p = 0
     while q.next():
-        dimpageaddr = (int(q.value(addr1).toString()) << 24) + (int(q.value(addr2).toString()) << 16) + (
+        dimpageaddr_p = (int(q.value(addr1).toString()) << 24) + (int(q.value(addr2).toString()) << 16) + (
         int(q.value(addr3).toString()) << 8)
-        dimpageid = int(q.value(0).toString())
-    print hex(dimpageaddr),dimpageid
+        dimpageid_p = int(q.value(0).toString())
+    print hex(dimpageaddr_p),dimpageid_p
+
+    q.exec_("select id,regname,regaddress,description from register where page = %d " % dimpageid )
+    print q.record().count()
+    addr1 = q.record().indexOf("RegName")
+    addr2 = q.record().indexOf("RegAddress")
+    addr3 = q.record().indexOf("Description")
+    # dimpageid = 0
+    while q.next():
+        regname = str(q.value(addr1).toString())
+        regaddr =  int(q.value(addr2).toString())
+        regdescription = str(q.value(addr3).toString())
+        print hex(dimpageaddr+regaddr*4),regname
+        print regdescription
+    q.exec_("select id,regname,regaddress,description from register where page = %d " % dimpageid_p )
+    print q.record().count()
+    addr1 = q.record().indexOf("RegName")
+    addr2 = q.record().indexOf("RegAddress")
+    addr3 = q.record().indexOf("Description")
+    # dimpageid = 0
+    while q.next():
+        regname = str(q.value(addr1).toString())
+        regaddr =  int(q.value(addr2).toString())
+        regdescription = str(q.value(addr3).toString())
+        print hex(dimpageaddr_p+regaddr*4),regname
+        print regdescription
 
 def createTable():
     q = QtSql.QSqlQuery()
