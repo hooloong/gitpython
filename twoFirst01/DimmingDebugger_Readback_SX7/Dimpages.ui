@@ -19,14 +19,20 @@
      <x>170</x>
      <y>0</y>
      <width>601</width>
-     <height>521</height>
+     <height>507</height>
     </rect>
    </property>
    <attribute name="horizontalHeaderCascadingSectionResizes">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>100</number>
+    <number>143</number>
+   </attribute>
+   <attribute name="horizontalHeaderHighlightSections">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>false</bool>
    </attribute>
    <row>
     <property name="text">
@@ -145,7 +151,7 @@
      <x>10</x>
      <y>0</y>
      <width>161</width>
-     <height>701</height>
+     <height>688</height>
     </rect>
    </property>
    <property name="font">
@@ -223,7 +229,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>520</y>
+     <y>507</y>
      <width>601</width>
      <height>181</height>
     </rect>
