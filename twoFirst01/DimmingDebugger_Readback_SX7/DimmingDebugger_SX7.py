@@ -132,10 +132,11 @@ class MyWindow(QtGui.QMainWindow):
         s_fp = open(settingfile, 'w+')
         if s_fp == False:
             print "error file!!!!"
-        elif len(self.s_dict) == 1:
+        elif len(self.s_setjson) <= 1:
             print "read firstly !!!!"
         else:
-            s_fp.write("%s" % self.s_setjson)
+            # s_fp.write("%s" % self.s_setjson)
+            json.dump(self.s_setjson,s_fp,indent =4 )
             s_fp.close()
 
     def closeEvent(self, event):
