@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form_Dimpages</class>
+ <widget class="QWidget" name="Form_Dimpages">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1012</width>
+    <height>744</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form_Dimpages</string>
+  </property>
+  <widget class="QTableWidget" name="tableWidget_curpage">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>0</y>
+     <width>601</width>
+     <height>521</height>
+    </rect>
+   </property>
+   <attribute name="horizontalHeaderCascadingSectionResizes">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>100</number>
+   </attribute>
+   <row>
+    <property name="text">
+     <string>00</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>10</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>20</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>30</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>40</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>50</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>60</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>70</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>80</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>90</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>A0</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>B0</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>C0</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>D0</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>E0</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>F0</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string>00</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>04</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>08</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>0C</string>
+    </property>
+   </column>
+   <item row="0" column="0">
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+   </item>
+  </widget>
+  <widget class="QTreeWidget" name="treeWidget_pages">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>161</width>
+     <height>701</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(85, 170, 0);</string>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="alternatingRowColors">
+    <bool>false</bool>
+   </property>
+   <property name="indentation">
+    <number>28</number>
+   </property>
+   <property name="itemsExpandable">
+    <bool>true</bool>
+   </property>
+   <property name="sortingEnabled">
+    <bool>false</bool>
+   </property>
+   <property name="animated">
+    <bool>false</bool>
+   </property>
+   <property name="allColumnsShowFocus">
+    <bool>true</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+   <property name="headerHidden">
+    <bool>false</bool>
+   </property>
+   <column>
+    <property name="text">
+     <string>V_PANEL</string>
+    </property>
+   </column>
+   <item>
+    <property name="text">
+     <string>2DDIM_PIXC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2DDIM_HIST</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_curregdes">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>520</y>
+     <width>601</width>
+     <height>181</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>40</y>
+     <width>160</width>
+     <height>115</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_1">
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_0_3">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(232, 232, 232);
+gridline-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_0_2">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 85, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_0_1">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 0, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_0_0">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(125, 125, 125);
+border-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_1_0">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Not Use</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="label_1_1">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Read Only</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_1_2">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Write Only</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="label_1_3">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Read | Write</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>20</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 255);</string>
+   </property>
+   <property name="text">
+    <string>Access Legend</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>220</y>
+     <width>76</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>TSE Common</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>220</y>
+     <width>71</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(229, 229, 229);
+border-left-color: rgb(255, 0, 0);
+border-color: rgb(0, 0, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>300</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#ff0000;&quot;&gt;ADD&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: 19A00400&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>320</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>DWORD Mode</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
