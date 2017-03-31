@@ -9,7 +9,16 @@ from PyQt4 import QtCore, QtGui, QtSql,uic  # ,Qwt5
 
 from Dimpages_res import *
 
+bits_label_list = ["7","6","5","4","3","2","1","0","15","14","13","12","11","10","9","8",
+                   "23","22","21","20","19","18","17","16","31","30","29","28","27","26","25","24"]
 
+def isproperdigit(strinput):
+    if len(strinput) == 0 or len(strinput) > 8:
+        return False
+    for c in strinput:
+        if c not in proper_digit:
+            return False
+    return True
 class HexSpinBox(QtGui.QSpinBox):
 
     def __init__(self):
@@ -55,16 +64,27 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.curvars = np.zeros(64,np.uint32)
 
         self.connectFlag = False
+        self.initFlag = False
+        self.start_pos = 0
 
         self.connect(self.ui.pushButton_getitem, QtCore.SIGNAL('clicked()'), self.printoutregs)
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('itemClicked(int,int)'),self.changeRegDescri_1)
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellEntered(int,int)'), self.changeRegDescri)
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellActivated(int,int)'), self.changeRegDescri)
         self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellPressed(int,int)'), self.changeRegDescri)
-        # self.ui.tableWidget_curpage.itemChanged.connect(self.updatepatts)
+        self.ui.tableWidget_curpage.itemChanged.connect(self.updatepatts)
+        self.connect(self.ui.radioButton_7, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
+        self.connect(self.ui.radioButton_15, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
+        self.connect(self.ui.radioButton_23, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
+        self.connect(self.ui.radioButton_31, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
+
         self.createConnection()
         self.printoutregs()
         self.DataShowiInTable()
+
+        self.ui.radioButton_31.setChecked(True)
+        self.initFlag = True
+        self.curselreg = 0
 
     def createConnection(self):
         self.db = QtSql.QSqlDatabase.addDatabase("QODBC")
@@ -82,34 +102,57 @@ class DimPagesWindow(QtGui.QMainWindow):
                 if self.histpageregs[i*4 + j].right == 1:
                     newItemt.setBackground(QtGui.QColor(255,0,255))
                 self.ui.tableWidget_curpage.setItem(i, j, newItemt)
+
     def changeRegDescri(self,row,col):
         print row,col
         self.ui.textEdit_curregdes.setText(self.histpageregs[row*4 + col].descr)
         self.ui.label_addr.setText("%X" % (self.dimpageaddr + self.histpageregs[row*4 + col].index * 4))
         self.ui.label_regsname.setText(self.histpageregs[row*4 + col].name)
         print self.histpageregs[row*4 + col].right
+        self.curselreg = row*4 + col
 
     def changeRegDescri_1(self,row,col):
         print row,col
 
+    def changeBitsel(self,flag):
+        if not self.initFlag: return
+
+        if self.ui.radioButton_7.isChecked():
+            self.start_pos = 0
+        elif self.ui.radioButton_15.isChecked():
+            self.start_pos = 8
+        elif self.ui.radioButton_23.isChecked():
+            self.start_pos = 16
+        else:
+            self.start_pos = 24
+        self.ui.label_24.setText(bits_label_list[self.start_pos+7])
+        self.ui.label_25.setText(bits_label_list[self.start_pos+6])
+        self.ui.label_26.setText(bits_label_list[self.start_pos+5])
+        self.ui.label_27.setText(bits_label_list[self.start_pos+4])
+        self.ui.label_28.setText(bits_label_list[self.start_pos+3])
+        self.ui.label_29.setText(bits_label_list[self.start_pos+2])
+        self.ui.label_30.setText(bits_label_list[self.start_pos+1])
+        self.ui.label_31.setText(bits_label_list[self.start_pos])
+
+
+
+        pass
     def updatepatts(self,item):
-        # if not self.initFlag: return
-        if item != self.ui.tableWidget_pattern.currentItem():
+        if not self.initFlag: return
+        if item != self.ui.tableWidget_curpage.currentItem():
             return
         print item.text()
         stringitem = "%s" % item.text()
-        isright = self.isproperdigit(stringitem)
+        isright = isproperdigit(stringitem)
         i = item.row()
         j = item.column()
         if isright is True:
-            self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
+            self.curvars[item.row()* 4 + item.column()] = int(stringitem,16)
 
-        if self.islowerdigit(stringitem) is True or isright is False:
-            self.ui.tableWidget_pattern.currentItem().setText(QtCore.QString("%1").arg(self.curpat[i * \
-                                 self.ui.tableWidget_pattern.columnCount() + j],
-                                        3, 16, QtCore.QChar(" ")).toUpper())
-        for i in range(self.pat_size):
-            self.curtmpppat[(self.pat_size+6)*self.current_edit_frame +6+i] = self.curpat[i]
+        if islowerdigit(stringitem) is True or isright is False:
+            self.ui.tableWidget_curpage.currentItem().setText(QtCore.QString("%1").arg(self.curvars[i * \
+                                 self.ui.tableWidget_curpage.columnCount() + j],
+                                        8, 16, QtCore.QChar("0")).toUpper())
 
 
     def printoutregs(self):
