@@ -30,6 +30,17 @@
         "hist_input":"16x8",
         "hdr_support": "YES"
     },
+     "dim_pages": {
+        "pages":[
+          {"page_name": "2DDIM_HIST","size": 64},
+          {"page_name": "2DDIM_PIXC","size": 64},
+          {"page_name": "1DDIM","size": 64},
+          {"page_name": "V_SW_PAGE_1","size": 64},
+          {"page_name": "V_SW_PAGE_2","size": 64}
+        ],
+        "database_mdb":"testing7.mdb",
+        "database_version": "20170331"
+    },
     "uisetting": {
         "Chip_ip": "10.86.60.44",
         "Chip_type":"SX7",

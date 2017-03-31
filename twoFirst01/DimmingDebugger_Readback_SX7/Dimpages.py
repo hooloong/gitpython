@@ -53,6 +53,7 @@ class DimPagesWindow(QtGui.QMainWindow):
         # insert hexspinbox in to table
         self.hexspinlist = []
         self.histpageregs=[]
+        self.pixcpageregs=[]
         for i in range(64):
             # newhex = HexSpinBox()
             newhex = QtGui.QSpinBox()
@@ -66,6 +67,7 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.connectFlag = False
         self.initFlag = False
         self.start_pos = 0
+        self.pages= {}
 
         self.connect(self.ui.pushButton_getitem, QtCore.SIGNAL('clicked()'), self.printoutregs)
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('itemClicked(int,int)'),self.changeRegDescri_1)
@@ -133,10 +135,8 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.ui.label_29.setText(bits_label_list[self.start_pos+2])
         self.ui.label_30.setText(bits_label_list[self.start_pos+1])
         self.ui.label_31.setText(bits_label_list[self.start_pos])
-
-
-
         pass
+
     def updatepatts(self,item):
         if not self.initFlag: return
         if item != self.ui.tableWidget_curpage.currentItem():
@@ -187,34 +187,40 @@ class DimPagesWindow(QtGui.QMainWindow):
             self.histpageregs.append(regs(regaddr,regname,regdescription,regright))
         print len(self.histpageregs)
 
-        # self.q.exec_("select id,shadowreg,shadowregval,shadowregmask from page where caption='2DDIM_PIXC'")
-        # print self.q.record().count()
-        # addr1 = self.q.record().indexOf("ShadowReg")
-        # addr2 = self.q.record().indexOf("ShadowRegVal")
-        # addr3 = self.q.record().indexOf("ShadowRegMask")
-        # # print addr1,addr2,addr3
-        # self.dimpageid_p = 0
-        # while self.q.next():
-        #     self.dimpageaddr_p = (int(self.q.value(addr1).toString()) << 24) + (int(self.q.value(addr2).toString()) << 16) + (
-        #         int(self.q.value(addr3).toString()) << 8)
-        #     self. dimpageid_p = int(self.q.value(0).toString())
-        # print hex(self.dimpageaddr_p), self.dimpageid_p
-        # self.q.exec_("select id,regname,regaddress,description from register where page = %d " %self.dimpageid_p)
-        # print self.q.record().count()
-        # addr1 = self.q.record().indexOf("RegName")
-        # addr2 = self.q.record().indexOf("RegAddress")
-        # addr3 = self.q.record().indexOf("Description")
-        # # dimpageid = 0
-        # while self.q.next():
-        #     regname = str(self.q.value(addr1).toString())
-        #     regaddr = int(self.q.value(addr2).toString())
-        #     regdescription = str(self.q.value(addr3).toString())
-        #     print hex(self.dimpageaddr_p + regaddr * 4), regname
-        #     print regdescription
+        self.q.exec_("select id,shadowreg,shadowregval,shadowregmask from page where caption='2DDIM_PIXC'")
+        print self.q.record().count()
+        addr1 = self.q.record().indexOf("ShadowReg")
+        addr2 = self.q.record().indexOf("ShadowRegVal")
+        addr3 = self.q.record().indexOf("ShadowRegMask")
+        # print addr1,addr2,addr3
+        self.dimpageid_p = 0
+        while self.q.next():
+            self.dimpageaddr_p = (int(self.q.value(addr1).toString()) << 24) + (int(self.q.value(addr2).toString()) << 16) + (
+                int(self.q.value(addr3).toString()) << 8)
+            self. dimpageid_p = int(self.q.value(0).toString())
+        print hex(self.dimpageaddr_p), self.dimpageid_p
+        self.q.exec_("select id,regname,regaddress,description,bit0right from register where page = %d and regaddress < 64 order by regaddress " %self.dimpageid_p)
+        print self.q.record().count()
+        addr1 = self.q.record().indexOf("RegName")
+        addr2 = self.q.record().indexOf("RegAddress")
+        addr3 = self.q.record().indexOf("Description")
+        addr4 = self.q.record().indexOf("bit0right")
+        # dimpageid = 0
+        while self.q.next():
+            regname = str(self.q.value(addr1).toString())
+            regaddr = int(self.q.value(addr2).toString())
+            regdescription = str(self.q.value(addr3).toString())
+            regright = int(self.q.value(addr4).toString())
+            self.pixcpageregs.append(regs(regaddr,regname,regdescription,regright))
+        print len(self.pixcpageregs)
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
+        pass
 
+    def setSettingDict(self, pages):
+        self.pages = pages
+        # print self.pages
 
 
 

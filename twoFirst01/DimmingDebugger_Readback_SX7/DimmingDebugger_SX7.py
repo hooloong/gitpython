@@ -66,6 +66,7 @@ class MyWindow(QtGui.QMainWindow):
 
     def setPanelInfo(self):
         self.formTestPattern.setSettingDict(self.s_dict)
+        self.formDimpages.setSettingDict(self.s_setjson["dim_pages"])
         pass
     def modifyIP(self, config_read):
         eth_ip = config_read.get("Connection", "Ethernet.IP")
