@@ -9,8 +9,8 @@ from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, uic  # ,Qwt5
 from TestPattern_res import *
 
-proper_digit="0123456789ABCDEFabcdef"
-low_digit="abcdef"
+# proper_digit="0123456789ABCDEFabcdef"
+# low_digit="abcdef"
 TOTAL_PATS_LIMIT = 200
 MANUAL_TESTING_PATS_ADDR = 0x91834B40
 
@@ -173,20 +173,6 @@ class TestPatternWindow(QtGui.QMainWindow):
         self.enableTestingPats(True)
         pass
 
-    def isproperdigit(self,strinput):
-        if len(strinput) == 0 or len(strinput) >3:
-            return  False
-        for c in strinput:
-            if c not in proper_digit:
-                return False
-        return True
-
-    def islowerdigit(self,strinput):
-        for c in strinput:
-            if c in low_digit:
-                return True
-        return False
-
     def updatethenumnerofhead(self):
         for i in range(1,self.total_manual_pat+1):
             self.curtmpppat[(6 + self.pat_size) * i + 2] = self.total_manual_pat
@@ -233,13 +219,13 @@ class TestPatternWindow(QtGui.QMainWindow):
         print item.text()
         # print item.row(),item.column()
         stringitem = "%s" % item.text()
-        isright = self.isproperdigit(stringitem)
+        isright = isproperdigit(stringitem)
         i = item.row()
         j = item.column()
         if isright is True:
             self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
 
-        if self.islowerdigit(stringitem) is True or isright is False:
+        if islowerdigit(stringitem) is True or isright is False:
             self.ui.tableWidget_pattern.currentItem().setText(QtCore.QString("%1").arg(self.curpat[i * \
                                  self.ui.tableWidget_pattern.columnCount() + j],
                                         3, 16, QtCore.QChar(" ")).toUpper())
@@ -254,7 +240,7 @@ class TestPatternWindow(QtGui.QMainWindow):
         item = self.ui.tableWidget_pattern.currentItem()
         print item.text(),i,j
         stringitem = "%s" % item.text()
-        isright = self.isproperdigit(stringitem)
+        isright = isproperdigit(stringitem)
         if isright is True:
             self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
         else:

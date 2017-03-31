@@ -61,6 +61,7 @@ class DimPagesWindow(QtGui.QMainWindow):
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellEntered(int,int)'), self.changeRegDescri)
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellActivated(int,int)'), self.changeRegDescri)
         self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellPressed(int,int)'), self.changeRegDescri)
+        # self.ui.tableWidget_curpage.itemChanged.connect(self.updatepatts)
         self.createConnection()
         self.printoutregs()
         self.DataShowiInTable()
@@ -91,7 +92,24 @@ class DimPagesWindow(QtGui.QMainWindow):
     def changeRegDescri_1(self,row,col):
         print row,col
 
+    def updatepatts(self,item):
+        # if not self.initFlag: return
+        if item != self.ui.tableWidget_pattern.currentItem():
+            return
+        print item.text()
+        stringitem = "%s" % item.text()
+        isright = self.isproperdigit(stringitem)
+        i = item.row()
+        j = item.column()
+        if isright is True:
+            self.curpat[item.row()* self.debugregisters[u"led_x"] + item.column()] = int(stringitem,16)
 
+        if self.islowerdigit(stringitem) is True or isright is False:
+            self.ui.tableWidget_pattern.currentItem().setText(QtCore.QString("%1").arg(self.curpat[i * \
+                                 self.ui.tableWidget_pattern.columnCount() + j],
+                                        3, 16, QtCore.QChar(" ")).toUpper())
+        for i in range(self.pat_size):
+            self.curtmpppat[(self.pat_size+6)*self.current_edit_frame +6+i] = self.curpat[i]
 
 
     def printoutregs(self):

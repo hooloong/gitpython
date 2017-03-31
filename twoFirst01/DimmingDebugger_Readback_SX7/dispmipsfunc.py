@@ -2,7 +2,24 @@ __author__ = 'hooloongge'
 
 import ctypes as C
 from pdb import set_trace
+proper_digit="0123456789ABCDEFabcdef"
+low_digit="abcdef"
 
+
+def isproperdigit(strinput):
+    if len(strinput) == 0 or len(strinput) > 3:
+        return False
+    for c in strinput:
+        if c not in proper_digit:
+            return False
+    return True
+
+
+def islowerdigit(strinput):
+    for c in strinput:
+        if c in low_digit:
+            return True
+    return False
 
 import two01 as TFC
 
