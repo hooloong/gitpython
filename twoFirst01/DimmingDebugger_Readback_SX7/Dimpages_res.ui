@@ -196,6 +196,9 @@
    <property name="headerHidden">
     <bool>false</bool>
    </property>
+   <property name="columnCount">
+    <number>1</number>
+   </property>
    <column>
     <property name="text">
      <string>V_PANEL</string>
@@ -210,6 +213,11 @@
    </column>
    <item>
     <property name="text">
+     <string>2DDIM_HIST</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>2DDIM_PIXC</string>
     </property>
     <property name="background">
@@ -220,11 +228,6 @@
        <blue>255</blue>
       </color>
      </brush>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>2DDIM_HIST</string>
     </property>
    </item>
   </widget>

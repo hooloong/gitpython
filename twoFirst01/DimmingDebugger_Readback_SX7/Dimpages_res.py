@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Dimpages_res.ui'
 #
-# Created: Fri Mar 31 18:30:33 2017
+# Created: Fri Mar 31 21:32:00 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -99,6 +99,7 @@ class Ui_Form_Dimpages(object):
         self.treeWidget_pages.setAllColumnsShowFocus(True)
         self.treeWidget_pages.setWordWrap(True)
         self.treeWidget_pages.setHeaderHidden(False)
+        self.treeWidget_pages.setColumnCount(1)
         self.treeWidget_pages.setObjectName(_fromUtf8("treeWidget_pages"))
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -106,10 +107,10 @@ class Ui_Form_Dimpages(object):
         font.setWeight(75)
         self.treeWidget_pages.headerItem().setFont(0, font)
         item_0 = QtGui.QTreeWidgetItem(self.treeWidget_pages)
+        item_0 = QtGui.QTreeWidgetItem(self.treeWidget_pages)
         brush = QtGui.QBrush(QtGui.QColor(85, 255, 255))
         brush.setStyle(QtCore.Qt.NoBrush)
         item_0.setBackground(0, brush)
-        item_0 = QtGui.QTreeWidgetItem(self.treeWidget_pages)
         self.textEdit_curregdes = QtGui.QTextEdit(Form_Dimpages)
         self.textEdit_curregdes.setGeometry(QtCore.QRect(170, 507, 601, 181))
         self.textEdit_curregdes.setReadOnly(True)
@@ -371,8 +372,8 @@ class Ui_Form_Dimpages(object):
         self.treeWidget_pages.headerItem().setText(0, _translate("Form_Dimpages", "V_PANEL", None))
         __sortingEnabled = self.treeWidget_pages.isSortingEnabled()
         self.treeWidget_pages.setSortingEnabled(False)
-        self.treeWidget_pages.topLevelItem(0).setText(0, _translate("Form_Dimpages", "2DDIM_PIXC", None))
-        self.treeWidget_pages.topLevelItem(1).setText(0, _translate("Form_Dimpages", "2DDIM_HIST", None))
+        self.treeWidget_pages.topLevelItem(0).setText(0, _translate("Form_Dimpages", "2DDIM_HIST", None))
+        self.treeWidget_pages.topLevelItem(1).setText(0, _translate("Form_Dimpages", "2DDIM_PIXC", None))
         self.treeWidget_pages.setSortingEnabled(__sortingEnabled)
         self.label_1_0.setText(_translate("Form_Dimpages", "Not Use", None))
         self.label_1_1.setText(_translate("Form_Dimpages", "Read Only", None))
