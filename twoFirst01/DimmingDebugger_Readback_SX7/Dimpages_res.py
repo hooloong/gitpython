@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Dimpages.ui'
+# Form implementation generated from reading ui file 'Dimpages_res.ui'
 #
-# Created: Fri Mar 31 15:21:36 2017
+# Created: Fri Mar 31 15:38:59 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -84,7 +84,7 @@ class Ui_Form_Dimpages(object):
         self.tableWidget_curpage.verticalHeader().setHighlightSections(False)
         self.treeWidget_pages = QtGui.QTreeWidget(Form_Dimpages)
         self.treeWidget_pages.setEnabled(True)
-        self.treeWidget_pages.setGeometry(QtCore.QRect(10, 177, 161, 511))
+        self.treeWidget_pages.setGeometry(QtCore.QRect(10, 157, 161, 531))
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Arial"))
         font.setPointSize(11)
@@ -209,27 +209,27 @@ class Ui_Form_Dimpages(object):
         self.label_addr.setStyleSheet(_fromUtf8("color: rgb(0, 0, 255);"))
         self.label_addr.setObjectName(_fromUtf8("label_addr"))
         self.groupBox = QtGui.QGroupBox(Form_Dimpages)
-        self.groupBox.setGeometry(QtCore.QRect(0, 0, 161, 101))
+        self.groupBox.setGeometry(QtCore.QRect(0, 30, 171, 71))
         self.groupBox.setTitle(_fromUtf8(""))
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
-        self.verticalLayoutWidget_2 = QtGui.QWidget(self.groupBox)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(10, 10, 61, 88))
-        self.verticalLayoutWidget_2.setObjectName(_fromUtf8("verticalLayoutWidget_2"))
-        self.verticalLayout_2 = QtGui.QVBoxLayout(self.verticalLayoutWidget_2)
-        self.verticalLayout_2.setMargin(0)
-        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.radioButton_31 = QtGui.QRadioButton(self.verticalLayoutWidget_2)
+        self.gridLayoutWidget_3 = QtGui.QWidget(self.groupBox)
+        self.gridLayoutWidget_3.setGeometry(QtCore.QRect(10, 20, 160, 42))
+        self.gridLayoutWidget_3.setObjectName(_fromUtf8("gridLayoutWidget_3"))
+        self.gridLayout_2 = QtGui.QGridLayout(self.gridLayoutWidget_3)
+        self.gridLayout_2.setMargin(0)
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+        self.radioButton_31 = QtGui.QRadioButton(self.gridLayoutWidget_3)
         self.radioButton_31.setObjectName(_fromUtf8("radioButton_31"))
-        self.verticalLayout_2.addWidget(self.radioButton_31)
-        self.radioButton_23 = QtGui.QRadioButton(self.verticalLayoutWidget_2)
+        self.gridLayout_2.addWidget(self.radioButton_31, 0, 0, 1, 1)
+        self.radioButton_23 = QtGui.QRadioButton(self.gridLayoutWidget_3)
         self.radioButton_23.setObjectName(_fromUtf8("radioButton_23"))
-        self.verticalLayout_2.addWidget(self.radioButton_23)
-        self.radioButton_15 = QtGui.QRadioButton(self.verticalLayoutWidget_2)
+        self.gridLayout_2.addWidget(self.radioButton_23, 1, 0, 1, 1)
+        self.radioButton_15 = QtGui.QRadioButton(self.gridLayoutWidget_3)
         self.radioButton_15.setObjectName(_fromUtf8("radioButton_15"))
-        self.verticalLayout_2.addWidget(self.radioButton_15)
-        self.radioButton_7 = QtGui.QRadioButton(self.verticalLayoutWidget_2)
+        self.gridLayout_2.addWidget(self.radioButton_15, 0, 1, 1, 1)
+        self.radioButton_7 = QtGui.QRadioButton(self.gridLayoutWidget_3)
         self.radioButton_7.setObjectName(_fromUtf8("radioButton_7"))
-        self.verticalLayout_2.addWidget(self.radioButton_7)
+        self.gridLayout_2.addWidget(self.radioButton_7, 1, 1, 1, 1)
         self.verticalLayoutWidget_3 = QtGui.QWidget(Form_Dimpages)
         self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(10, 100, 151, 51))
         self.verticalLayoutWidget_3.setObjectName(_fromUtf8("verticalLayoutWidget_3"))
@@ -314,6 +314,10 @@ class Ui_Form_Dimpages(object):
         self.checkBox_8.setObjectName(_fromUtf8("checkBox_8"))
         self.horizontalLayout.addWidget(self.checkBox_8)
         self.verticalLayout_4.addLayout(self.horizontalLayout)
+        self.label_regsname = QtGui.QLabel(Form_Dimpages)
+        self.label_regsname.setGeometry(QtCore.QRect(30, 10, 111, 16))
+        self.label_regsname.setStyleSheet(_fromUtf8("color: rgb(0, 85, 255);"))
+        self.label_regsname.setObjectName(_fromUtf8("label_regsname"))
 
         self.retranslateUi(Form_Dimpages)
         QtCore.QMetaObject.connectSlotsByName(Form_Dimpages)
@@ -394,4 +398,5 @@ class Ui_Form_Dimpages(object):
         self.label_26.setText(_translate("Form_Dimpages", "26", None))
         self.label_25.setText(_translate("Form_Dimpages", "25", None))
         self.label_24.setText(_translate("Form_Dimpages", "24", None))
+        self.label_regsname.setText(_translate("Form_Dimpages", "spare:spare", None))
 

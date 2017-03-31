@@ -69,7 +69,6 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.db = QtSql.QSqlDatabase.addDatabase("QODBC")
         connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing7.mdb'
         self.db.setDatabaseName(connection_string)
-
         self.db.open()
     def DataShowiInTable(self):
         # testing patt
@@ -78,7 +77,7 @@ class DimPagesWindow(QtGui.QMainWindow):
                 # pwmdutytemp = "%X" % (self.curpat[i * self.ui.tableWidget_pattern.columnCount() + j])
                 newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curvars[i * \
                 self.ui.tableWidget_curpage.columnCount() + j],8,16,QtCore.QChar("0")).toUpper())
-                newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+                newItemt.setTextAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
                 if self.histpageregs[i*4 + j].right == 1:
                     newItemt.setBackground(QtGui.QColor(255,0,255))
                 self.ui.tableWidget_curpage.setItem(i, j, newItemt)
@@ -86,6 +85,7 @@ class DimPagesWindow(QtGui.QMainWindow):
         print row,col
         self.ui.textEdit_curregdes.setText(self.histpageregs[row*4 + col].descr)
         self.ui.label_addr.setText("%X" % (self.dimpageaddr + self.histpageregs[row*4 + col].index * 4))
+        self.ui.label_regsname.setText(self.histpageregs[row*4 + col].name)
         print self.histpageregs[row*4 + col].right
 
     def changeRegDescri_1(self,row,col):
