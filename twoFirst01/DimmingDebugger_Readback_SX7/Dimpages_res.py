@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Dimpages_res.ui'
 #
-# Created: Fri Mar 31 17:35:24 2017
+# Created: Fri Mar 31 18:30:33 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -389,7 +389,7 @@ class Ui_Form_Dimpages(object):
         self.radioButton_7.setText(_translate("Form_Dimpages", "7-0", None))
         self.radioButton_15.setText(_translate("Form_Dimpages", "15-8", None))
         self.radioButton_23.setText(_translate("Form_Dimpages", "23-16", None))
-        self.radioButton_31.setText(_translate("Form_Dimpages", "24-31", None))
+        self.radioButton_31.setText(_translate("Form_Dimpages", "31-24", None))
         self.label_31.setText(_translate("Form_Dimpages", "31", None))
         self.label_30.setText(_translate("Form_Dimpages", "30", None))
         self.label_29.setText(_translate("Form_Dimpages", "29", None))
