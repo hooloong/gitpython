@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'Dimpages_res.ui'
 #
-# Created: Fri Mar 31 21:32:00 2017
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -119,7 +118,6 @@ class Ui_Form_Dimpages(object):
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(780, 40, 160, 115))
         self.gridLayoutWidget_2.setObjectName(_fromUtf8("gridLayoutWidget_2"))
         self.gridLayout_1 = QtGui.QGridLayout(self.gridLayoutWidget_2)
-        self.gridLayout_1.setMargin(0)
         self.gridLayout_1.setObjectName(_fromUtf8("gridLayout_1"))
         self.label_0_3 = QtGui.QLabel(self.gridLayoutWidget_2)
         self.label_0_3.setStyleSheet(_fromUtf8("background-color: rgb(232, 232, 232);\n"
@@ -188,7 +186,6 @@ class Ui_Form_Dimpages(object):
         self.gridLayoutWidget.setGeometry(QtCore.QRect(780, 400, 160, 101))
         self.gridLayoutWidget.setObjectName(_fromUtf8("gridLayoutWidget"))
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.pushButton_writepage = QtGui.QPushButton(self.gridLayoutWidget)
         self.pushButton_writepage.setObjectName(_fromUtf8("pushButton_writepage"))
@@ -217,7 +214,6 @@ class Ui_Form_Dimpages(object):
         self.gridLayoutWidget_3.setGeometry(QtCore.QRect(10, 20, 160, 42))
         self.gridLayoutWidget_3.setObjectName(_fromUtf8("gridLayoutWidget_3"))
         self.gridLayout_2 = QtGui.QGridLayout(self.gridLayoutWidget_3)
-        self.gridLayout_2.setMargin(0)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.radioButton_7 = QtGui.QRadioButton(self.gridLayoutWidget_3)
         self.radioButton_7.setObjectName(_fromUtf8("radioButton_7"))
@@ -235,7 +231,6 @@ class Ui_Form_Dimpages(object):
         self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(10, 100, 151, 51))
         self.verticalLayoutWidget_3.setObjectName(_fromUtf8("verticalLayoutWidget_3"))
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.verticalLayoutWidget_3)
-        self.verticalLayout_4.setMargin(0)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))

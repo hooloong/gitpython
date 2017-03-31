@@ -90,6 +90,7 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.curpageregs = self.histpageregs
         self.DataShowiInTable()
         self.ui.radioButton_31.setChecked(True)
+        self.start_pos = 24
         self.initFlag = True
         self.curselreg = 0
 
@@ -120,8 +121,49 @@ class DimPagesWindow(QtGui.QMainWindow):
                     newItemt.setFlags(QtCore.Qt.NoItemFlags)
                 self.ui.tableWidget_curpage.setItem(i, j, newItemt)
 
+    def updatethecheckboxbits(self,byte):
+        if byte & 0x80:
+            self.ui.checkBox_10.setChecked(True)
+        else:
+            self.ui.checkBox_10.setChecked(False)
+        if byte & 0x40:
+            self.ui.checkBox_6.setChecked(True)
+        else:
+            self.ui.checkBox_6.setChecked(False)
+        if byte & 0x20:
+            self.ui.checkBox_5.setChecked(True)
+        else:
+            self.ui.checkBox_5.setChecked(False)
+        if byte & 0x10:
+            self.ui.checkBox_4.setChecked(True)
+        else:
+            self.ui.checkBox_4.setChecked(False)
+        if byte & 0x8:
+            self.ui.checkBox_3.setChecked(True)
+        else:
+            self.ui.checkBox_3.setChecked(False)
+        if byte & 0x4:
+            self.ui.checkBox_2.setChecked(True)
+        else:
+            self.ui.checkBox_2.setChecked(False)
+        if byte & 0x2:
+            self.ui.checkBox_1.setChecked(True)
+        else:
+            self.ui.checkBox_1.setChecked(False)
+        if byte & 0x1:
+            self.ui.checkBox_0.setChecked(True)
+        else:
+            self.ui.checkBox_0.setChecked(False)
+        pass
+
+
+    def updatethebitsfromvars(self):
+        print self.curselreg,self.curvars[self.curselreg],self.start_pos
+        self.updatethecheckboxbits(self.curvars[self.curselreg] >> self.start_pos)
+
+
+
     def changeRegDescri(self,row,col):
-        print row,col
         getFlag = False
         for k in range(len(self.curpageregs)):
             if self.curpageregs[k].index == (row * 4 + col):
@@ -132,6 +174,7 @@ class DimPagesWindow(QtGui.QMainWindow):
                 self.ui.label_regsname.setText(self.curpageregs[k].name)
                 print self.curpageregs[k].right
                 self.curselreg = row * 4 + col
+                self.updatethebitsfromvars()
                 break
 
 
@@ -182,6 +225,8 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.ui.label_29.setText(bits_label_list[self.start_pos+2])
         self.ui.label_30.setText(bits_label_list[self.start_pos+1])
         self.ui.label_31.setText(bits_label_list[self.start_pos])
+
+        self.updatethebitsfromvars()
         pass
 
     def updatepatts(self,item):
