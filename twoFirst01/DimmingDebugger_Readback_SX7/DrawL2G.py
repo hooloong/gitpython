@@ -116,20 +116,6 @@ lines = np.array([
 texts = ["Point %d" % i for i in range(6)]
 
 
-class DrawWindow(pg.GraphicsWindow):
-
-    def __init__(self):
-        super(DrawL2GWindow, self).__init__()
-        # Enable antialiasing for prettier plots
-        pg.setConfigOptions(antialias=True)
-
-        # self.w = pg.GraphicsWindow()
-        # self.w.setWindowTitle('pyqtgraph example: CustomGraphItem')
-        self.v = self.addViewBox()
-        # v.setAspectLocked()
-        self.gld = Graph()
-        self.v.addItem(self.gld)
-        self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
 
 class DrawL2GWindow(QtGui.QMainWindow):
 
@@ -147,6 +133,9 @@ class DrawL2GWindow(QtGui.QMainWindow):
         self.gld = Graph()
         self.v.addItem(self.gld)
         self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+
+    def setConnectFlag(self, flag):
+        self.connectFlag = flag
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

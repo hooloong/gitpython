@@ -108,6 +108,21 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.initFlag = True
         self.curselreg = 0
 
+    # def keyPressEvent(self, ev):
+    #     print ev.key()
+    #     print  QtCore.Qt.Key_Space
+    #     if ev.key() == QtCore.Qt.Key_Space:
+    #         ev.ignore()
+    #         return
+    #     ev.accept()
+
+    def keyReleaseEvent(self, ev):
+        if ev.key() == QtCore.Qt.Key_Space:
+            self.readcurpage()
+            ev.ignore()
+            return
+        ev.accept()
+
     def createConnection(self):
         self.db = QtSql.QSqlDatabase.addDatabase("QODBC")
         connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing7.mdb'
