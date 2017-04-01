@@ -273,7 +273,6 @@ class DimPagesWindow(QtGui.QMainWindow):
                     self.changeTableOneReg(row,col)
                 break
 
-
     def changeRegDescri_1(self,row,col):
         print row,col
 
@@ -301,12 +300,6 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.getrightforcurpage()
         self.readcurpage()
         self.DataShowiInTable()
-
-
-
-
-
-
 
     def changeBitsel(self,flag):
         if not self.initFlag: return
