@@ -519,9 +519,9 @@ border-color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
-     <width>151</width>
-     <height>51</height>
+     <y>110</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -588,7 +588,7 @@ border-color: rgb(0, 0, 0);</string>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QCheckBox" name="checkBox_10">
+       <widget class="QCheckBox" name="checkBox_7">
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>

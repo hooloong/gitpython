@@ -65,6 +65,7 @@ class DimPagesWindow(QtGui.QMainWindow):
             # newhex.setButtonSymbols(0)
             self.hexspinlist.append(newhex)
         self.curvars = np.zeros(64,np.uint32)
+        self.curbaseaddr = 0x19A00400
         self.curpageregs = []
         self.connectFlag = False
         self.initFlag = False
@@ -123,9 +124,9 @@ class DimPagesWindow(QtGui.QMainWindow):
 
     def updatethecheckboxbits(self,byte):
         if byte & 0x80:
-            self.ui.checkBox_10.setChecked(True)
+            self.ui.checkBox_7.setChecked(True)
         else:
-            self.ui.checkBox_10.setChecked(False)
+            self.ui.checkBox_7.setChecked(False)
         if byte & 0x40:
             self.ui.checkBox_6.setChecked(True)
         else:
@@ -198,8 +199,10 @@ class DimPagesWindow(QtGui.QMainWindow):
         print self.treepagesname
         if currentkey == "2DDIM_PIXC":
             self.curpageregs= self.pixcpageregs
+
         else:
             self.curpageregs = self.histpageregs
+        self.curbaseaddr = self.curpageregs[0].baseaddr
         self.DataShowiInTable()
 
 
