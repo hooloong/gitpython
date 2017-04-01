@@ -8,6 +8,7 @@ import numpy as np
 from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, QtSql,uic  # ,Qwt5
 import pyqtgraph as pg
+from Drawlg_res import  *
 
 
 class Graph(pg.GraphItem):
@@ -115,7 +116,7 @@ lines = np.array([
 texts = ["Point %d" % i for i in range(6)]
 
 
-class DrawL2GWindow(pg.GraphicsWindow):
+class DrawWindow(pg.GraphicsWindow):
 
     def __init__(self):
         super(DrawL2GWindow, self).__init__()
@@ -126,6 +127,23 @@ class DrawL2GWindow(pg.GraphicsWindow):
         # self.w.setWindowTitle('pyqtgraph example: CustomGraphItem')
         self.v = self.addViewBox()
         # v.setAspectLocked()
+        self.gld = Graph()
+        self.v.addItem(self.gld)
+        self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+
+class DrawL2GWindow(QtGui.QMainWindow):
+
+    def __init__(self):
+        super(DrawL2GWindow, self).__init__()
+        self.ui =  Ui_Form_Hist()
+        self.ui.setupUi(self)
+        pg.setConfigOptions(antialias=True)
+        self.ui.tabWidget.removeTab(0)
+        self.ui.tabWidget.removeTab(0)
+        self.w = pg.GraphicsWindow()
+        self.ui.tabWidget.insertTab(0, self.w, u"Draw L2G")
+        self.v = self.w.addViewBox()
+        self.v.setAspectLocked()
         self.gld = Graph()
         self.v.addItem(self.gld)
         self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
