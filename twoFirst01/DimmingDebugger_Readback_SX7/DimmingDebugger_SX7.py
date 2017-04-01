@@ -15,6 +15,7 @@ from PWMs import *
 from Hist import *
 from TestPattern import *
 from Dimpages import *
+from DrawL2G import *
 # from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 # from matplotlib.figure import Figure
 # from mpl_toolkits.mplot3d import Axes3D
@@ -52,8 +53,10 @@ class MyWindow(QtGui.QMainWindow):
         self.loadSettingfromJson()
         self.formTestPattern = TestPatternWindow()
         self.formDimpages = DimPagesWindow()
+        self.formDraw = DrawL2GWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
         self.ui.tabWidget.insertTab(3, self.formDimpages, u"DimPages")
+        self.ui.tabWidget.insertTab(4, self.formDraw, u"DrawL2G")
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
         self.connect(self.ui.actionDisconnect, QtCore.SIGNAL('triggered()'), self.disconnectChip)
         self.ui.actionQuit.connect(self.ui.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
