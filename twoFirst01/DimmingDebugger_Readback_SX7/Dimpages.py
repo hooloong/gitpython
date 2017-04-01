@@ -79,18 +79,23 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_readpage, QtCore.SIGNAL('clicked()'), self.readcurpage)
         self.connect(self.ui.pushButton_writepage, QtCore.SIGNAL('clicked()'), self.writecurpage)
 
-        # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('itemClicked(int,int)'),self.changeRegDescri_1)
-        # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellEntered(int,int)'), self.changeRegDescri)
-        # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellActivated(int,int)'), self.changeRegDescri)
         self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellPressed(int,int)'), self.changeRegDescri)
         self.ui.tableWidget_curpage.itemChanged.connect(self.updatepatts)
 
         self.ui.treeWidget_pages.itemPressed.connect(self.pagesel)
-        # self.connect(self.ui.treeWidget_pages, QtCore.SIGNAL('itemPressed(,int)'), self.pagesel)
+
         self.connect(self.ui.radioButton_7, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
         self.connect(self.ui.radioButton_15, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
         self.connect(self.ui.radioButton_23, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
         self.connect(self.ui.radioButton_31, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
+        self.connect(self.ui.checkBox_0, QtCore.SIGNAL('clicked()'), self.setbitcheck)
+        self.connect(self.ui.checkBox_1, QtCore.SIGNAL('clicked()'), self.setbitcheck)
+        self.connect(self.ui.checkBox_2, QtCore.SIGNAL('clicked()'), self.setbitcheck)
+        self.connect(self.ui.checkBox_3, QtCore.SIGNAL('clicked()'), self.setbitcheck)
+        self.connect(self.ui.checkBox_4, QtCore.SIGNAL('clicked()'), self.setbitcheck)
+        self.connect(self.ui.checkBox_5, QtCore.SIGNAL('clicked()'), self.setbitcheck)
+        self.connect(self.ui.checkBox_6, QtCore.SIGNAL('clicked()'), self.setbitcheck)
+        self.connect(self.ui.checkBox_7, QtCore.SIGNAL('clicked()'), self.setbitcheck)
 
         self.createConnection()
         self.printoutregs()
@@ -174,10 +179,63 @@ class DimPagesWindow(QtGui.QMainWindow):
             self.ui.checkBox_0.setChecked(False)
         pass
 
+    def setCurRegVarTochip(self,reg,num):
+        if self.connectFlag is False: return
+        if self.initFlag is False: return
+        if self.curchipreadflag is False: return
+        ret = False
+        if self.curvars[num] != self.chipstorecurvars[num]:
+            ret = True
+        else:
+            ret = False
+        self.chipstorecurvars[num] = self.curvars[num]
+        if ret is True and self.connectFlag is True and self.curchipreadflag is True:
+            if reg.right !=1 :
+                TFC.tfcWriteDword(reg.baseaddr, num*4,self.chipstorecurvars[num])
+        pass
+    def setbitcheck(self):
+
+        temp = 0xFFFFFFFF & (~(0xFF << self.start_pos))
+        self.curvars[self.curselreg] &= temp
+        self.curvars[self.curselreg] |= (self.getbitfromcheckbox() << self.start_pos)
+
+        for k in range(len(self.curpageregs)):
+            if self.curpageregs[k].index == self.curselreg:
+                self.changeTableOneReg(self.curselreg/4 , self.curselreg%4)
+                self.setCurRegVarTochip(self.curpageregs[k],self.curselreg)
+        pass
+    def getbitfromcheckbox(self):
+        bytevar = 0
+        if self.ui.checkBox_0.isChecked():
+            bytevar |= 1
+        if self.ui.checkBox_1.isChecked():
+            bytevar |= 2
+
+        if self.ui.checkBox_2.isChecked():
+            bytevar |= 4
+
+        if self.ui.checkBox_3.isChecked():
+            bytevar |= 8
+
+        if self.ui.checkBox_4.isChecked():
+            bytevar |= 0x10
+
+        if self.ui.checkBox_5.isChecked():
+            bytevar |= 0x20
+
+        if self.ui.checkBox_6.isChecked():
+            bytevar |= 0x40
+
+        if self.ui.checkBox_7.isChecked():
+            bytevar |= 0x80
+
+        return bytevar
+
 
     def updatethebitsfromvars(self):
         print self.curselreg,self.curvars[self.curselreg],self.start_pos
         self.updatethecheckboxbits(self.curvars[self.curselreg] >> self.start_pos)
+        pass
 
     def changeTableOneReg(self,row,col):
         self.ui.tableWidget_curpage.currentItem().setText(QtCore.QString("%1").arg(self.curvars[row * \
@@ -242,6 +300,8 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.getrightforcurpage()
         self.readcurpage()
         self.DataShowiInTable()
+
+
 
 
 
