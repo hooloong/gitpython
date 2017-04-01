@@ -78,6 +78,7 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_getitem, QtCore.SIGNAL('clicked()'), self.printoutregs)
         self.connect(self.ui.pushButton_readpage, QtCore.SIGNAL('clicked()'), self.readcurpage)
         self.connect(self.ui.pushButton_writepage, QtCore.SIGNAL('clicked()'), self.writecurpage)
+        self.connect(self.ui.pushButton_refresh, QtCore.SIGNAL('clicked()'), self.readcurpage)
 
         self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellPressed(int,int)'), self.changeRegDescri)
         self.ui.tableWidget_curpage.itemChanged.connect(self.updatepatts)
