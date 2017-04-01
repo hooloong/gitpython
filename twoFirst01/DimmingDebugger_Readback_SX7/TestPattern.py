@@ -164,7 +164,7 @@ class TestPatternWindow(QtGui.QMainWindow):
                     # print hex(addr_up),hex(val)
         else:
             print("send %d frames data!" % self.total_manual_pat)
-            for i in range(self.pat_size + 6,(self.pat_size + 6)*self.total_manual_pat+1):
+            for i in range(self.pat_size + 6,(self.pat_size + 6)*(self.total_manual_pat+1)):
                 if 0== i%2:
                     addr_up = MANUAL_TESTING_PATS_ADDR + ((i-(self.pat_size + 6))/2)*4
                     val = self.curtmpppat[i]+ (self.curtmpppat[i+1] <<16)
