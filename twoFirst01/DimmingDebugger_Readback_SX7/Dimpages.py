@@ -65,14 +65,20 @@ class DimPagesWindow(QtGui.QMainWindow):
             # newhex.setButtonSymbols(0)
             self.hexspinlist.append(newhex)
         self.curvars = np.zeros(64,np.uint32)
+        self.chipstorecurvars = np.zeros(64, np.uint32)
+        self.chippageright = np.zeros(64, np.uint32)
         self.curbaseaddr = 0x19A00400
         self.curpageregs = []
         self.connectFlag = False
         self.initFlag = False
+        self.curchipreadflag = False
         self.start_pos = 0
         self.pages= {}
 
         self.connect(self.ui.pushButton_getitem, QtCore.SIGNAL('clicked()'), self.printoutregs)
+        self.connect(self.ui.pushButton_readpage, QtCore.SIGNAL('clicked()'), self.readcurpage)
+        self.connect(self.ui.pushButton_writepage, QtCore.SIGNAL('clicked()'), self.writecurpage)
+
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('itemClicked(int,int)'),self.changeRegDescri_1)
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellEntered(int,int)'), self.changeRegDescri)
         # self.connect(self.ui.tableWidget_curpage, QtCore.SIGNAL('cellActivated(int,int)'), self.changeRegDescri)
@@ -89,6 +95,7 @@ class DimPagesWindow(QtGui.QMainWindow):
         self.createConnection()
         self.printoutregs()
         self.curpageregs = self.histpageregs
+        self.getrightforcurpage()
         self.DataShowiInTable()
         self.ui.radioButton_31.setChecked(True)
         self.start_pos = 24
@@ -100,7 +107,17 @@ class DimPagesWindow(QtGui.QMainWindow):
         connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing7.mdb'
         self.db.setDatabaseName(connection_string)
         self.db.open()
+
+    def getrightforcurpage(self):
+        self.chippageright = np.zeros(64,np.uint32)
+        for inx in range(64):
+            for k in range(len(self.curpageregs)):
+                if self.curpageregs[k].index == inx:
+                    getright = self.curpageregs[k].right
+                    self.chippageright[inx] = getright
+
     def DataShowiInTable(self):
+        self.chippageright = np.zeros(64, np.uint32)
         for i in range(self.ui.tableWidget_curpage.rowCount()):
             for j in range(self.ui.tableWidget_curpage.columnCount()):
                 getFlag = False
@@ -162,13 +179,30 @@ class DimPagesWindow(QtGui.QMainWindow):
         print self.curselreg,self.curvars[self.curselreg],self.start_pos
         self.updatethecheckboxbits(self.curvars[self.curselreg] >> self.start_pos)
 
+    def changeTableOneReg(self,row,col):
+        self.ui.tableWidget_curpage.currentItem().setText(QtCore.QString("%1").arg(self.curvars[row * \
+                                 self.ui.tableWidget_curpage.columnCount() + col],
+                                        8, 16, QtCore.QChar("0")).toUpper())
+        pass
 
+    def getCurRegVarFromchip(self,reg,num):
+        if self.connectFlag is False: return
+        if self.initFlag is False: return
+        if self.curchipreadflag is False: return
+        ret = False
+        self.chipstorecurvars[num] = TFC.tfcReadDword(reg.baseaddr, num*4)
+        if self.curvars[num] != self.chipstorecurvars[num]:
+            ret = True
+        else:
+            ret = False
+        self.curvars[num] = self.chipstorecurvars[num]
+        return True
 
     def changeRegDescri(self,row,col):
-        getFlag = False
+        itemregchangflag = False
         for k in range(len(self.curpageregs)):
             if self.curpageregs[k].index == (row * 4 + col):
-                getFlag = True
+                itemregchangflag = self.getCurRegVarFromchip(self.curpageregs[k],row * 4 + col)
                 self.ui.textEdit_curregdes.setText(self.curpageregs[k].descr)
                 self.ui.label_addr.setText(
                     "%X" % (self.curpageregs[k].baseaddr + self.curpageregs[k].index * 4))
@@ -176,6 +210,8 @@ class DimPagesWindow(QtGui.QMainWindow):
                 print self.curpageregs[k].right
                 self.curselreg = row * 4 + col
                 self.updatethebitsfromvars()
+                if itemregchangflag is True:
+                    self.changeTableOneReg(row,col)
                 break
 
 
@@ -191,6 +227,7 @@ class DimPagesWindow(QtGui.QMainWindow):
             if key == item.text(pos) and self.treepagesname[key] == 1:
                 return
             if key == item.text(pos) and self.treepagesname[key] == 0:
+                self.curchipreadflag= False
                 currentkey = key
         self.treepagesname[currentkey] = 1
         for key in self.treepagesname:
@@ -199,10 +236,11 @@ class DimPagesWindow(QtGui.QMainWindow):
         print self.treepagesname
         if currentkey == "2DDIM_PIXC":
             self.curpageregs= self.pixcpageregs
-
         else:
             self.curpageregs = self.histpageregs
         self.curbaseaddr = self.curpageregs[0].baseaddr
+        self.getrightforcurpage()
+        self.readcurpage()
         self.DataShowiInTable()
 
 
@@ -243,12 +281,48 @@ class DimPagesWindow(QtGui.QMainWindow):
         j = item.column()
         if isright is True:
             self.curvars[item.row()* 4 + item.column()] = int(stringitem,16)
+            self.ui.tableWidget_curpage.currentItem().setText(QtCore.QString("%1").arg(self.curvars[i * \
+                                 self.ui.tableWidget_curpage.columnCount() + j],
+                                        8, 16, QtCore.QChar("0")).toUpper())
 
         if islowerdigit(stringitem) is True or isright is False:
             self.ui.tableWidget_curpage.currentItem().setText(QtCore.QString("%1").arg(self.curvars[i * \
                                  self.ui.tableWidget_curpage.columnCount() + j],
                                         8, 16, QtCore.QChar("0")).toUpper())
 
+    def readcurpage(self):
+        if self.connectFlag is False: return
+        if self.initFlag is False: return
+        # self.chipstorecurvars = np.zeros(64, np.uint32)
+        self.curbaseaddr = self.curpageregs[0].baseaddr
+        self.getrightforcurpage()
+        for i in range(64):
+            if self.chippageright[i] != 0 and self.chippageright[i] != 2:
+                self.chipstorecurvars[i] = TFC.tfcReadDword(self.curbaseaddr, i*4)
+            else:
+                self.chipstorecurvars[i] = 0
+            self.curvars[i] =  self.chipstorecurvars[i]
+
+        self.DataShowiInTable()
+        # print self.chipstorecurvars
+        self.curchipreadflag = True
+
+        pass
+
+    def writecurpage(self):
+        if self.connectFlag is False: return
+        if self.initFlag is False: return
+        if self.curchipreadflag is False: return
+        self.curbaseaddr = self.curpageregs[0].baseaddr
+        self.getrightforcurpage()
+        self.chipstorecurvars = np.zeros(64, np.uint32)
+        for i in range(64):
+            self.chipstorecurvars[i] = self.curvars[i]
+            if self.chippageright[i] != 0 and self.chippageright[i] != 1:
+                TFC.tfcWriteDword(self.curbaseaddr,i*4,self.chipstorecurvars[i])
+
+        print self.curbaseaddr
+        pass
 
     def printoutregs(self):
         self.q = QtSql.QSqlQuery()
