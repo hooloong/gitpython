@@ -481,9 +481,9 @@ border-color: rgb(0, 0, 0);</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>11</y>
       <width>160</width>
-      <height>42</height>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -522,9 +522,9 @@ border-color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>110</y>
+     <y>100</y>
      <width>161</width>
-     <height>41</height>
+     <height>51</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
