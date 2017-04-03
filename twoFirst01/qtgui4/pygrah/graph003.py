@@ -73,11 +73,12 @@ vb = CustomViewBox()
 pw = pg.PlotWidget(viewBox=vb,  enableMenu=True,
                    title="PlotItem with custom axis and ViewBox<br>Menu disabled, mouse behavior changed: left-drag to zoom, right-click to reset zoom")
 dates = np.arange(8) * (3600 * 24 * 356)
-# pw.plot(x=dates, y=[1, 6, 2, 4, 3, 5, 6, 8], symbol='o')
+pw.plot(x=dates, y=[1, 6, 2, 4, 3, 5, 6, 8], symbol='o')
 pw.show()
 pw.setWindowTitle('pyqtgraph example: customPlot')
 
-r = pg.PolyLineROI([(0, 0), (10, 10),(1,1),(2,2),(3,3)])
+r = pg.CustomPolyLineROI([(0, 0), (10, 10),(1,1),(2,2),(3,3)],closed=False)
+# r = pg.LineSegmentROI([(0, 0), (10, 10)])
 pw.addItem(r)
 
 # update all plots
@@ -88,7 +89,7 @@ def update():
     pass
 timer = pg.QtCore.QTimer()
 timer.timeout.connect(update)
-timer.start(500)
+timer.start(5000)
 
 ## Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
