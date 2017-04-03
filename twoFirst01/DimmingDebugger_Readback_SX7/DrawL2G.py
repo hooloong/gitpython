@@ -100,20 +100,33 @@ adj = np.array([
     ])
 
 ## Define the symbol to use for each node (this is optional)
-symbols = ['o','o','o','o','t','+']
+symbols = ['o','o','o','o','o','o']
 
 ## Define the line style for each connection (this is optional)
 lines = np.array([
     (255,0,0,255,1),
-    (255,0,255,255,2),
-    (255,0,255,255,3),
-    (255,255,0,255,2),
+    (255,0,255,255,1),
+    (255,0,255,255,1),
+    (255,255,0,255,1),
     (255,0,0,255,1),
-    (255,255,255,255,4),
+    (255,255,255,255,1),
     ], dtype=[('red',np.ubyte),('green',np.ubyte),('blue',np.ubyte),('alpha',np.ubyte),('width',float)])
 
 ## Define text to show next to each symbol
-texts = ["Point %d" % i for i in range(6)]
+texts = ["%d" % i for i in range(48)]
+for i in range(3):
+    pos = np.row_stack((pos,pos))
+    adj =  np.row_stack((adj,adj))
+    symbols = symbols *2
+# lines = lines.repeat(32)
+lines =  np.tile(lines,8)
+for i in range(48):
+    pos[i][0] = i
+    pos[i][1] = (48-i) * 0xC00/0x400
+    adj[i][0] = i
+    adj[i][1] = i+1
+adj[47][1] = 47
+print len(pos),len(adj),len(lines),len(symbols)
 
 class CustomViewBox(pg.ViewBox):
     def __init__(self, *args, **kwds):
@@ -161,6 +174,15 @@ class DrawL2GWindow(QtGui.QMainWindow):
         self.gld = Graph()
         self.v.addItem(self.gld)
         self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+        self.vLine = pg.InfiniteLine(angle=90, movable=False)
+        self.hLine = pg.InfiniteLine(angle=0, movable=False)
+        self.v.addItem(self.vLine, ignoreBounds=True)
+        self.v.addItem(self.hLine, ignoreBounds=True)
+        self.linepen = pg.mkPen({'color': "111"})
+        for i in range(1,47):
+            vlines = pg.InfiniteLine(angle=90, movable=False,pen=self.linepen)
+            self.v.addItem(vlines)
+            vlines.setPos([i,0])
 
         # self.vb = CustomViewBox()
         # self.vb.setAspectLocked()

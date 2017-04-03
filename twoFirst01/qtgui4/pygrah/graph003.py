@@ -66,6 +66,7 @@ class CustomViewBox(pg.ViewBox):
 app = pg.mkQApp()
 
 axis = DateAxis(orientation='bottom')
+axis.setGrid(111)
 vb = CustomViewBox()
 
 # pw = pg.PlotWidget(viewBox=vb, axisItems={'bottom': axis}, enableMenu=True,

@@ -22,8 +22,11 @@ class Graph(pg.GraphItem):
         self.dragPoint = None
         self.dragOffset = None
         self.textItems = []
+        self.startpos = [0,0]
+        self.indexpos = 0
         pg.GraphItem.__init__(self)
         self.scatter.sigClicked.connect(self.clicked)
+
 
     def setData(self, **kwds):
         self.text = kwds.pop('text', [])
@@ -67,7 +70,10 @@ class Graph(pg.GraphItem):
             self.dragPoint = pts[0]
             ind = pts[0].data()[0]
             self.dragOffset = self.data['pos'][ind] - pos
+
         elif ev.isFinish():
+            ind = self.dragPoint.data()[0]
+            print self.data['pos'][ind]
             self.dragPoint = None
             return
         else:
@@ -100,31 +106,47 @@ pos = np.array([
 ## Define the set of connections in the graph
 adj = np.array([
     [0,1],
-    [1,3],
-    [3,2],
-    [2,0],
-    [1,5],
-    [3,5],
+    [1,2],
+    [2,3],
+    [3,4],
+    [4,5],
+    [6,7]
     ])
 
 ## Define the symbol to use for each node (this is optional)
-symbols = ['o','o','o','o','t','+']
+symbols = ['o','o','o','o','o','o']
+
 
 ## Define the line style for each connection (this is optional)
 lines = np.array([
-    (255,0,0,255,1),
+    (255,0,0,255,2),
     (255,0,255,255,2),
-    (255,0,255,255,3),
+    (255,0,255,255,2),
     (255,255,0,255,2),
-    (255,0,0,255,1),
-    (255,255,255,255,4),
+    (255,0,0,255,2),
+    (255,255,255,255,2),
     ], dtype=[('red',np.ubyte),('green',np.ubyte),('blue',np.ubyte),('alpha',np.ubyte),('width',float)])
 
+
+
 ## Define text to show next to each symbol
-texts = ["Point %d" % i for i in range(6)]
+texts = ["Point %d" % i for i in range(192)]
+for i in range(5):
+    pos = np.row_stack((pos,pos))
+    adj =  np.row_stack((adj,adj))
+    symbols = symbols *2
+# lines = lines.repeat(32)
+lines =  np.tile(lines,32)
+for i in range(192):
+    pos[i][0] = i
+    pos[i][1] = (192-i) * 0xC00/0x400 + 0x400
+    adj[i][0] = i
+    adj[i][1] = i+1
+adj[191][1] = 191
+print len(pos),len(adj),len(lines),len(symbols)
 
 ## Update the graph
-g.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+g.setData(pos=pos, adj=adj, pen=lines, size=0.1, symbol=symbols, pxMode=False, text=texts)
 
 
 
