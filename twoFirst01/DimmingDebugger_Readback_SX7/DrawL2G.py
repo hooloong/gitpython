@@ -137,7 +137,7 @@ class DrawL2GWindow(QtGui.QMainWindow):
         super(DrawL2GWindow, self).__init__()
         self.ui =  Ui_Form_Hist()
         self.ui.setupUi(self)
-        # pg.setConfigOptions(antialias=True)
+        pg.setConfigOptions(antialias=True)
         # self.w = pg.GraphicsWindow()
         # self.ui.gridLayout_2.addWidget(self.w, 0,0)
         # self.v = self.w.addViewBox()
@@ -147,10 +147,11 @@ class DrawL2GWindow(QtGui.QMainWindow):
         # self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
 
         self.vb = CustomViewBox()
-        self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=False,
+        self.vb.setAspectLocked()
+        self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=True,
                            title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
         self.ui.gridLayout_2.addWidget(self.pw, 0, 0)
-        self.r = pg.PolyLineROI([(0, 0),  (1, 1), (2, 2), (3, 3),(10,10)])
+        self.r = pg.CustomPolyLineROI([(0, 1),  (10,1), (20,1), (30, 1),(2570,0x800)])
         self.vb.addItem(self.r)
 
         self.timer = pg.QtCore.QTimer()
