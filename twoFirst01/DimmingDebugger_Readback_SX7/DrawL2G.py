@@ -154,42 +154,42 @@ class DrawL2GWindow(QtGui.QMainWindow):
 
         self.lgdata = []
         pg.setConfigOptions(antialias=True)
-        # self.w = pg.GraphicsWindow()
-        # self.ui.gridLayout_2.addWidget(self.w, 0,0)
-        # self.v = self.w.addViewBox()
-        # self.v.setAspectLocked()
-        # self.gld = Graph()
-        # self.v.addItem(self.gld)
-        # self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+        self.w = pg.GraphicsWindow()
+        self.ui.gridLayout_2.addWidget(self.w, 0,0)
+        self.v = self.w.addViewBox()
+        self.v.setAspectLocked()
+        self.gld = Graph()
+        self.v.addItem(self.gld)
+        self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
 
-        self.vb = CustomViewBox()
-        self.vb.setAspectLocked()
-        self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=True,
-                           title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
-        self.ui.gridLayout_2.addWidget(self.pw, 0, 0)
-        # self.r = pg.CustomPolyLineROI([(0, 1),  (10,1), (20,1), (30, 1),(2570,0x800)])
-        self.generateLGdata()
-        self.r = pg.CustomPolyLineROI(self.lgdata)
-        self.vb.addItem(self.r)
-        self.vLine = pg.InfiniteLine(angle=90, movable=False)
-        self.hLine = pg.InfiniteLine(angle=0, movable=False)
-        self.vb.addItem(self.vLine, ignoreBounds=True)
-        self.vb.addItem(self.hLine, ignoreBounds=True)
-
-        proxy = pg.SignalProxy(self.vb.scene().sigMouseMoved, rateLimit=60, slot=self.mouseMoved)
-
-        self.timer = pg.QtCore.QTimer()
-        self.timer.timeout.connect(self.update)
-        # self.timer.start(1000)
+        # self.vb = CustomViewBox()
+        # self.vb.setAspectLocked()
+        # self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=True,
+        #                    title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
+        # self.ui.gridLayout_2.addWidget(self.pw, 0, 0)
+        # # self.r = pg.CustomPolyLineROI([(0, 1),  (10,1), (20,1), (30, 1),(2570,0x800)])
+        # self.generateLGdata()
+        # self.r = pg.CustomPolyLineROI(self.lgdata)
+        # self.vb.addItem(self.r)
+        # self.vLine = pg.InfiniteLine(angle=90, movable=False)
+        # self.hLine = pg.InfiniteLine(angle=0, movable=False)
+        # self.vb.addItem(self.vLine, ignoreBounds=True)
+        # self.vb.addItem(self.hLine, ignoreBounds=True)
+        #
+        # proxy = pg.SignalProxy(self.vb.scene().sigMouseMoved, rateLimit=60, slot=self.mouseMoved)
+        #
+        # self.timer = pg.QtCore.QTimer()
+        # self.timer.timeout.connect(self.update)
+        # # self.timer.start(1000)
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
 
-    def update(self):
-        # print self.r.getState()
-        self.vLine.setPos(self.r.getState()["points"][0])
-        self.hLine.setPos(self.r.getState()["points"][0])
-        pass
+    # def update(self):
+    #     # print self.r.getState()
+    #     self.vLine.setPos(self.r.getState()["points"][0])
+    #     self.hLine.setPos(self.r.getState()["points"][0])
+    #     pass
 
     def generateLGdata(self):
         for i in range(32):
@@ -199,19 +199,7 @@ class DrawL2GWindow(QtGui.QMainWindow):
         print self.lgdata
         pass
 
-    def mouseMoved(self,evt):
-        print 11111
-        pos = evt[0]  ## using signal proxy turns original arguments into a tuple
-        print pos
-        if self.pw.sceneBoundingRect().contains(pos):
-            mousePoint = self.vb.mapSceneToView(pos)
-            index = int(mousePoint.x())
-            # if index > 0 and index < len(data1):
-            #     label.setText(
-            #         "<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (
-            #         mousePoint.x(), data1[index], data2[index]))
-            self.vLine.setPos(mousePoint.x())
-            self.hLine.setPos(mousePoint.y())
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
