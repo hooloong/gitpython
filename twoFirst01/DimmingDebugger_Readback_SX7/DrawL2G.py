@@ -115,7 +115,21 @@ lines = np.array([
 ## Define text to show next to each symbol
 texts = ["Point %d" % i for i in range(6)]
 
+class CustomViewBox(pg.ViewBox):
+    def __init__(self, *args, **kwds):
+        pg.ViewBox.__init__(self, *args, **kwds)
+        self.setMouseMode(self.RectMode)
 
+    ## reimplement right-click to zoom out
+    def mouseClickEvent(self, ev):
+        if ev.button() == QtCore.Qt.RightButton:
+            self.autoRange()
+
+    def mouseDragEvent(self, ev):
+        if ev.button() == QtCore.Qt.RightButton:
+            ev.ignore()
+        else:
+            pg.ViewBox.mouseDragEvent(self, ev)
 
 class DrawL2GWindow(QtGui.QMainWindow):
 
@@ -123,17 +137,33 @@ class DrawL2GWindow(QtGui.QMainWindow):
         super(DrawL2GWindow, self).__init__()
         self.ui =  Ui_Form_Hist()
         self.ui.setupUi(self)
-        pg.setConfigOptions(antialias=True)
-        self.w = pg.GraphicsWindow()
-        self.ui.gridLayout_2.addWidget(self.w, 0,0)
-        self.v = self.w.addViewBox()
-        self.v.setAspectLocked()
-        self.gld = Graph()
-        self.v.addItem(self.gld)
-        self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+        # pg.setConfigOptions(antialias=True)
+        # self.w = pg.GraphicsWindow()
+        # self.ui.gridLayout_2.addWidget(self.w, 0,0)
+        # self.v = self.w.addViewBox()
+        # self.v.setAspectLocked()
+        # self.gld = Graph()
+        # self.v.addItem(self.gld)
+        # self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+
+        self.vb = CustomViewBox()
+        self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=False,
+                           title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
+        self.ui.gridLayout_2.addWidget(self.pw, 0, 0)
+        self.r = pg.PolyLineROI([(0, 0),  (1, 1), (2, 2), (3, 3),(10,10)])
+        self.vb.addItem(self.r)
+
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(self.update)
+        self.timer.start(3000)
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
+
+    def update(self):
+        print self.r.getState()
+        pass
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
