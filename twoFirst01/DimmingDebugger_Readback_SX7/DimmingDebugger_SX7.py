@@ -64,8 +64,22 @@ class MyWindow(QtGui.QMainWindow):
                                              self.loadSettingfromJson)
         self.ui.actionSave_setting_file.connect(self.ui.actionSave_setting_file, QtCore.SIGNAL('triggered()'),
                                              self.saveSettingfromJson)
-
+        self.connect(self.ui.tabWidget, QtCore.SIGNAL('currentChanged(int)'), self.tabchanges)
         self.setPanelInfo()
+
+        self.resize(860, 690)
+
+    def tabchanges(self,index):
+        if index == 4:
+            self.resize(1180,760)
+        elif index == 3:
+            self.resize(960, 760)
+        elif index == 2:
+            self.resize(840, 690)
+        elif index == 1:
+            self.resize(860, 700)
+        else:
+            self.resize(860, 690)
 
     def setPanelInfo(self):
         self.formTestPattern.setSettingDict(self.s_dict)
