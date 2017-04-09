@@ -113,19 +113,19 @@ lines = np.array([
     ], dtype=[('red',np.ubyte),('green',np.ubyte),('blue',np.ubyte),('alpha',np.ubyte),('width',float)])
 
 ## Define text to show next to each symbol
-texts = ["%d" % i for i in range(48)]
-for i in range(3):
+texts = ["%d" % i for i in range(192)]
+for i in range(5):
     pos = np.row_stack((pos,pos))
     adj =  np.row_stack((adj,adj))
     symbols = symbols *2
 # lines = lines.repeat(32)
-lines =  np.tile(lines,8)
-for i in range(48):
+lines =  np.tile(lines,32)
+for i in range(192):
     pos[i][0] = i
-    pos[i][1] = (48-i) * 0xC00/0x400
+    pos[i][1] = (192-i) * 0xC00/0x400
     adj[i][0] = i
     adj[i][1] = i+1
-adj[47][1] = 47
+adj[191][1] = 191
 print len(pos),len(adj),len(lines),len(symbols)
 
 class CustomViewBox(pg.ViewBox):
@@ -133,17 +133,18 @@ class CustomViewBox(pg.ViewBox):
         pg.ViewBox.__init__(self, *args, **kwds)
         # self.setMouseMode(self.RectMode)
 
+        self.setLimits(xMin=0,yMin=0x400)
     ## reimplement right-click to zoom out
     def mouseClickEvent(self, ev):
-        # if ev.button() == QtCore.Qt.RightButton:
-        #     self.autoRange()
+        if ev.button() == QtCore.Qt.RightButton:
+            self.autoRange()
         pass
 
     def mouseDragEvent(self, ev):
-        # if ev.button() == QtCore.Qt.RightButton:
-        #     ev.ignore()
-        # else:
-        #   pg.ViewBox.mouseDragEvent(self, ev)
+        if ev.button() == QtCore.Qt.RightButton:
+            ev.ignore()
+        else:
+          pg.ViewBox.mouseDragEvent(self, ev)
         pass
 
     def mouseMoved(self,evt):
@@ -158,6 +159,21 @@ class CustomViewBox(pg.ViewBox):
             vLine.setPos(mousePoint.x())
             hLine.setPos(mousePoint.y())
 
+class CustomPolyLineROI2(pg.PolyLineROI):
+
+    def __init__(self, positions, closed=False, pos=None, **args):
+        pg.PolyLineROI.__init__(self, positions, closed=False, pos=None, **args)
+
+    def segmentClicked(self, segment, ev=None, pos=None): ## pos should be in this item's coordinate system
+        if ev != None:
+            pos = segment.mapToParent(ev.pos())
+        elif pos != None:
+            pos = pos
+        else:
+            raise Exception("Either an event or a position must be given.")
+
+
+
 class DrawL2GWindow(QtGui.QMainWindow):
 
     def __init__(self):
@@ -167,55 +183,57 @@ class DrawL2GWindow(QtGui.QMainWindow):
 
         self.lgdata = []
         pg.setConfigOptions(antialias=True)
-        self.w = pg.GraphicsWindow()
-        self.ui.gridLayout_2.addWidget(self.w, 0,0)
-        self.v = self.w.addViewBox()
-        self.v.setAspectLocked()
-        self.gld = Graph()
-        self.v.addItem(self.gld)
-        self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
-        self.vLine = pg.InfiniteLine(angle=90, movable=False)
-        self.hLine = pg.InfiniteLine(angle=0, movable=False)
-        self.v.addItem(self.vLine, ignoreBounds=True)
-        self.v.addItem(self.hLine, ignoreBounds=True)
-        self.linepen = pg.mkPen({'color': "111"})
-        for i in range(1,47):
-            vlines = pg.InfiniteLine(angle=90, movable=False,pen=self.linepen)
-            self.v.addItem(vlines)
-            vlines.setPos([i,0])
+        # #self.w = pg.GraphicsWindow()
+        # self.w = pg.GraphicsLayoutWidget()
+        # self.ui.gridLayout_2.addWidget(self.w, 0,0)
+        # self.v = self.w.addViewBox()
+        # self.v.setAspectLocked()
+        # self.gld = Graph()
+        # self.v.addItem(self.gld)
+        # self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
+        # self.vLine = pg.InfiniteLine(angle=90, movable=False)
+        # self.hLine = pg.InfiniteLine(angle=0, movable=False)
+        # self.v.addItem(self.vLine, ignoreBounds=True)
+        # self.v.addItem(self.hLine, ignoreBounds=True)
+        # self.linepen = pg.mkPen({'color': "111"})
+        # for i in range(1,192):
+        #     vlines = pg.InfiniteLine(angle=90, movable=False,pen=self.linepen)
+        #     self.v.addItem(vlines)
+        #     vlines.setPos([i,0])
 
-        # self.vb = CustomViewBox()
-        # self.vb.setAspectLocked()
-        # self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=True,
-        #                    title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
-        # self.ui.gridLayout_2.addWidget(self.pw, 0, 0)
-        # # self.r = pg.CustomPolyLineROI([(0, 1),  (10,1), (20,1), (30, 1),(2570,0x800)])
-        # self.generateLGdata()
-        # self.r = pg.CustomPolyLineROI(self.lgdata)
-        # self.vb.addItem(self.r)
+        self.vb = CustomViewBox()
+        self.vb.setAspectLocked()
+        self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=True,
+                           title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
+        self.pw.showGrid(True,True,0.5)
+        self.ui.gridLayout_2.addWidget(self.pw, 0, 0)
+        # self.r = pg.CustomPolyLineROI([(0, 1),  (10,1), (20,1), (30, 1),(2570,0x800)])
+        self.generateLGdata()
+        self.r = CustomPolyLineROI2(self.lgdata)
+        self.vb.addItem(self.r)
         # self.vLine = pg.InfiniteLine(angle=90, movable=False)
         # self.hLine = pg.InfiniteLine(angle=0, movable=False)
         # self.vb.addItem(self.vLine, ignoreBounds=True)
         # self.vb.addItem(self.hLine, ignoreBounds=True)
-        #
+
         # proxy = pg.SignalProxy(self.vb.scene().sigMouseMoved, rateLimit=60, slot=self.mouseMoved)
-        #
-        # self.timer = pg.QtCore.QTimer()
-        # self.timer.timeout.connect(self.update)
-        # # self.timer.start(1000)
+
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(self.update)
+        self.timer.start(2000)
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
 
-    # def update(self):
-    #     # print self.r.getState()
-    #     self.vLine.setPos(self.r.getState()["points"][0])
-    #     self.hLine.setPos(self.r.getState()["points"][0])
-    #     pass
+    def update(self):
+        print self.r.getState()
+        # self.vLine.setPos(self.r.getState()["points"][0])
+        # self.hLine.setPos(self.r.getState()["points"][0])
+        pass
 
     def generateLGdata(self):
-        for i in range(32):
-            j = (i, i*10)
+        for i in range(12):
+            j = (i, 0x400+i*10)
             self.lgdata.append(j)
 
         print self.lgdata

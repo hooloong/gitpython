@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'AutoTest_res.ui'
 #
-# Created: Fri Apr 07 15:12:23 2017
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -35,14 +34,10 @@ class Ui_Form_Autotest(object):
         font.setWeight(75)
         self.pushButton_start.setFont(font)
         self.pushButton_start.setObjectName(_fromUtf8("pushButton_start"))
-        self.qwtPlot = Qwt5.QwtPlot(Form_Autotest)
-        self.qwtPlot.setGeometry(QtCore.QRect(0, 310, 400, 200))
-        self.qwtPlot.setObjectName(_fromUtf8("qwtPlot"))
         self.gridLayoutWidget = QtGui.QWidget(Form_Autotest)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 30, 160, 131))
         self.gridLayoutWidget.setObjectName(_fromUtf8("gridLayoutWidget"))
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.comboBox_source = QtGui.QComboBox(self.gridLayoutWidget)
         self.comboBox_source.setObjectName(_fromUtf8("comboBox_source"))
@@ -66,7 +61,6 @@ class Ui_Form_Autotest(object):
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(200, 30, 169, 131))
         self.gridLayoutWidget_2.setObjectName(_fromUtf8("gridLayoutWidget_2"))
         self.gridLayout_2 = QtGui.QGridLayout(self.gridLayoutWidget_2)
-        self.gridLayout_2.setMargin(0)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.comboBox_source_2 = QtGui.QComboBox(self.gridLayoutWidget_2)
         self.comboBox_source_2.setObjectName(_fromUtf8("comboBox_source_2"))
@@ -115,4 +109,3 @@ class Ui_Form_Autotest(object):
         self.label_22.setText(_translate("Form_Autotest", "Source_No_2", None))
         self.label_current.setText(_translate("Form_Autotest", "Current Source Change:", None))
 
-from PyQt4 import Qwt5
