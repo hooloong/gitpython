@@ -28,6 +28,10 @@
    <property name="text">
     <string>PREV</string>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>images/back.png</normaloff>images/back.png</iconset>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_nextPWM">
    <property name="enabled">
@@ -43,6 +47,10 @@
    </property>
    <property name="text">
     <string>NEXT</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>images/next.png</normaloff>images/next.png</iconset>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_readmem">

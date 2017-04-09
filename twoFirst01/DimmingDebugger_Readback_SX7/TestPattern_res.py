@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'TestPattern_res.ui'
 #
-# Created: Wed Mar 29 11:09:03 2017
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -191,7 +190,6 @@ class Ui_Form_TestPattern(object):
         self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(20, 10, 411, 281))
         self.horizontalLayoutWidget_3.setObjectName(_fromUtf8("horizontalLayoutWidget_3"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_3)
-        self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.verticalLayout_2 = QtGui.QVBoxLayout()
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -203,6 +201,9 @@ class Ui_Form_TestPattern(object):
         self.gridLayout.addWidget(self.pushButton_savepatToFile, 0, 0, 1, 1)
         self.pushButton_next = QtGui.QPushButton(self.horizontalLayoutWidget_3)
         self.pushButton_next.setEnabled(True)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("images/next.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_next.setIcon(icon)
         self.pushButton_next.setObjectName(_fromUtf8("pushButton_next"))
         self.gridLayout.addWidget(self.pushButton_next, 1, 0, 1, 1)
         self.pushButton_loadpatfromFile = QtGui.QPushButton(self.horizontalLayoutWidget_3)
@@ -211,6 +212,9 @@ class Ui_Form_TestPattern(object):
         self.gridLayout.addWidget(self.pushButton_loadpatfromFile, 0, 1, 1, 1)
         self.pushButton_prev = QtGui.QPushButton(self.horizontalLayoutWidget_3)
         self.pushButton_prev.setEnabled(True)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8("images/back.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_prev.setIcon(icon1)
         self.pushButton_prev.setObjectName(_fromUtf8("pushButton_prev"))
         self.gridLayout.addWidget(self.pushButton_prev, 1, 1, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout)
@@ -303,7 +307,6 @@ class Ui_Form_TestPattern(object):
         self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(20, 570, 411, 51))
         self.horizontalLayoutWidget_4.setObjectName(_fromUtf8("horizontalLayoutWidget_4"))
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_4)
-        self.horizontalLayout_5.setMargin(0)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
         self.label_patdelay = QtGui.QLabel(self.horizontalLayoutWidget_4)
         font = QtGui.QFont()

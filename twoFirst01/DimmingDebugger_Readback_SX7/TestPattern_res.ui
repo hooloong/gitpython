@@ -465,6 +465,10 @@
           <property name="text">
            <string>NEXT</string>
           </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>images/next.png</normaloff>images/next.png</iconset>
+          </property>
          </widget>
         </item>
         <item row="0" column="1">
@@ -484,6 +488,10 @@
           </property>
           <property name="text">
            <string>PREV</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>images/back.png</normaloff>images/back.png</iconset>
           </property>
          </widget>
         </item>
