@@ -162,7 +162,22 @@ class CustomPolyLineROI2(pg.PolyLineROI):
         else:
             raise Exception("Either an event or a position must be given.")
 
-
+    # def paint(self, p, *args):
+    #     p.setRenderHint(QtGui.QPainter.Antialiasing)
+    #     p.setPen(self.currentPen)
+    #     h1 = self.handles[0]['item'].pos()
+    #     h2 = self.handles[1]['item'].pos()
+    #     p.drawCubicBezier(h1, h2)
+    # def shape(self):
+    #     p = QtGui.QPainterPath()
+    #     if len(self.handles) == 0:
+    #         return p
+    #     p.moveTo(self.handles[0]['item'].pos())
+    #     for i in range(len(self.handles)):
+    #         p.lineTo(self.handles[i]['item'].pos())
+    #     p.lineTo(self.handles[0]['item'].pos())
+    #     print p
+    #     return p
 
 class DrawL2GWindow(QtGui.QMainWindow):
 
@@ -210,7 +225,7 @@ class DrawL2GWindow(QtGui.QMainWindow):
 
         self.timer = pg.QtCore.QTimer()
         self.timer.timeout.connect(self.update)
-        self.timer.start(2000)
+        # self.timer.start(2000)
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
