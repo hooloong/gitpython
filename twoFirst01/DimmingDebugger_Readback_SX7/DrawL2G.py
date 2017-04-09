@@ -147,22 +147,12 @@ class CustomViewBox(pg.ViewBox):
           pg.ViewBox.mouseDragEvent(self, ev)
         pass
 
-    def mouseMoved(self,evt):
-        pos = evt[0]  ## using signal proxy turns original arguments into a tuple
-        if p1.sceneBoundingRect().contains(pos):
-            mousePoint = vb.mapSceneToView(pos)
-            index = int(mousePoint.x())
-            if index > 0 and index < len(data1):
-                label.setText(
-                    "<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (
-                    mousePoint.x(), data1[index], data2[index]))
-            vLine.setPos(mousePoint.x())
-            hLine.setPos(mousePoint.y())
+
 
 class CustomPolyLineROI2(pg.PolyLineROI):
 
     def __init__(self, positions, closed=False, pos=None, **args):
-        pg.PolyLineROI.__init__(self, positions, closed=False, pos=None, **args)
+        pg.PolyLineROI.__init__(self, positions, closed=False, pos=None,movable=False, **args)
 
     def segmentClicked(self, segment, ev=None, pos=None): ## pos should be in this item's coordinate system
         if ev != None:
@@ -202,7 +192,7 @@ class DrawL2GWindow(QtGui.QMainWindow):
         #     vlines.setPos([i,0])
 
         self.vb = CustomViewBox()
-        self.vb.setAspectLocked()
+        self.vb.setAspectLocked(False)
         self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=True,
                            title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
         self.pw.showGrid(True,True,0.5)
@@ -232,8 +222,8 @@ class DrawL2GWindow(QtGui.QMainWindow):
         pass
 
     def generateLGdata(self):
-        for i in range(12):
-            j = (i, 0x400+i*10)
+        for i in range(11,-1,-1):
+            j = (i*20, 0x400+(0xC00-0x400)*(11-i)/11)
             self.lgdata.append(j)
 
         print self.lgdata
