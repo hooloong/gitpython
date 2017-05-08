@@ -81,15 +81,19 @@ class MyWindow(QtGui.QMainWindow):
         pass
     def modifyIP(self, config_read):
         eth_ip = config_read.get("Connection", "Ethernet.IP")
+        arm_set = config_read.get("Connection", "arm")
+        frcx_set = config_read.get("Connection", "sx6-frcx")
         ip_addr, ok = QtGui.QInputDialog.getText(self, 'IP', 'Enter IP address:', text=eth_ip)
         if ok is False:
             return False
         elif ip_addr.isEmpty():
             QtGui.QMessageBox.information(self, "warning", ("Please enter IP address !!!"))
             return False
-        elif ip_addr != eth_ip:
+        elif ip_addr != eth_ip or arm_set != '0' or frcx_set != '1':
             try:
                 config_read.set("Connection", "Ethernet.IP", ip_addr)
+                config_read.set("Connection", "arm", '0')
+                config_read.set("Connection", "sx6-frcx", '1')
                 config_read.write(open("ChipDebugger.INI", "r+"))
             except Exception, e:
                 QtGui.QMessageBox.information(self, "Warning", str(e))
