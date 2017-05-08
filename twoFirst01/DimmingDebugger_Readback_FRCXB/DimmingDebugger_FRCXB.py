@@ -9,22 +9,13 @@ import ConfigParser
 import numpy as np
 from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui,QtSql, uic  # ,Qwt5
-# import dimmingdebugger_res_sx7
-from dimmingdebugger_res_sx7 import *
+from dimmingdebugger_res_FRCXB import *
 from PWMs import *
 from Hist import *
 from TestPattern import *
 from Dimpages import *
 from DrawL2G import *
 from AutoTest import  *
-# from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-# from matplotlib.figure import Figure
-# from mpl_toolkits.mplot3d import Axes3D
-# import matplotlib.pyplot as plt
-# import ctypes as C
-# import cProfile
-# cProfile.run('main()')
-# import logging
 
 
 class MyWindow(QtGui.QMainWindow):
@@ -47,19 +38,19 @@ class MyWindow(QtGui.QMainWindow):
         self.formHist = HistWindow()
         self.ui.tabWidget.insertTab(1, self.formHist, u"Hist")
 
-        self.s_dict = dict(defaultfilename="dimming_readback_parameters_sx7.json")
+        self.s_dict = dict(defaultfilename="dimming_readback_parameters_frcxb.json")
 
         self.connectFlag = False
         self.bConnectionTried = False
         self.loadSettingfromJson()
         self.formTestPattern = TestPatternWindow()
         self.formDimpages = DimPagesWindow()
-        self.formDraw = DrawL2GWindow()
-        self.formAutoTest = AutoTestWindow()
+        # self.formDraw = DrawL2GWindow()
+        # self.formAutoTest = AutoTestWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
         self.ui.tabWidget.insertTab(3, self.formDimpages, u"DimPages")
-        self.ui.tabWidget.insertTab(4, self.formDraw, u"DrawL2G")
-        self.ui.tabWidget.insertTab(5, self.formAutoTest, u"AutoTest")
+        # self.ui.tabWidget.insertTab(4, self.formDraw, u"DrawL2G")
+        # self.ui.tabWidget.insertTab(5, self.formAutoTest, u"AutoTest")
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
         self.connect(self.ui.actionDisconnect, QtCore.SIGNAL('triggered()'), self.disconnectChip)
         self.ui.actionQuit.connect(self.ui.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
@@ -139,7 +130,7 @@ class MyWindow(QtGui.QMainWindow):
         self.setWindowTitle("Dimming Debugger     DisConnect..")
 
     def loadSettingfromJson(self):
-        settingfile = "dimming_readback_parameters_sx7.json"
+        settingfile = "dimming_readback_parameters_frcxb.json"
         s_fp = open(settingfile, 'r')
         if s_fp == False:
             print "error file!!!!"
@@ -153,7 +144,7 @@ class MyWindow(QtGui.QMainWindow):
             # self.loadParaTable()
 
     def saveSettingfromJson(self):
-        settingfile = "dimming_readback_parameters_sx7_1.json"
+        settingfile = "dimming_readback_parameters_frcxb_1.json"
         s_fp = open(settingfile, 'w+')
         if s_fp == False:
             print "error file!!!!"

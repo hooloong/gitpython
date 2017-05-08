@@ -1,7 +1,7 @@
 {
     "parameters": {
-        "version": "20170321",
-        "platform": "SX7"
+        "version": "20170508",
+        "platform": "FRCXB"
     },
     "panel_info": {
         "registers":[

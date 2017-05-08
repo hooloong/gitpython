@@ -2,6 +2,17 @@
 
 import ctypes as C
 try:
+    # bin_FRCXB
+    print "FRCXB"
+    BASIC_PAGE = 0x198A0000
+
+    SREG_LOG_DEBUG = 0x19B0028C
+    SBIT_LOG_DEBUG = 0x00000200
+    SREG_MEM_ADDR = 0x19D00284
+    SREG_MEM_WRITEINDEX = 0x19D0028C  # [15:0] count; [31:16] size, unit byte;
+    TFC = C.WinDLL( r"TFCAPI.dll" )
+
+except:
     # bin_SX7
     print "SX7"
     BASIC_PAGE = 0x19A00400
@@ -13,16 +24,6 @@ try:
 
     #TFC = C.WinDLL( r"D:\HiDTV\SVP_FUSION\Bin_SX7\TFCAPI.dll" )
     TFC = C.WinDLL( r"..\TFCAPI.dll" )
-except:
-    # bin_FRCXB
-    print "FRCXB"
-    BASIC_PAGE = 0x198A0000
-
-    SREG_LOG_DEBUG = 0x19B0028C
-    SBIT_LOG_DEBUG = 0x00000200
-    SREG_MEM_ADDR = 0x19D00284
-    SREG_MEM_WRITEINDEX = 0x19D0028C  # [15:0] count; [31:16] size, unit byte;
-    TFC = C.WinDLL( r"TFCAPI.dll" )
 
 
 def Cfunc(fcn, argin, argout=None):
