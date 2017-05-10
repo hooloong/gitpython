@@ -13,7 +13,9 @@
           {"name": "manual_panel_bls","address": "0x19400004","bit_start":0, "bit_end":31},
           {"name": "panel_id","address": "0x195603C0","bit_start":0, "bit_end":7},
           {"name": "database_version","address": "0x195603C8","bit_start":0, "bit_end":31},
-          {"name": "hist_led","address": "0x198800BC","bit_start":0, "bit_end":31}
+          {"name": "hist_led","address": "0x198800BC","bit_start":0, "bit_end":31},
+          {"name": "TSE_VERSION","address": "0x19600C30","bit_start":0, "bit_end":31},
+          {"name": "BUILD_TIME","address": "0x19600C34","bit_start":0, "bit_end":31}
         ],
         "boosting_type":["No boosting","Zero Dimming","Boosting 3824","Boosting 3820","Boosting Lite"],
         "led_output":[
