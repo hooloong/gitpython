@@ -6,10 +6,10 @@ try:
     print "FRCXB"
     BASIC_PAGE = 0x198A0000
 
-    SREG_LOG_DEBUG = 0x19B0028C
-    SBIT_LOG_DEBUG = 0x00000200
-    SREG_MEM_ADDR = 0x19D00284
-    SREG_MEM_WRITEINDEX = 0x19D0028C  # [15:0] count; [31:16] size, unit byte;
+    SREG_LOG_DEBUG = 0x198800B4
+    SBIT_LOG_DEBUG = 0x00000003
+    SREG_MEM_ADDR = 0x198800B0
+    SREG_MEM_WRITEINDEX = 0x198800B8  # [15:0] count; [31:16] size, unit byte;
     TFC = C.WinDLL( r"TFCAPI.dll" )
 
 except:
