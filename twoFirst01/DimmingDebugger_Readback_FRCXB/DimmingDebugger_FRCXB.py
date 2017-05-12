@@ -32,17 +32,17 @@ class MyWindow(QtGui.QMainWindow):
 
         self.ui.tabWidget.removeTab(0)
 
-        self.formPWMs = PWMsWindow()
-        self.ui.tabWidget.insertTab(0, self.formPWMs, u"PWMs")
-
-        self.formHist = HistWindow()
-        self.ui.tabWidget.insertTab(1, self.formHist, u"Hist")
-
         self.s_dict = dict(defaultfilename="dimming_readback_parameters_frcxb.json")
 
         self.connectFlag = False
         self.bConnectionTried = False
         self.loadSettingfromJson()
+
+        self.formPWMs = PWMsWindow()
+        self.ui.tabWidget.insertTab(0, self.formPWMs, u"PWMs")
+
+        self.formHist = HistWindow()
+        self.ui.tabWidget.insertTab(1, self.formHist, u"Hist")
         self.formTestPattern = TestPatternWindow()
         self.formDimpages = DimPagesWindow()
         # self.formDraw = DrawL2GWindow()
@@ -78,6 +78,7 @@ class MyWindow(QtGui.QMainWindow):
     def setPanelInfo(self):
         self.formTestPattern.setSettingDict(self.s_dict)
         self.formDimpages.setSettingDict(self.s_setjson["dim_pages"])
+        self.formPWMs.setSettingDict(self.s_dict)
         pass
     def modifyIP(self, config_read):
         eth_ip = config_read.get("Connection", "Ethernet.IP")

@@ -37,6 +37,8 @@ class PWMsWindow(QtGui.QMainWindow):
         self.painter = QtGui.QPainter()
 
         self.connectFlag = False
+        self.regs_mapping_addr = [0x198A01F8, 0x0000FFFF, 0]
+        self.regs_boostype_addr = [0x198800DC, 0x3, 0]
         self.pwm = np.zeros(64, np.uint32)
         for i in range(64):
             self.pwm[i] = random.randrange(100, 4095)
@@ -77,6 +79,29 @@ class PWMsWindow(QtGui.QMainWindow):
     def setConnectFlag(self, flag):
         self.connectFlag = flag
 
+    def setSettingDict(self, panel):
+        self.panel_info = panel
+        # print self.panel_info
+        for regs in self.panel_info["registers"]:
+            if regs["name"] == "mapping_id":
+                self.regs_mapping_addr[0] = int(regs["address"], 16)
+                self.regs_mapping_addr[1] = self.generateMask(regs["bit_start"], regs["bit_end"])
+                self.regs_mapping_addr[2] = regs["bit_start"]
+            if regs["name"] == "boosting_type":
+                self.regs_boostype_addr[0] = int(regs["address"], 16)
+                self.regs_boostype_addr[1] = self.generateMask(regs["bit_start"], regs["bit_end"])
+                self.regs_boostype_addr[2] = regs["bit_start"]
+        pass
+    def generateMask(self,a,b):
+        if(a > 31 or b> 31):
+            return 0xFFFFFFFF
+        if a <0 or b < 0 :
+            return 0x0
+        ret = 0
+        for i in range(a,b+1):
+            ret |= 1<<i
+        # print hex(ret)
+        return ret
     def paintPWM(self):
         viewWid = float(self.ui.graphicsView_PWM.width() - 2)
         viewHeight = float(self.ui.graphicsView_PWM.height() - 2)
