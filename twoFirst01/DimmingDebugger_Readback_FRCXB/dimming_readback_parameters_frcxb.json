@@ -5,8 +5,8 @@
     },
     "panel_info": {
         "registers":[
-          {"name": "mapping_id","address": "0x198800B0","bit_start":24, "bit_end":31},
-          {"name": "boosting_type","address": "0x198800B0","bit_start":0, "bit_end":2},
+          {"name": "mapping_id","address": "0x198A01F8","bit_start":0, "bit_end":15},
+          {"name": "boosting_type","address": "0x198800DC","bit_start":0, "bit_end":3},
           {"name": "testing_pat_en","address": "0x198800B4","bit_start":4, "bit_end":5},
           {"name": "testing_pat_ctrl","address": "0x198800B8","bit_start":0, "bit_end":31},
           {"name": "manual_pats_addr","address": "0x198A04D0","bit_start":0, "bit_end":27},
