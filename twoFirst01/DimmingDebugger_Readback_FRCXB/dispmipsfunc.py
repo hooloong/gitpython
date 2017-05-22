@@ -27,8 +27,6 @@ import two01 as TFC
 DWORD = C.c_uint32
 
 
-
-
 mmapPToVDispMips = (
     (0x00000000, 0x10000000, 1), #region 1
     (0x10000000, 0x50000000, 2), # region 2

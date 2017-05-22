@@ -25,8 +25,8 @@ class MyWindow(QtGui.QMainWindow):
         # uic.loadUi("dimmingdebugger_res.ui", self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon("222.ico"))
-        # self.setGeometry(300,300,810,640)
+        self.setWindowIcon(QtGui.QIcon("images/222.ico"))
+        self.setGeometry(300,300,810,640)
         self.statusBar().showMessage('DisConnected to chip!!!')
         self.painter = QtGui.QPainter()
 
