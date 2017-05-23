@@ -57,7 +57,7 @@ class PWMsWindow(QtGui.QMainWindow):
         self.log_flag = False
         self.read_flag = False
         self.stop_flag = False
-        self.ui.lineEdit_PWMfile.setText("DimmingMemLogData.bin")
+        self.ui.lineEdit_PWMfile.setText("DimmingMemLogData_FRCXB.bin")
         self.readMem_Thread = ReadMemThread()
         self.readMem_Thread.setFilePath(self.ui.lineEdit_PWMfile.text())
         self.connect(self.ui.pushButton_logstart, QtCore.SIGNAL('clicked()'), self.logStart)
@@ -366,7 +366,7 @@ class ReadMemThread(QtCore.QThread):
     def __init__(self, parent=None):
         super(ReadMemThread, self).__init__(parent)
         self.breakflag = False
-        self.filepath = "DimmingMemLogData.bin"
+        self.filepath = "DimmingMemLogData_FRCXB.bin"
 
     def run(self):
         startAddr = TFC.tfcReadDword(REG_MEM_ADDR, 0x0)
