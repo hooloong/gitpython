@@ -125,7 +125,7 @@ class DimPagesWindow(QtGui.QMainWindow):
 
     def createConnection(self):
         self.db = QtSql.QSqlDatabase.addDatabase("QODBC")
-        connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing7.mdb'
+        connection_string = 'Driver={Microsoft Access Driver (*.mdb)};DBQ=D:\\testing_fb.mdb'
         self.db.setDatabaseName(connection_string)
         self.db.open()
 
@@ -425,7 +425,7 @@ class DimPagesWindow(QtGui.QMainWindow):
             self.histpageregs.append(regs(regaddr,regname,regdescription,regright,self.dimpageaddr))
         print len(self.histpageregs)
 
-        self.q.exec_("select id,shadowreg,shadowregval,shadowregmask from page where caption='2DDIM_PIXC'")
+        self.q.exec_("select id,shadowreg,shadowregval,shadowregmask from page where caption='2DDIM_PIXC0'")
         print self.q.record().count()
         addr1 = self.q.record().indexOf("ShadowReg")
         addr2 = self.q.record().indexOf("ShadowRegVal")
