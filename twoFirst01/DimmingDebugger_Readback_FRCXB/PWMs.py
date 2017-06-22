@@ -137,7 +137,47 @@ class PWMsWindow(QtGui.QMainWindow):
                 #
                 # newItemt = QtGui.QTableWidgetItem(currenttablevar)
                 # self.tableWidget_Current.setItem(i, j, newItemt)
+    def getpanelinfofromchip(self):
+        if self.connectFlag is False:
+            QtGui.QMessageBox.information(self, "warning", ("Please connect to chip first!!!\n Setting->Connect"))
+            return
+        if self.initFlag is True:
+            return
+        """
+        update panel info label
+        """
+        self.debugregisters["mapping_id"] = (TFC.tfcReadDword(self.regs_mapping_addr[0], 0x0) \
+                                             & self.regs_mapping_addr[1]) >> self.regs_mapping_addr[2]
+        self.debugregisters["boosting_type"] = (TFC.tfcReadDword(self.regs_boostype_addr[0], 0x0) \
+                                             & self.regs_boostype_addr[1]) >> self.regs_boostype_addr[2]
+        # print self.debugregisters["mapping_id"],self.debugregisters["boosting_type"]
+        self.manual_buff_addr = (TFC.tfcReadDword(self.manual_testpat_addr[0], 0x0) \
+                                             & self.manual_testpat_addr[1]) << 4
+        print  hex(self.manual_buff_addr)
+        temps = ""
+        for ledtype in self.panel_info["led_output"]:
+            # print ledtype
+            if ledtype[u"mapping_id"] == self.debugregisters["mapping_id"]:
+                temps = temps+ ledtype["name"]
+                # print ledtype["name"]
+                self.debugregisters[u"led_x"] = ledtype["led_x"]
+                self.debugregisters[u"led_y"] = ledtype["led_y"]
+        self.ui.label_paneinfo_1.setText("Panel is %s!   LEDX=%d, LEDY=%d." % ( \
+            self.panel_info["boosting_type"][self.debugregisters["boosting_type"]],\
+            self.debugregisters[u"led_x"] , self.debugregisters[u"led_y"] ))
+        """
+        update the current pattern table widget
+        """
 
+        self.pat_size = self.debugregisters[u"led_x"] * self.debugregisters[u"led_y"]
+        self.curpat = np.zeros(self.pat_size, np.uint32)
+        self.curtmpppat = np.zeros((self.pat_size + 6)*TOTAL_PATS_LIMIT, np.uint16)
+        self.total_manual_pat = 0
+        self.reStruTable()
+        self.DataShowiInTable()
+        self.initFlag = True
+        self.headpartupdate()
+        pass
     def logStart(self):
         if self.connectFlag is False:
             QtGui.QMessageBox.information(self, "warning", ("Please connect to chip first!!!\n Setting->Connect"))

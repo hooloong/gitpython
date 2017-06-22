@@ -2,7 +2,8 @@
 
 # Form implementation generated from reading ui file 'PWMs_res.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created: Wed Jun 21 19:23:26 2017
+#      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -49,7 +50,7 @@ class Ui_Form_PWMs(object):
         self.pushButton_readmem.setFont(font)
         self.pushButton_readmem.setObjectName(_fromUtf8("pushButton_readmem"))
         self.pushButton_logstart = QtGui.QPushButton(Form_PWMs)
-        self.pushButton_logstart.setGeometry(QtCore.QRect(430, 30, 91, 31))
+        self.pushButton_logstart.setGeometry(QtCore.QRect(430, 50, 91, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -70,7 +71,7 @@ class Ui_Form_PWMs(object):
         self.spinBox_MemDataSelect.setProperty("value", 0)
         self.spinBox_MemDataSelect.setObjectName(_fromUtf8("spinBox_MemDataSelect"))
         self.pushButton_saveMemDataToFile = QtGui.QPushButton(Form_PWMs)
-        self.pushButton_saveMemDataToFile.setGeometry(QtCore.QRect(430, 70, 91, 31))
+        self.pushButton_saveMemDataToFile.setGeometry(QtCore.QRect(430, 87, 91, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -219,10 +220,10 @@ class Ui_Form_PWMs(object):
         self.graphicsView_PWM.setGeometry(QtCore.QRect(10, 310, 840, 300))
         self.graphicsView_PWM.setObjectName(_fromUtf8("graphicsView_PWM"))
         self.lineEdit_PWMfile = QtGui.QLineEdit(Form_PWMs)
-        self.lineEdit_PWMfile.setGeometry(QtCore.QRect(540, 75, 180, 20))
+        self.lineEdit_PWMfile.setGeometry(QtCore.QRect(540, 92, 180, 20))
         self.lineEdit_PWMfile.setObjectName(_fromUtf8("lineEdit_PWMfile"))
         self.pushButton_chooseFile = QtGui.QPushButton(Form_PWMs)
-        self.pushButton_chooseFile.setGeometry(QtCore.QRect(730, 73, 75, 23))
+        self.pushButton_chooseFile.setGeometry(QtCore.QRect(730, 90, 75, 23))
         self.pushButton_chooseFile.setObjectName(_fromUtf8("pushButton_chooseFile"))
         self.label_Status = QtGui.QLabel(Form_PWMs)
         self.label_Status.setGeometry(QtCore.QRect(20, 280, 400, 16))
@@ -231,6 +232,14 @@ class Ui_Form_PWMs(object):
         self.label_Status.setFont(font)
         self.label_Status.setText(_fromUtf8(""))
         self.label_Status.setObjectName(_fromUtf8("label_Status"))
+        self.PushButton_tvinfo = QtGui.QPushButton(Form_PWMs)
+        self.PushButton_tvinfo.setGeometry(QtCore.QRect(430, 12, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.PushButton_tvinfo.setFont(font)
+        self.PushButton_tvinfo.setObjectName(_fromUtf8("PushButton_tvinfo"))
 
         self.retranslateUi(Form_PWMs)
         QtCore.QMetaObject.connectSlotsByName(Form_PWMs)
@@ -375,4 +384,5 @@ class Ui_Form_PWMs(object):
         item.setText(_translate("Form_PWMs", "6", None))
         self.tableWidget_PWM.setSortingEnabled(__sortingEnabled)
         self.pushButton_chooseFile.setText(_translate("Form_PWMs", "Choose File", None))
+        self.PushButton_tvinfo.setText(_translate("Form_PWMs", "Get_TVInfo", None))
 
