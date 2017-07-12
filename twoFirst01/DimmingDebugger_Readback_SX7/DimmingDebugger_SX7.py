@@ -15,6 +15,7 @@ from PWMs import *
 from Hist import *
 from TestPattern import *
 from Dimpages import *
+from DrawMap import *
 from DrawL2G import *
 from AutoTest import  *
 # from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
@@ -54,12 +55,14 @@ class MyWindow(QtGui.QMainWindow):
         self.loadSettingfromJson()
         self.formTestPattern = TestPatternWindow()
         self.formDimpages = DimPagesWindow()
+        self.formDrawm = DrawMLutWindow()
         self.formDraw = DrawL2GWindow()
         self.formAutoTest = AutoTestWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
         self.ui.tabWidget.insertTab(3, self.formDimpages, u"DimPages")
-        self.ui.tabWidget.insertTab(4, self.formDraw, u"DrawL2G")
-        self.ui.tabWidget.insertTab(5, self.formAutoTest, u"AutoTest")
+        self.ui.tabWidget.insertTab(4, self.formDrawm, u"M_Lut")
+        self.ui.tabWidget.insertTab(5, self.formDraw, u"DrawL2G")
+        self.ui.tabWidget.insertTab(6, self.formAutoTest, u"AutoTest")
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
         self.connect(self.ui.actionDisconnect, QtCore.SIGNAL('triggered()'), self.disconnectChip)
         self.ui.actionQuit.connect(self.ui.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
@@ -73,7 +76,9 @@ class MyWindow(QtGui.QMainWindow):
         self.resize(860, 690)
 
     def tabchanges(self,index):
-        if index == 4:
+        if index == 5:
+            self.resize(1180,760)
+        elif index == 4:
             self.resize(1180,760)
         elif index == 3:
             self.resize(960, 760)
@@ -117,6 +122,7 @@ class MyWindow(QtGui.QMainWindow):
         self.formHist.setConnectFlag(self.connectFlag)
         self.formTestPattern.setConnectFlag(self.connectFlag)
         self.formDimpages.setConnectFlag(self.connectFlag)
+        self.formDrawm.setConnectFlag(self.connectFlag)
         print("tfcConnInit returns ", self.connectFlag)
         if self.connectFlag:
             print("Connect to chip!!! ")
