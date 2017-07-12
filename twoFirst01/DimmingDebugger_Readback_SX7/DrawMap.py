@@ -183,7 +183,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(DrawMLutWindow, self).__init__()
-        self.ui =  Ui_Form_Hist()
+        self.ui =  Ui_Form_MLut()
         self.ui.setupUi(self)
 
         self.lgdata = []

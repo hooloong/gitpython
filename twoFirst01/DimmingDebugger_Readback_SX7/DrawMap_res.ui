@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form_Hist</class>
- <widget class="QWidget" name="Form_Hist">
+ <class>Form_MLut</class>
+ <widget class="QWidget" name="Form_MLut">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -65,7 +65,7 @@
     <rect>
      <x>30</x>
      <y>360</y>
-     <width>160</width>
+     <width>161</width>
      <height>80</height>
     </rect>
    </property>
@@ -78,23 +78,23 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_1">
+     <widget class="QPushButton" name="pushButton_generate">
       <property name="text">
-       <string>PushButton</string>
+       <string>Generate!</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="pushButton_write">
       <property name="text">
-       <string>PushButton</string>
+       <string>WriteToChip</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="pushButton_read">
       <property name="text">
-       <string>PushButton</string>
+       <string>ReadFromChip</string>
       </property>
      </widget>
     </item>
@@ -103,21 +103,21 @@
   <widget class="QLabel" name="label_1">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>300</y>
-     <width>54</width>
-     <height>12</height>
+     <x>30</x>
+     <y>310</y>
+     <width>81</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>TestmodeSelect</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>300</y>
+     <x>240</x>
+     <y>310</y>
      <width>54</width>
      <height>12</height>
     </rect>
@@ -136,6 +136,36 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2"/>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>310</y>
+     <width>101</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Normal</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>SetToZeroAll</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>SetAllTo_63</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>SetBinaryToAll</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>
