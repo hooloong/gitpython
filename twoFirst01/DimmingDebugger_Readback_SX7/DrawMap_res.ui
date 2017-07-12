@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form_MLut</class>
- <widget class="QWidget" name="Form_MLut">
+ <class>Form_mLut</class>
+ <widget class="QWidget" name="Form_mLut">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,9 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form_Hist</string>
+   <string>Form_mLut</string>
   </property>
-  <widget class="QTableWidget" name="tableWidget_lg">
+  <widget class="QTableWidget" name="tableWidget_mlut">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -137,7 +137,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout_2"/>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="comboBox_test">
    <property name="geometry">
     <rect>
      <x>120</x>

@@ -183,7 +183,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(DrawMLutWindow, self).__init__()
-        self.ui =  Ui_Form_MLut()
+        self.ui =  Ui_Form_mLut()
         self.ui.setupUi(self)
 
         self.lgdata = []
@@ -226,6 +226,16 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.timer = pg.QtCore.QTimer()
         self.timer.timeout.connect(self.update)
         # self.timer.start(2000)
+        self.normalm= np.zeros(65, np.uint32)
+        self.setzerom = np.zeros(65,np.uint32)
+        self.setfullm = np.zeros(65,np.uint32)
+        self.setbinarym = np.zeros(65, np.uint32)
+        self.normalm_lut= np.zeros(1024, np.uint32)
+        self.setzerom_lut = np.zeros(1024,np.uint32)
+        self.setfullm_lut = np.zeros(1024,np.uint32)
+        self.setbinarym_lut = np.zeros(1024, np.uint32)
+        self.generateTestingdata()
+        self.initMlutTable()
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
@@ -244,7 +254,48 @@ class DrawMLutWindow(QtGui.QMainWindow):
         print self.lgdata
         pass
 
+    def initMlutTable(self):
+        for i in range(self.ui.tableWidget_mlut.rowCount()):
+            for j in range(self.ui.tableWidget_mlut.columnCount()):
+                # pwmdutytemp = "%X" % (self.curpat[i * self.ui.tableWidget_pattern.columnCount() + j])
+                newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.normalm[i * \
+                self.ui.tableWidget_mlut.columnCount() + j],4,10,QtCore.QChar(" ")).toUpper())
+                newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+                self.ui.tableWidget_mlut.setItem(i, j, newItemt)
+        pass
 
+    def tableToLut(self,inputs,output):
+        # //check the input values
+        print inputs,output
+        if inputs[63] != 1023:
+            print "input[63 ] != 1023, error"
+            # QtGui.QMessageBox.information(self, "warning", ("input[63 ] != 1023, error"))
+            return
+        for i in range(63):
+            if inputs[i] > inputs[i+1]:
+                print "inputs[ %d] > next data, error" % i
+                # QtGui.QMessageBox.information(self, "warning", ("data not right!!"))
+                return
+            if inputs[i] > 1023:
+                print "inputs[ %d] > 1023, error" % i
+                # QtGui.QMessageBox.information(self, "warning", ("data not right!!"))
+                return
+        output[0] = 0
+        output[1023] = 63
+        for i in range(1,64):
+            for y in range(output[i-1],inputs[i]):
+                output[y] = i
+        print output
+
+        pass
+
+    def generateTestingdata(self):
+        for i in range(64):
+            self.normalm[i] = 1024/64 * (i+1)
+        self.normalm[64] = 1023
+
+        self.tableToLut(self.normalm,self.normalm_lut)
+        pass
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
