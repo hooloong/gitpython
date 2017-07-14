@@ -234,8 +234,13 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.setzerom_lut = np.zeros(1024,np.uint32)
         self.setfullm_lut = np.zeros(1024,np.uint32)
         self.setbinarym_lut = np.zeros(1024, np.uint32)
+        self.curmm= np.zeros(65, np.uint32)
+        self.curmm_lut = np.zeros(1024, np.uint32)
         self.generateTestingdata()
         self.initMlutTable()
+        self.connect(self.ui.pushButton_write, QtCore.SIGNAL('clicked()'), self.writeMlut)
+        self.connect(self.ui.pushButton_write, QtCore.SIGNAL('pressed()'), self.changeText_Mlut)
+        self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
@@ -258,7 +263,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         for i in range(self.ui.tableWidget_mlut.rowCount()):
             for j in range(self.ui.tableWidget_mlut.columnCount()):
                 # pwmdutytemp = "%X" % (self.curpat[i * self.ui.tableWidget_pattern.columnCount() + j])
-                newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.normalm[i * \
+                newItemt = QtGui.QTableWidgetItem(QtCore.QString("%1").arg(self.curmm[i * \
                 self.ui.tableWidget_mlut.columnCount() + j],4,10,QtCore.QChar(" ")).toUpper())
                 newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
                 self.ui.tableWidget_mlut.setItem(i, j, newItemt)
@@ -283,19 +288,112 @@ class DrawMLutWindow(QtGui.QMainWindow):
         output[0] = 0
         output[1023] = 63
         for i in range(1,64):
-            for y in range(output[i-1],inputs[i]):
+            for y in range(inputs[i-1],inputs[i]):
                 output[y] = i
         print output
-
         pass
 
     def generateTestingdata(self):
+        """
+        generate normal table
+        """
         for i in range(64):
             self.normalm[i] = 1024/64 * (i+1)
-        self.normalm[64] = 1023
+        self.normalm[63] = 1023
 
         self.tableToLut(self.normalm,self.normalm_lut)
+        print self.normalm_lut
+
+        # generate  zero table for hist
+        for i in range(64):
+            self.setzerom[i] = 0
+        for i in range(1024):
+            self.setzerom_lut[i] = 0
+        # generate full mapping lut
+        for i in range(64):
+            self.setfullm[i] = 1023
+        for i in range(1024):
+            self.setfullm_lut[i] = 63
+        print self.setfullm_lut
+        # generate binary mpping lut, the knee set to 0x512
+        for i in range(64):
+                if i <32:
+                    self.setbinarym[i] = 0
+                else:
+                    self.setbinarym[i] = 1023
+        for i in range(1024):
+                if i < 512:
+                    self.setbinarym_lut[i] = 0
+                else:
+                    self.setbinarym_lut[i] = 63
+        print self.setbinarym_lut
+        self.curmm_lut = self.normalm_lut.copy()
+        self.curmm = self.normalm.copy()
+        # self.curmm_lut = self.setfullm_lut.copy()
+        # self.curmm = self.setfullm.copy()
+        # self.curmm_lut = self.setbinarym_lut.copy()
+        # self.curmm = self.setbinarym.copy()
+        # self.curmm_lut = self.setzerom_lut.copy()
+        # self.curmm = self.setzerom.copy()
         pass
+    def comboxchange(self):
+        # if  self.initFlag is False: return
+        index = self.ui.comboBox_test.currentIndex()
+        if index ==0:
+            self.curmm_lut = self.normalm_lut.copy()
+            self.curmm = self.normalm.copy()
+        elif index == 1:
+            self.curmm_lut = self.setzerom_lut.copy()
+            self.curmm = self.setzerom.copy()
+        elif index == 2:
+            self.curmm_lut = self.setfullm_lut.copy()
+            self.curmm = self.setfullm.copy()
+        else:
+            self.curmm_lut = self.setbinarym_lut.copy()
+            self.curmm = self.setbinarym.copy()
+
+        self.initMlutTable()
+        self.update()
+        pass
+    def changeText_Mlut(self):
+        if self.connectFlag is False:
+            pass
+        else:
+            self.ui.pushButton_write.setText("Write...")
+    def writeMlut(self):
+        # added read from registers
+        if self.connectFlag is False:
+            QtGui.QMessageBox.information(self, "warning", ("Please connect to chip first!!!\n Setting->Connect"))
+            return
+        TFC.tfcWriteDwordMask(0x19A004B0, 0, 0x00008000, 0x00008000)
+        for i in range(1024):
+            if i%4 == 0:
+                temp = self.curmm_lut[i] | (self.curmm_lut[i+1] <<8)  \
+                                                          | self.curmm_lut[i+2] <<16 | self.curmm_lut[i+3] << 24
+                TFC.tfcWriteDword(0x19A46000+i,0,temp)
+                print temp
+        TFC.tfcWriteDwordMask(0x19A004B0, 0, 0x00008000, 0x00000000)
+        self.ui.pushButton_write.setText("WriteToChip")
+
+    def readMlut(self):
+        # added read from registers
+        if self.connectFlag is False:
+            QtGui.QMessageBox.information(self, "warning", ("Please connect to chip first!!!\n Setting->Connect"))
+            return
+        histbaseaddress = (TFC.tfc2ddReadDword(0xC0) & 0x0FFFFFFF) << 4
+        histindex = self.ui.spinBox_HistDataSelect.value()
+        print histbaseaddress, histindex
+
+        if histindex >= 799:
+            histindex -= 1
+        self.ui.spinBox_HistDataSelect.setValue(histindex)
+        self.ui.spinBox_HistDataSelect.setRange(0, 799)
+
+        # histbaseaddress += histindex * 32
+        self.updateHist(32, histindex, histbaseaddress)
+        self.ui.pushButton_readHist.setText("ReadHist")
+        # print self.pushButton_readpwm.text
+        print self.hist
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
