@@ -241,6 +241,8 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_write, QtCore.SIGNAL('clicked()'), self.writeMlut)
         self.connect(self.ui.pushButton_write, QtCore.SIGNAL('pressed()'), self.changeText_Mlut)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
+        self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
+
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
@@ -251,6 +253,14 @@ class DrawMLutWindow(QtGui.QMainWindow):
         # self.hLine.setPos(self.r.getState()["points"][0])
         pass
 
+    def enableMlut(self):
+        if self.connectFlag is False: return
+        if self.ui.checkBox_en.isChecked():
+            TFC.tfcWriteDwordMask(TFC.BASIC_PAGE, 0x30, 0x00000008, 0x00000008)
+        else:
+            TFC.tfcWriteDwordMask(TFC.BASIC_PAGE, 0x30, 0x00000008, 0)
+
+        pass
     def generateLGdata(self):
         for i in range(11,-1,-1):
             j = (i*20, 0x400+(0xC00-0x400)*(11-i)/11)
