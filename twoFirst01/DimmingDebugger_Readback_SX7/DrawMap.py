@@ -244,7 +244,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_read, QtCore.SIGNAL('pressed()'), self.changeText_Mlut_read)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
-
+        self.ui.tableWidget_mlut.itemChanged.connect(self.updatetable)
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
@@ -279,7 +279,24 @@ class DrawMLutWindow(QtGui.QMainWindow):
                 newItemt.setTextAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
                 self.ui.tableWidget_mlut.setItem(i, j, newItemt)
         pass
+    def updatetable(self,item):
+        # if not self.initFlag: return
 
+        if item != self.ui.tableWidget_mlut.currentItem():
+            return
+        print item.text()
+        stringitem = "%s" % item.text()
+        isright = ispropernumber(stringitem)
+        i = item.row()
+        j = item.column()
+        if isright is True:
+            self.curmm[item.row()* 8 + item.column()] = int(stringitem,10)
+
+        if isright is False:
+            self.ui.tableWidget_mlut.currentItem().setText(QtCore.QString("%1").arg(self.curmm[i * \
+                                 self.ui.tableWidget_mlut.columnCount() + j],
+                                        4, 10, QtCore.QChar(" ")).toUpper())
+        pass
     def tableToLut(self,inputs,output):
         # //check the input values
         print inputs,output

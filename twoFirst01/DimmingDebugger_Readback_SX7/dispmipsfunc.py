@@ -4,7 +4,7 @@ import ctypes as C
 from pdb import set_trace
 proper_digit="0123456789ABCDEFabcdef"
 low_digit="abcdef"
-
+proper_number="01234567890"
 
 def isproperdigit(strinput):
     if len(strinput) == 0 or len(strinput) > 3:
@@ -13,8 +13,13 @@ def isproperdigit(strinput):
         if c not in proper_digit:
             return False
     return True
-
-
+def ispropernumber(strnum):
+    if len(strnum) == 0 or len(strnum) > 4:
+        return False
+    for c in strnum:
+        if c not in proper_number:
+            return False
+    return True
 def islowerdigit(strinput):
     for c in strinput:
         if c in low_digit:
