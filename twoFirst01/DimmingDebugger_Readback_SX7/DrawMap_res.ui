@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>391</width>
-     <height>261</height>
+     <width>371</width>
+     <height>251</height>
     </rect>
    </property>
    <property name="rowCount">
@@ -64,26 +64,12 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>350</y>
-     <width>161</width>
-     <height>80</height>
+     <y>330</y>
+     <width>323</width>
+     <height>83</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_refresh">
-      <property name="text">
-       <string>Refresh</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_generate">
-      <property name="text">
-       <string>Generate!</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QPushButton" name="pushButton_write">
       <property name="text">
@@ -91,32 +77,61 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="3" column="4">
+     <widget class="QPushButton" name="pushButton_output">
+      <property name="text">
+       <string>OutputMlut</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
      <widget class="QPushButton" name="pushButton_read">
       <property name="text">
        <string>ReadFromChip</string>
       </property>
      </widget>
     </item>
+    <item row="0" column="4">
+     <widget class="QPushButton" name="pushButton_draw">
+      <property name="text">
+       <string>DrawIt!</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="pushButton_convert">
+      <property name="text">
+       <string>EditorConv</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="pushButton_refresh">
+      <property name="text">
+       <string>Refresh</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QPushButton" name="pushButton_load">
+      <property name="text">
+       <string>loadFromFile</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QPushButton" name="pushButton_save">
+      <property name="text">
+       <string>SaveToFile</string>
+      </property>
+     </widget>
+    </item>
    </layout>
-  </widget>
-  <widget class="QLabel" name="label_1">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>310</y>
-     <width>81</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TestmodeSelect</string>
-   </property>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>400</x>
      <y>10</y>
      <width>741</width>
      <height>681</height>
@@ -124,58 +139,65 @@
    </property>
    <layout class="QGridLayout" name="gridLayout_2"/>
   </widget>
-  <widget class="QComboBox" name="comboBox_test">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>310</y>
-     <width>101</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>Normal</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>SetToZeroAll</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>SetAllTo_63</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>SetBinaryToAll</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_en">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>310</y>
-     <width>91</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Enable M_LUT</string>
-   </property>
-  </widget>
   <widget class="QPlainTextEdit" name="plainTextEdit_output">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>440</y>
-     <width>401</width>
-     <height>251</height>
+     <y>420</y>
+     <width>371</width>
+     <height>271</height>
     </rect>
    </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>280</y>
+     <width>259</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label_1">
+      <property name="text">
+       <string>TestingData:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox_test">
+      <item>
+       <property name="text">
+        <string>Normal</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SetToZeroAll</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SetAllTo_63</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SetBinaryToAll</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox_en">
+      <property name="text">
+       <string>Enable M_LUT</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
