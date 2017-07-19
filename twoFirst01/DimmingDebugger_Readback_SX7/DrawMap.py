@@ -242,6 +242,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_write, QtCore.SIGNAL('pressed()'), self.changeText_Mlut)
         self.connect(self.ui.pushButton_read, QtCore.SIGNAL('clicked()'), self.readMlut)
         self.connect(self.ui.pushButton_read, QtCore.SIGNAL('pressed()'), self.changeText_Mlut_read)
+        self.connect(self.ui.pushButton_convert, QtCore.SIGNAL('clicked()'), self.convert)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
         self.ui.tableWidget_mlut.itemChanged.connect(self.updatetable)
@@ -320,7 +321,9 @@ class DrawMLutWindow(QtGui.QMainWindow):
                 output[y] = i
         print output
         pass
-
+    def convert(self):
+        self.tableToLut(self.curmm, self.curmm_lut)
+        pass
     def generateTestingdata(self):
         """
         generate normal table
