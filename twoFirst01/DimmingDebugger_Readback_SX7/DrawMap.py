@@ -240,6 +240,8 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.initMlutTable()
         self.connect(self.ui.pushButton_write, QtCore.SIGNAL('clicked()'), self.writeMlut)
         self.connect(self.ui.pushButton_write, QtCore.SIGNAL('pressed()'), self.changeText_Mlut)
+        self.connect(self.ui.pushButton_read, QtCore.SIGNAL('clicked()'), self.readMlut)
+        self.connect(self.ui.pushButton_read, QtCore.SIGNAL('pressed()'), self.changeText_Mlut_read)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
 
@@ -259,7 +261,6 @@ class DrawMLutWindow(QtGui.QMainWindow):
             TFC.tfcWriteDwordMask(TFC.BASIC_PAGE, 0x30, 0x00000008, 0x00000008)
         else:
             TFC.tfcWriteDwordMask(TFC.BASIC_PAGE, 0x30, 0x00000008, 0)
-
         pass
     def generateLGdata(self):
         for i in range(11,-1,-1):
@@ -370,6 +371,11 @@ class DrawMLutWindow(QtGui.QMainWindow):
             pass
         else:
             self.ui.pushButton_write.setText("Write...")
+    def changeText_Mlut_read(self):
+        if self.connectFlag is False:
+            pass
+        else:
+            self.ui.pushButton_read.setText("Read...")
     def writeMlut(self):
         # added read from registers
         if self.connectFlag is False:
@@ -386,24 +392,20 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.ui.pushButton_write.setText("WriteToChip")
 
     def readMlut(self):
-        # added read from registers
         if self.connectFlag is False:
             QtGui.QMessageBox.information(self, "warning", ("Please connect to chip first!!!\n Setting->Connect"))
             return
-        histbaseaddress = (TFC.tfc2ddReadDword(0xC0) & 0x0FFFFFFF) << 4
-        histindex = self.ui.spinBox_HistDataSelect.value()
-        print histbaseaddress, histindex
-
-        if histindex >= 799:
-            histindex -= 1
-        self.ui.spinBox_HistDataSelect.setValue(histindex)
-        self.ui.spinBox_HistDataSelect.setRange(0, 799)
-
-        # histbaseaddress += histindex * 32
-        self.updateHist(32, histindex, histbaseaddress)
-        self.ui.pushButton_readHist.setText("ReadHist")
-        # print self.pushButton_readpwm.text
-        print self.hist
+        TFC.tfcWriteDwordMask(0x19A004B0, 0, 0x00008000, 0x00008000)
+        for i in range(1024):
+            if i%4 == 0:
+                temp = TFC.tfcReadDword(0x19A46000 + i, 0)
+                self.curmm_lut[i] = temp & 0x000000FF
+                self.curmm_lut[i+1] = (temp >> 8) & 0x000000FF
+                self.curmm_lut[i+2] = (temp >> 16) & 0x000000FF
+                self.curmm_lut[i+3] = (temp >> 24) & 0x000000FF
+                print temp
+        TFC.tfcWriteDwordMask(0x19A004B0, 0, 0x00008000, 0x00000000)
+        self.ui.pushButton_read.setText("ReadFromChip")
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
