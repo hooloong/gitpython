@@ -317,7 +317,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         output[0] = 0
         output[1023] = 63
         for i in range(1,64):
-            for y in range(inputs[i-1],inputs[i]):
+            for y in range(inputs[i-1],inputs[i]+1):
                 output[y] = i
         print output
         pass
