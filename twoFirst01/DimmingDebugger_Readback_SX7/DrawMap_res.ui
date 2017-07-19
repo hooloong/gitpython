@@ -63,8 +63,8 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>360</y>
+     <x>10</x>
+     <y>350</y>
      <width>161</width>
      <height>80</height>
     </rect>
@@ -103,7 +103,7 @@
   <widget class="QLabel" name="label_1">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>310</y>
      <width>81</width>
      <height>16</height>
@@ -111,19 +111,6 @@
    </property>
    <property name="text">
     <string>TestmodeSelect</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>310</y>
-     <width>54</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
    </property>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget_2">
@@ -140,7 +127,7 @@
   <widget class="QComboBox" name="comboBox_test">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>90</x>
      <y>310</y>
      <width>101</width>
      <height>22</height>
@@ -166,6 +153,29 @@
      <string>SetBinaryToAll</string>
     </property>
    </item>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_en">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>310</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enable M_LUT</string>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="plainTextEdit_output">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>440</y>
+     <width>401</width>
+     <height>251</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <resources/>

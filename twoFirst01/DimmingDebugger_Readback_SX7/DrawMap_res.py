@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'DrawMap_res.ui'
 #
-# Created: Wed Jul 12 18:35:34 2017
+# Created: Wed Jul 19 10:58:28 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -38,7 +38,7 @@ class Ui_Form_mLut(object):
         self.tableWidget_mlut.horizontalHeader().setMinimumSectionSize(21)
         self.tableWidget_mlut.verticalHeader().setVisible(False)
         self.gridLayoutWidget = QtGui.QWidget(Form_mLut)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(30, 360, 161, 80))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 350, 161, 80))
         self.gridLayoutWidget.setObjectName(_fromUtf8("gridLayoutWidget"))
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setMargin(0)
@@ -56,11 +56,8 @@ class Ui_Form_mLut(object):
         self.pushButton_read.setObjectName(_fromUtf8("pushButton_read"))
         self.gridLayout.addWidget(self.pushButton_read, 1, 1, 1, 1)
         self.label_1 = QtGui.QLabel(Form_mLut)
-        self.label_1.setGeometry(QtCore.QRect(30, 310, 81, 16))
+        self.label_1.setGeometry(QtCore.QRect(10, 310, 81, 16))
         self.label_1.setObjectName(_fromUtf8("label_1"))
-        self.label_2 = QtGui.QLabel(Form_mLut)
-        self.label_2.setGeometry(QtCore.QRect(240, 310, 54, 12))
-        self.label_2.setObjectName(_fromUtf8("label_2"))
         self.gridLayoutWidget_2 = QtGui.QWidget(Form_mLut)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(430, 10, 741, 681))
         self.gridLayoutWidget_2.setObjectName(_fromUtf8("gridLayoutWidget_2"))
@@ -68,12 +65,18 @@ class Ui_Form_mLut(object):
         self.gridLayout_2.setMargin(0)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.comboBox_test = QtGui.QComboBox(Form_mLut)
-        self.comboBox_test.setGeometry(QtCore.QRect(120, 310, 101, 22))
+        self.comboBox_test.setGeometry(QtCore.QRect(90, 310, 101, 22))
         self.comboBox_test.setObjectName(_fromUtf8("comboBox_test"))
         self.comboBox_test.addItem(_fromUtf8(""))
         self.comboBox_test.addItem(_fromUtf8(""))
         self.comboBox_test.addItem(_fromUtf8(""))
         self.comboBox_test.addItem(_fromUtf8(""))
+        self.checkBox_en = QtGui.QCheckBox(Form_mLut)
+        self.checkBox_en.setGeometry(QtCore.QRect(220, 310, 91, 17))
+        self.checkBox_en.setObjectName(_fromUtf8("checkBox_en"))
+        self.plainTextEdit_output = QtGui.QPlainTextEdit(Form_mLut)
+        self.plainTextEdit_output.setGeometry(QtCore.QRect(10, 440, 401, 251))
+        self.plainTextEdit_output.setObjectName(_fromUtf8("plainTextEdit_output"))
 
         self.retranslateUi(Form_mLut)
         QtCore.QMetaObject.connectSlotsByName(Form_mLut)
@@ -85,9 +88,9 @@ class Ui_Form_mLut(object):
         self.pushButton_write.setText(_translate("Form_mLut", "WriteToChip", None))
         self.pushButton_read.setText(_translate("Form_mLut", "ReadFromChip", None))
         self.label_1.setText(_translate("Form_mLut", "TestmodeSelect", None))
-        self.label_2.setText(_translate("Form_mLut", "TextLabel", None))
         self.comboBox_test.setItemText(0, _translate("Form_mLut", "Normal", None))
         self.comboBox_test.setItemText(1, _translate("Form_mLut", "SetToZeroAll", None))
         self.comboBox_test.setItemText(2, _translate("Form_mLut", "SetAllTo_63", None))
         self.comboBox_test.setItemText(3, _translate("Form_mLut", "SetBinaryToAll", None))
+        self.checkBox_en.setText(_translate("Form_mLut", "Enable M_LUT", None))
 
