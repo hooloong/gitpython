@@ -243,6 +243,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_read, QtCore.SIGNAL('clicked()'), self.readMlut)
         self.connect(self.ui.pushButton_read, QtCore.SIGNAL('pressed()'), self.changeText_Mlut_read)
         self.connect(self.ui.pushButton_convert, QtCore.SIGNAL('clicked()'), self.convert)
+        self.connect(self.ui.pushButton_output, QtCore.SIGNAL('clicked()'), self.printout)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
         self.ui.tableWidget_mlut.itemChanged.connect(self.updatetable)
@@ -426,6 +427,22 @@ class DrawMLutWindow(QtGui.QMainWindow):
                 print temp
         TFC.tfcWriteDwordMask(0x19A004B0, 0, 0x00008000, 0x00000000)
         self.ui.pushButton_read.setText("ReadFromChip")
+    def printout(self):
+
+        if self.ui.checkBox_toc.isChecked():
+            tmps = "unsigned char const mappinglut_default[1024] = { \n"
+            for i in xrange(32):
+                for j in xrange(32):
+                    tmps += " %2d," % self.curmm_lut[i*32+j]
+                tmps += "\n"
+            tmps += "};\n"
+            self.ui.plainTextEdit_output.setPlainText(tmps)
+            return
+        tmps = "Pixel(10bits), Hist(6bits) \n"
+        for j in range(1024):
+            tmps += "  %4d,  %4d\n" % (j, self.curmm_lut[j])
+        self.ui.plainTextEdit_output.setPlainText(tmps)
+        pass
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

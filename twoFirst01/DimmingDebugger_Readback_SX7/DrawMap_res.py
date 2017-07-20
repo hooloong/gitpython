@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'DrawMap_res.ui'
 #
-# Created: Wed Jul 19 14:11:37 2017
+# Created: Thu Jul 20 16:54:46 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -38,7 +38,7 @@ class Ui_Form_mLut(object):
         self.tableWidget_mlut.horizontalHeader().setMinimumSectionSize(21)
         self.tableWidget_mlut.verticalHeader().setVisible(False)
         self.gridLayoutWidget = QtGui.QWidget(Form_mLut)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 330, 323, 83))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 330, 371, 83))
         self.gridLayoutWidget.setObjectName(_fromUtf8("gridLayoutWidget"))
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setMargin(0)
@@ -77,7 +77,7 @@ class Ui_Form_mLut(object):
         self.plainTextEdit_output.setGeometry(QtCore.QRect(10, 420, 371, 271))
         self.plainTextEdit_output.setObjectName(_fromUtf8("plainTextEdit_output"))
         self.horizontalLayoutWidget = QtGui.QWidget(Form_mLut)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 280, 259, 41))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 280, 371, 41))
         self.horizontalLayoutWidget.setObjectName(_fromUtf8("horizontalLayoutWidget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setMargin(0)
@@ -95,6 +95,9 @@ class Ui_Form_mLut(object):
         self.checkBox_en = QtGui.QCheckBox(self.horizontalLayoutWidget)
         self.checkBox_en.setObjectName(_fromUtf8("checkBox_en"))
         self.horizontalLayout.addWidget(self.checkBox_en)
+        self.checkBox_toc = QtGui.QCheckBox(self.horizontalLayoutWidget)
+        self.checkBox_toc.setObjectName(_fromUtf8("checkBox_toc"))
+        self.horizontalLayout.addWidget(self.checkBox_toc)
 
         self.retranslateUi(Form_mLut)
         QtCore.QMetaObject.connectSlotsByName(Form_mLut)
@@ -109,10 +112,11 @@ class Ui_Form_mLut(object):
         self.pushButton_refresh.setText(_translate("Form_mLut", "Refresh", None))
         self.pushButton_load.setText(_translate("Form_mLut", "loadFromFile", None))
         self.pushButton_save.setText(_translate("Form_mLut", "SaveToFile", None))
-        self.label_1.setText(_translate("Form_mLut", "TestingData:", None))
+        self.label_1.setText(_translate("Form_mLut", "TestingInitData:", None))
         self.comboBox_test.setItemText(0, _translate("Form_mLut", "Normal", None))
         self.comboBox_test.setItemText(1, _translate("Form_mLut", "SetToZeroAll", None))
         self.comboBox_test.setItemText(2, _translate("Form_mLut", "SetAllTo_63", None))
         self.comboBox_test.setItemText(3, _translate("Form_mLut", "SetBinaryToAll", None))
         self.checkBox_en.setText(_translate("Form_mLut", "Enable M_LUT", None))
+        self.checkBox_toc.setText(_translate("Form_mLut", "C-Format", None))
 

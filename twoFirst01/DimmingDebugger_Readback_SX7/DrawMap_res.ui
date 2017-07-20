@@ -65,7 +65,7 @@
     <rect>
      <x>10</x>
      <y>330</y>
-     <width>323</width>
+     <width>371</width>
      <height>83</height>
     </rect>
    </property>
@@ -154,7 +154,7 @@
     <rect>
      <x>10</x>
      <y>280</y>
-     <width>259</width>
+     <width>371</width>
      <height>41</height>
     </rect>
    </property>
@@ -162,7 +162,7 @@
     <item>
      <widget class="QLabel" name="label_1">
       <property name="text">
-       <string>TestingData:</string>
+       <string>TestingInitData:</string>
       </property>
      </widget>
     </item>
@@ -194,6 +194,13 @@
      <widget class="QCheckBox" name="checkBox_en">
       <property name="text">
        <string>Enable M_LUT</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox_toc">
+      <property name="text">
+       <string>C-Format</string>
       </property>
      </widget>
     </item>
