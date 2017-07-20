@@ -133,7 +133,7 @@ class CustomViewBox(pg.ViewBox):
         pg.ViewBox.__init__(self, *args, **kwds)
         # self.setMouseMode(self.RectMode)
 
-        self.setLimits(xMin=0,yMin=0x400)
+        self.setLimits(xMin=0,yMin=0)
     ## reimplement right-click to zoom out
     def mouseClickEvent(self, ev):
         if ev.button() == QtCore.Qt.RightButton:
@@ -188,44 +188,14 @@ class DrawMLutWindow(QtGui.QMainWindow):
 
         self.lgdata = []
         pg.setConfigOptions(antialias=True)
-        # #self.w = pg.GraphicsWindow()
-        # self.w = pg.GraphicsLayoutWidget()
-        # self.ui.gridLayout_2.addWidget(self.w, 0,0)
-        # self.v = self.w.addViewBox()
-        # self.v.setAspectLocked()
-        # self.gld = Graph()
-        # self.v.addItem(self.gld)
-        # self.gld.setData(pos=pos, adj=adj, pen=lines, size=1, symbol=symbols, pxMode=False, text=texts)
-        # self.vLine = pg.InfiniteLine(angle=90, movable=False)
-        # self.hLine = pg.InfiniteLine(angle=0, movable=False)
-        # self.v.addItem(self.vLine, ignoreBounds=True)
-        # self.v.addItem(self.hLine, ignoreBounds=True)
-        # self.linepen = pg.mkPen({'color': "111"})
-        # for i in range(1,192):
-        #     vlines = pg.InfiniteLine(angle=90, movable=False,pen=self.linepen)
-        #     self.v.addItem(vlines)
-        #     vlines.setPos([i,0])
 
         self.vb = CustomViewBox()
         self.vb.setAspectLocked(False)
         self.pw = pg.PlotWidget(viewBox=self.vb, enableMenu=True,
-                           title="Plot 2dd L2G Curve<br>left-drag to zoom, right-click to reset zoom")
-        self.pw.showGrid(True,True,0.5)
+                           title="Plot 2dd Mapping Curve<br>left-drag to zoom, right-click to reset zoom")
+        self.pw.showGrid(True,True,1)
         self.ui.gridLayout_2.addWidget(self.pw, 0, 0)
-        # self.r = pg.CustomPolyLineROI([(0, 1),  (10,1), (20,1), (30, 1),(2570,0x800)])
-        self.generateLGdata()
-        self.r = CustomPolyLineROI2(self.lgdata)
-        self.vb.addItem(self.r)
-        # self.vLine = pg.InfiniteLine(angle=90, movable=False)
-        # self.hLine = pg.InfiniteLine(angle=0, movable=False)
-        # self.vb.addItem(self.vLine, ignoreBounds=True)
-        # self.vb.addItem(self.hLine, ignoreBounds=True)
 
-        # proxy = pg.SignalProxy(self.vb.scene().sigMouseMoved, rateLimit=60, slot=self.mouseMoved)
-
-        self.timer = pg.QtCore.QTimer()
-        self.timer.timeout.connect(self.update)
-        # self.timer.start(2000)
         self.normalm= np.zeros(65, np.uint32)
         self.setzerom = np.zeros(65,np.uint32)
         self.setfullm = np.zeros(65,np.uint32)
@@ -237,6 +207,14 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.curmm= np.zeros(65, np.uint32)
         self.curmm_lut = np.zeros(1024, np.uint32)
         self.generateTestingdata()
+
+        self.generateLGdata()
+        self.r = CustomPolyLineROI2(self.lgdata)
+        self.vb.addItem(self.r)
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(self.update)
+        # self.timer.start(2000)
+
         self.initMlutTable()
         self.connect(self.ui.pushButton_write, QtCore.SIGNAL('clicked()'), self.writeMlut)
         self.connect(self.ui.pushButton_write, QtCore.SIGNAL('pressed()'), self.changeText_Mlut)
@@ -246,17 +224,22 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_output, QtCore.SIGNAL('clicked()'), self.printout)
         self.connect(self.ui.pushButton_save, QtCore.SIGNAL('clicked()'), self.savetofile)
         self.connect(self.ui.pushButton_load, QtCore.SIGNAL('clicked()'), self.loadfromfile)
+        self.connect(self.ui.pushButton_draw, QtCore.SIGNAL('clicked()'), self.drawit)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
         self.ui.tableWidget_mlut.itemChanged.connect(self.updatetable)
 
+        # self.generateLGdata()
+        # self.r = CustomPolyLineROI2(self.lgdata)
+        # self.vb.addItem(self.r)
+        # self.timer = pg.QtCore.QTimer()
+        # self.timer.timeout.connect(self.update)
     def setConnectFlag(self, flag):
         self.connectFlag = flag
 
     def update(self):
         print self.r.getState()
-        # self.vLine.setPos(self.r.getState()["points"][0])
-        # self.hLine.setPos(self.r.getState()["points"][0])
+
         pass
 
     def enableMlut(self):
@@ -266,14 +249,30 @@ class DrawMLutWindow(QtGui.QMainWindow):
         else:
             TFC.tfcWriteDwordMask(TFC.BASIC_PAGE, 0x30, 0x00000008, 0)
         pass
+    # def generateLGdata(self):
+    #     j = (0,0)
+    #     self.lgdata.append(j)
+    #     j = (0,self.curmm[0])
+    #     for i in range(1,64):
+    #         j = (i*10, 1000+self.curmm[i-1])
+    #         self.lgdata.append(j)
+    #         j = (i*10, 1000+self.curmm[i])
+    #         self.lgdata.append(j)
+    #     print self.lgdata
+    #     pass
     def generateLGdata(self):
-        for i in range(11,-1,-1):
-            j = (i*20, 0x400+(0xC00-0x400)*(11-i)/11)
+        self.lgdata = []
+        for i in range(0,64):
+            j = (i, self.curmm[i-1])
             self.lgdata.append(j)
-
         print self.lgdata
         pass
-
+    def drawit(self):
+        self.generateLGdata()
+        self.r.clearPoints()
+        self.r.setPoints(self.lgdata)
+        self.update()
+        pass
     def initMlutTable(self):
         for i in range(self.ui.tableWidget_mlut.rowCount()):
             for j in range(self.ui.tableWidget_mlut.columnCount()):
