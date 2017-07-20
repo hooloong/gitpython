@@ -244,6 +244,8 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_read, QtCore.SIGNAL('pressed()'), self.changeText_Mlut_read)
         self.connect(self.ui.pushButton_convert, QtCore.SIGNAL('clicked()'), self.convert)
         self.connect(self.ui.pushButton_output, QtCore.SIGNAL('clicked()'), self.printout)
+        self.connect(self.ui.pushButton_save, QtCore.SIGNAL('clicked()'), self.savetofile)
+        self.connect(self.ui.pushButton_load, QtCore.SIGNAL('clicked()'), self.loadfromfile)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
         self.ui.tableWidget_mlut.itemChanged.connect(self.updatetable)
@@ -443,6 +445,35 @@ class DrawMLutWindow(QtGui.QMainWindow):
             tmps += "  %4d,  %4d\n" % (j, self.curmm_lut[j])
         self.ui.plainTextEdit_output.setPlainText(tmps)
         pass
+    def savetofile(self):
+        dfile = QtGui.QFileDialog.getSaveFileName(self,"Save File dialog", "./", "bin files(*.bin *.txt)")
+        if dfile:
+            print dfile
+        else:
+            return
+
+        dfile = str(dfile)
+        try:
+            self.curmm.tofile(dfile)
+        except Exception, e:
+            print e
+
+
+
+    def loadfromfile(self):
+        file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "./", "bin files(*.bin *.txt)")
+        if file:
+            print file
+        else:
+            return
+        file = str(file)
+        try:
+            self.curmm =  np.fromfile(file, dtype=np.uint32)
+        except Exception, e:
+            print e
+        self.initMlutTable()
+        self.tableToLut(self.curmm, self.curmm_lut)
+        self.update()
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
