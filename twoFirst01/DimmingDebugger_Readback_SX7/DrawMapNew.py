@@ -99,19 +99,26 @@ class DrawMLutWindow(QtGui.QMainWindow):
         scene = QtGui.QGraphicsScene(self)
         scene.setSceneRect(-viewWid/2, -viewHeight/2, viewWid, viewHeight)
         rectWid = 0
-        totalBin = 1024
+        totalBin = 64
         if totalBin != 0:
-            rectWid = 1
+            rectWid = 5
         RangeColor = [0x7f007f, 0xff7f00, 0xff7f7f, 0xff7fff, 0xffff00, 0xffff7f, 0x7f7f00, 0x7f7f7f, 0x7f7fff,
                       0x7fff00, 0x7f00ff, 0x7fffff, 0x7f007f, 0x007f00, 0x00007f, 0xFFFF00, 0x00FF00]
-        for i in range(totalBin):
-            var = self.curmm_lut[i] *5
-            j = self.curmm_lut[i]
-            color = QtGui.QColor(RangeColor[j%16] & 0xFF, (RangeColor[j%16] >> 4) & 0xFF, (RangeColor[j%16] >> 8) & 0xFF)
-            item = QtGui.QGraphicsLineItem(QtCore.QLineF(0, 0, 1, var))
-            item.setPen(color)
+
+        color = QtGui.QColor(RangeColor[0] & 0xFF, (RangeColor[0] >> 4) & 0xFF,
+                             (RangeColor[0] >> 8) & 0xFF)
+        item = QtGui.QGraphicsRectItem(QtCore.QRectF(0, 0,self.curmm[0]-0, 5))
+        item.setBrush(color)
+        scene.addItem(item)
+        item.setPos(( 0- viewWid / 2), (-5*(0) + viewHeight / 2))
+        for i in range(1,totalBin):
+            var1 = self.curmm[i-1]
+            var2 = self.curmm[i]
+            color = QtGui.QColor(RangeColor[i%16] & 0xFF, (RangeColor[i%16] >> 4) & 0xFF, (RangeColor[i%16] >> 8) & 0xFF)
+            item = QtGui.QGraphicsRectItem(QtCore.QRectF(0,0, var2-var1, 5))
+            item.setBrush(color)
             scene.addItem(item)
-            item.setPos((i * rectWid - viewWid/2), (- var + viewHeight/2))
+            item.setPos((var1-viewWid/2), (-5*(i) + viewHeight/2))
         self.ui.graphicsView_mlut.setScene(scene)
         self.ui.graphicsView_mlut.show()
     def generateLGdata(self):
