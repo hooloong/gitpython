@@ -79,7 +79,7 @@ class MyWindow(QtGui.QMainWindow):
         if index == 5:
             self.resize(1180,760)
         elif index == 4:
-            self.resize(1180,760)
+            self.resize(1080,780)
         elif index == 3:
             self.resize(960, 760)
         elif index == 2:
