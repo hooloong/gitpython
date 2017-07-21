@@ -305,7 +305,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.ui.plainTextEdit_output.setPlainText(tmps)
         pass
     def savetofile(self):
-        dfile = QtGui.QFileDialog.getSaveFileName(self,"Save File dialog", "./", "bin files(*.bin *.txt)")
+        dfile = QtGui.QFileDialog.getSaveFileName(self,"Save File dialog", "./", "bin files(*.mlut *.txt)")
         if dfile:
             print dfile
         else:
@@ -320,7 +320,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
 
 
     def loadfromfile(self):
-        file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "./", "bin files(*.bin *.txt)")
+        file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "./", "bin files(*.mlut  *.txt)")
         if file:
             print file
         else:
