@@ -110,7 +110,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         item = QtGui.QGraphicsRectItem(QtCore.QRectF(0, 0,self.curmm[0]-0, 5))
         item.setBrush(color)
         scene.addItem(item)
-        item.setPos(( 0- viewWid / 2), (-5*(0) + viewHeight / 2))
+        item.setPos(( 0- viewWid / 2), (-5 + viewHeight / 2))
         for i in range(1,totalBin):
             var1 = self.curmm[i-1]
             var2 = self.curmm[i]
@@ -118,7 +118,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
             item = QtGui.QGraphicsRectItem(QtCore.QRectF(0,0, var2-var1, 5))
             item.setBrush(color)
             scene.addItem(item)
-            item.setPos((var1-viewWid/2), (-5*(i) + viewHeight/2))
+            item.setPos((var1-viewWid/2), (-5*(i+1) + viewHeight/2))
         self.ui.graphicsView_mlut.setScene(scene)
         self.ui.graphicsView_mlut.show()
     def generateLGdata(self):
