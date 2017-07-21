@@ -15,7 +15,7 @@ from PWMs import *
 from Hist import *
 from TestPattern import *
 from Dimpages import *
-from DrawMap import *
+from DrawMapNew import *
 from DrawL2G import *
 from AutoTest import  *
 # from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
