@@ -48,10 +48,10 @@ class DrawMLutWindow(QtGui.QMainWindow):
     def setConnectFlag(self, flag):
         self.connectFlag = flag
 
-    def update(self):
-        print self.r.getState()
-
-        pass
+    # def update(self):
+    #     print self.r.getState()
+    #
+    #     pass
 
     def enableMlut(self):
         if self.connectFlag is False: return
@@ -80,8 +80,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         pass
     def drawit(self):
         self.generateLGdata()
-        self.r.clearPoints()
-        self.r.setPoints(self.lgdata)
+
         self.update()
         pass
     def initMlutTable(self):

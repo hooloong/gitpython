@@ -56,13 +56,13 @@ class MyWindow(QtGui.QMainWindow):
         self.formTestPattern = TestPatternWindow()
         self.formDimpages = DimPagesWindow()
         self.formDrawm = DrawMLutWindow()
-        self.formDraw = DrawL2GWindow()
-        self.formAutoTest = AutoTestWindow()
+        # self.formDraw = DrawL2GWindow()
+        # self.formAutoTest = AutoTestWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
         self.ui.tabWidget.insertTab(3, self.formDimpages, u"DimPages")
         self.ui.tabWidget.insertTab(4, self.formDrawm, u"M_Lut")
-        self.ui.tabWidget.insertTab(5, self.formDraw, u"DrawL2G")
-        self.ui.tabWidget.insertTab(6, self.formAutoTest, u"AutoTest")
+        # self.ui.tabWidget.insertTab(5, self.formDraw, u"DrawL2G")
+        # self.ui.tabWidget.insertTab(6, self.formAutoTest, u"AutoTest")
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
         self.connect(self.ui.actionDisconnect, QtCore.SIGNAL('triggered()'), self.disconnectChip)
         self.ui.actionQuit.connect(self.ui.actionQuit, QtCore.SIGNAL('triggered()'), QtGui.qApp, QtCore.SLOT('quit()'))
@@ -79,7 +79,7 @@ class MyWindow(QtGui.QMainWindow):
         if index == 5:
             self.resize(1180,760)
         elif index == 4:
-            self.resize(1080,780)
+            self.resize(1060,780)
         elif index == 3:
             self.resize(960, 760)
         elif index == 2:
