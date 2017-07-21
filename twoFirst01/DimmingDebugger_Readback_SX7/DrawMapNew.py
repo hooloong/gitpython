@@ -43,7 +43,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
         self.ui.tableWidget_mlut.itemChanged.connect(self.updatetable)
-
+        self.paintMlut()
 
     def setConnectFlag(self, flag):
         self.connectFlag = flag
@@ -71,6 +71,49 @@ class DrawMLutWindow(QtGui.QMainWindow):
     #         self.lgdata.append(j)
     #     print self.lgdata
     #     pass
+    # def paintMlut(self):
+    #     viewWid = float(self.ui.graphicsView_mlut.width() - 2)
+    #     viewHeight = float(self.ui.graphicsView_mlut.height() - 2)
+    #     scene = QtGui.QGraphicsScene(self)
+    #     scene.setSceneRect(-viewWid/2, -viewHeight/2, viewWid, viewHeight)
+    #     rectWid = 0
+    #     totalBin = 1024
+    #     if totalBin != 0:
+    #         rectWid = 1
+    #     RangeColor = [0x7f007f, 0xff7f00, 0xff7f7f, 0xff7fff, 0xffff00, 0xffff7f, 0x7f7f00, 0x7f7f7f, 0x7f7fff,
+    #                   0x7fff00, 0x7f00ff, 0x7fffff, 0x7f007f, 0x007f00, 0x00007f, 0xFFFF00, 0x00FF00]
+    #     for i in range(totalBin):
+    #         var = self.curmm_lut[i] *5
+    #         j = self.curmm_lut[i]
+    #         color = QtGui.QColor(RangeColor[j%16] & 0xFF, (RangeColor[j%16] >> 4) & 0xFF, (RangeColor[j%16] >> 8) & 0xFF)
+    #         item = QtGui.QGraphicsLineItem(QtCore.QLineF(0, 0, 1, var))
+    #         item.setPen(color)
+    #         scene.addItem(item)
+    #         item.setPos((i * rectWid - viewWid/2), (- var + viewHeight/2))
+    #     self.ui.graphicsView_mlut.setScene(scene)
+    #     self.ui.graphicsView_mlut.show()
+
+    def paintMlut(self):
+        viewWid = float(self.ui.graphicsView_mlut.width() - 2)
+        viewHeight = float(self.ui.graphicsView_mlut.height() - 2)
+        scene = QtGui.QGraphicsScene(self)
+        scene.setSceneRect(-viewWid/2, -viewHeight/2, viewWid, viewHeight)
+        rectWid = 0
+        totalBin = 1024
+        if totalBin != 0:
+            rectWid = 1
+        RangeColor = [0x7f007f, 0xff7f00, 0xff7f7f, 0xff7fff, 0xffff00, 0xffff7f, 0x7f7f00, 0x7f7f7f, 0x7f7fff,
+                      0x7fff00, 0x7f00ff, 0x7fffff, 0x7f007f, 0x007f00, 0x00007f, 0xFFFF00, 0x00FF00]
+        for i in range(totalBin):
+            var = self.curmm_lut[i] *5
+            j = self.curmm_lut[i]
+            color = QtGui.QColor(RangeColor[j%16] & 0xFF, (RangeColor[j%16] >> 4) & 0xFF, (RangeColor[j%16] >> 8) & 0xFF)
+            item = QtGui.QGraphicsLineItem(QtCore.QLineF(0, 0, 1, var))
+            item.setPen(color)
+            scene.addItem(item)
+            item.setPos((i * rectWid - viewWid/2), (- var + viewHeight/2))
+        self.ui.graphicsView_mlut.setScene(scene)
+        self.ui.graphicsView_mlut.show()
     def generateLGdata(self):
         self.lgdata = []
         for i in range(0,64):
@@ -79,8 +122,8 @@ class DrawMLutWindow(QtGui.QMainWindow):
         print self.lgdata
         pass
     def drawit(self):
-        self.generateLGdata()
 
+        self.paintMlut()
         self.update()
         pass
     def initMlutTable(self):

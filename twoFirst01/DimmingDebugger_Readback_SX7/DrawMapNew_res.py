@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'DrawMapNew_res.ui'
 #
-# Created: Fri Jul 21 14:36:11 2017
+# Created: Fri Jul 21 15:47:01 2017
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -41,7 +41,14 @@ class Ui_Form_mLut(object):
         self.plainTextEdit_output.setGeometry(QtCore.QRect(660, 10, 391, 261))
         self.plainTextEdit_output.setObjectName(_fromUtf8("plainTextEdit_output"))
         self.graphicsView_mlut = QtGui.QGraphicsView(Form_mLut)
-        self.graphicsView_mlut.setGeometry(QtCore.QRect(10, 290, 1041, 411))
+        self.graphicsView_mlut.setGeometry(QtCore.QRect(10, 300, 1040, 400))
+        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        self.graphicsView_mlut.setBackgroundBrush(brush)
+        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0, 0))
+        brush.setStyle(QtCore.Qt.NoBrush)
+        self.graphicsView_mlut.setForegroundBrush(brush)
+        self.graphicsView_mlut.setInteractive(True)
         self.graphicsView_mlut.setObjectName(_fromUtf8("graphicsView_mlut"))
         self.gridLayoutWidget_2 = QtGui.QWidget(Form_mLut)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(400, 10, 242, 261))
