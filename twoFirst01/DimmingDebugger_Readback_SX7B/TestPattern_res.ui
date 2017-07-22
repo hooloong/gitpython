@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form_TestPattern</class>
+ <widget class="QWidget" name="Form_TestPattern">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>870</width>
+    <height>708</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form_TestPattern</string>
+  </property>
+  <widget class="QPlainTextEdit" name="plainTextEdi_pats">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>30</y>
+     <width>371</width>
+     <height>591</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tableWidget_pattern">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>300</y>
+     <width>411</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>11</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhDigitsOnly|Qt::ImhNoAutoUppercase|Qt::ImhUppercaseOnly</set>
+   </property>
+   <property name="rowCount">
+    <number>8</number>
+   </property>
+   <property name="columnCount">
+    <number>8</number>
+   </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>45</number>
+   </attribute>
+   <attribute name="horizontalHeaderMinimumSectionSize">
+    <number>21</number>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>true</bool>
+   </attribute>
+   <row/>
+   <row/>
+   <row/>
+   <row/>
+   <row/>
+   <row/>
+   <row/>
+   <row/>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+   <column/>
+   <item row="0" column="0">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="0" column="1">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="0" column="2">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="0" column="3">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="0" column="4">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="0" column="5">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="0" column="6">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="0" column="7">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="1" column="0">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="1" column="1">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="1" column="2">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="1" column="3">
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item row="1" column="4">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="1" column="5">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="1" column="6">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="1" column="7">
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item row="2" column="0">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="2" column="1">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="2" column="2">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="2" column="3">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="2" column="4">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="2" column="5">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="2" column="6">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="2" column="7">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="3" column="0">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="3" column="1">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="3" column="2">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="3" column="3">
+    <property name="text">
+     <string>3</string>
+    </property>
+   </item>
+   <item row="3" column="4">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="3" column="5">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="3" column="6">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="3" column="7">
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+   <item row="4" column="0">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="4" column="1">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="4" column="2">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="4" column="3">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="4" column="4">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="4" column="5">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="4" column="6">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="4" column="7">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="5" column="0">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="5" column="1">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="5" column="2">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="5" column="3">
+    <property name="text">
+     <string>5</string>
+    </property>
+   </item>
+   <item row="5" column="4">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="5" column="5">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="5" column="6">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="5" column="7">
+    <property name="text">
+     <string>4</string>
+    </property>
+   </item>
+   <item row="6" column="0">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+   <item row="6" column="1">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+   <item row="6" column="2">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+   <item row="6" column="3">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+   <item row="6" column="4">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="6" column="5">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="6" column="6">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="6" column="7">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="7" column="0">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="7" column="1">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="7" column="2">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="7" column="3">
+    <property name="text">
+     <string>7</string>
+    </property>
+   </item>
+   <item row="7" column="4">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+   <item row="7" column="5">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+   <item row="7" column="6">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+   <item row="7" column="7">
+    <property name="text">
+     <string>6</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_paneinfo_1">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>0</y>
+     <width>401</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>No panel info!!</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>411</width>
+     <height>281</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_savepatToFile">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>SaveToFile</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_next">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>NEXT</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>images/next.png</normaloff>images/next.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="pushButton_loadpatfromFile">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>LoadfromFile</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pushButton_prev">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>PREV</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>images/back.png</normaloff>images/back.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_patindex">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Pattern Index:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox_listpats"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="lineEdit_index">
+          <property name="text">
+           <string>TEMP</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_totalpat">
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_disable">
+        <property name="text">
+         <string>DisManualPats</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_enable">
+        <property name="text">
+         <string>EnManualPats</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton_readpanel">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>GetPanelInfo</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_addpattern">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>AddPat</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_delpat">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>DelPat</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_sendpattochip">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>SendToChip</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_printallpats">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>PrintoutAllPats</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_bls">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Set VBO blue Screen</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>570</y>
+     <width>411</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <item>
+     <widget class="QLabel" name="label_patdelay">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Current Pat delay time(s):</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="spinBox_patdelays">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
+      <property name="value">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
