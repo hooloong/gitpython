@@ -293,9 +293,10 @@ class DrawMLutWindow(QtGui.QMainWindow):
         if self.ui.checkBox_toc.isChecked():
             tmps = "DWORD const mappinglut_default[256] = { \n"
             for i in xrange(32):
+                tmps += " "*4
                 for j in xrange(32):
                     if j%4 == 0:
-                        tmps += " 0x%X," % (self.curmm_lut[i*32+j] + (self.curmm_lut[i*32+j+1] << 8) \
+                        tmps += "0x%X, " % (self.curmm_lut[i*32+j] + (self.curmm_lut[i*32+j+1] << 8) \
                                              + (self.curmm_lut[i*32+j+2] << 16) + (self.curmm_lut[i*32+j+3] << 24))
                     # tmps += " %2d," % self.curmm_lut[i*32+j]
                 tmps += "\n"
