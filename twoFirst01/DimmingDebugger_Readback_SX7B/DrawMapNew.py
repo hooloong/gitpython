@@ -291,10 +291,13 @@ class DrawMLutWindow(QtGui.QMainWindow):
     def printout(self):
 
         if self.ui.checkBox_toc.isChecked():
-            tmps = "unsigned char const mappinglut_default[1024] = { \n"
+            tmps = "DWORD const mappinglut_default[256] = { \n"
             for i in xrange(32):
                 for j in xrange(32):
-                    tmps += " %2d," % self.curmm_lut[i*32+j]
+                    if j%4 == 0:
+                        tmps += " 0x%X," % (self.curmm_lut[i*32+j] + (self.curmm_lut[i*32+j+1] << 8) \
+                                             + (self.curmm_lut[i*32+j+2] << 16) + (self.curmm_lut[i*32+j+3] << 24))
+                    # tmps += " %2d," % self.curmm_lut[i*32+j]
                 tmps += "\n"
             tmps += "};\n"
             self.ui.plainTextEdit_output.setPlainText(tmps)
