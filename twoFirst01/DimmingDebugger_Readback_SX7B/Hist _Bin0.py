@@ -7,7 +7,7 @@ import two01 as TFC
 import numpy as np
 from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, uic  # ,Qwt5
-from Hist_res import *
+from Hist_Bin0_res import *
 # from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 # from matplotlib.figure import Figure
 # from mpl_toolkits.mplot3d import Axes3D
@@ -17,10 +17,10 @@ from Hist_res import *
 # cProfile.run('main()')
 # import logging
 
-class HistWindow(QtGui.QMainWindow):
+class BinWindow(QtGui.QMainWindow):
 
     def __init__(self):
-        super(HistWindow, self).__init__()
+        super(BinWindow, self).__init__()
         self.ui = Ui_Form_Hist()
         self.ui.setupUi(self)
 
@@ -121,6 +121,6 @@ class HistWindow(QtGui.QMainWindow):
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    mywindow = HistWindow()
+    mywindow = BinWindow()
     mywindow.show()
     sys.exit(app.exec_())
