@@ -50,19 +50,25 @@ class BinWindow(QtGui.QMainWindow):
         viewHeight = float(self.ui.graphicsView_Hist.height() - 2)
         scene = QtGui.QGraphicsScene(self)
         scene.setSceneRect(-viewWid/2, -viewHeight/2, viewWid, viewHeight)
-        rectWid = 0
-        totalBin = self.ui.tableWidget_Hist.rowCount() * self.ui.tableWidget_Hist.columnCount()
-        if totalBin != 0:
-            rectWid = viewWid/totalBin
-        RangeColor = [0x7f007f, 0xff7f00, 0xff7f7f, 0xff7fff, 0xffff00, 0xffff7f, 0x7f7f00, 0x7f7f7f, 0x7f7fff,
-                      0x7fff00, 0xff00ff, 0x7fffff, 0x7f7f7f, 0x007f00, 0x00007f, 0xFFFF00, 0x00FF00]
-        for i in range(totalBin):
-            var = self.hist[i] * viewHeight / 0xffff
-            color = QtGui.QColor(RangeColor[i%16] & 0xFF, (RangeColor[i%16] >> 4) & 0xFF, (RangeColor[i%16] >> 8) & 0xFF)
-            item = QtGui.QGraphicsRectItem(QtCore.QRectF(0, 0, rectWid, var))
-            item.setBrush(color)
-            scene.addItem(item)
-            item.setPos((i * rectWid - viewWid/2), (- var + viewHeight/2))
+
+        if self.ui.tableWidget_Hist.rowCount() != 0 and self.ui.tableWidget_Hist.columnCount() != 0:
+            rectWid = viewWid/self.ui.tableWidget_Hist.columnCount()
+            rectHeight = viewHeight/self.ui.tableWidget_Hist.rowCount()
+        else:
+            return
+
+        for i in range(self.ui.tableWidget_Hist.columnCount()):
+            for j in range(self.ui.tableWidget_Hist.rowCount()):
+                var = self.hist[j * self.ui.tableWidget_Hist.columnCount() + i]
+                if var < 0xFD20:
+                    br = 0x80
+                else:
+                    br = 0x0
+                color = QtGui.QColor(br, br, br)
+                item = QtGui.QGraphicsRectItem(QtCore.QRectF(0, 0, rectWid, rectHeight))
+                item.setBrush(color)
+                scene.addItem(item)
+                item.setPos((i * rectWid - viewWid/2), (j * rectHeight - viewHeight/2))
         self.ui.graphicsView_Hist.setScene(scene)
         self.ui.graphicsView_Hist.show()
 
@@ -78,14 +84,9 @@ class BinWindow(QtGui.QMainWindow):
     def updateHist(self, size, num, tstartAddr):
         for i in range(self.ui.tableWidget_Hist.rowCount()):
             for j in range(self.ui.tableWidget_Hist.columnCount()):
-                tmp = i * self.ui.tableWidget_Hist.rowCount() + j
-                indexpwm = tmp
-                tmp /= 2
-                if j%2 == 0:
-                    var = TFC.tfcReadMemDword(tstartAddr + 4 * (tmp + size * num)) & 0xFFFF
-                else:
-                    var = (TFC.tfcReadMemDword(tstartAddr + 4 * (tmp + size * num)) >> 16 )& 0xFFFF
-                self.hist[indexpwm] = var & 0xFFFF
+                tmp = i * self.ui.tableWidget_Hist.columnCount() + j
+                var = TFC.tfcReadMemDword(tstartAddr + 4 * (tmp * 32)) & 0xFFFF
+                self.hist[tmp] = var & 0xFFFF
                 pwmdutytemp = "%X" % (var & 0xFFFF)
                 newItemt = QtGui.QTableWidgetItem(pwmdutytemp)
                 self.ui.tableWidget_Hist.setItem(i, j, newItemt)
@@ -107,14 +108,14 @@ class BinWindow(QtGui.QMainWindow):
         histindex = self.ui.spinBox_HistDataSelect.value()
         print histbaseaddress, histindex
 
-        if histindex >= 799:
-            histindex -= 1
+        if histindex > 512:
+            histindex = 512
         self.ui.spinBox_HistDataSelect.setValue(histindex)
-        self.ui.spinBox_HistDataSelect.setRange(0, 799)
+
 
         # histbaseaddress += histindex * 32
         self.updateHist(32, histindex, histbaseaddress)
-        self.ui.pushButton_readHist.setText("ReadHist")
+        self.ui.pushButton_readHist.setText("ReadHistBin0")
         # print self.pushButton_readpwm.text
         print self.hist
 

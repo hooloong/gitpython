@@ -63,6 +63,7 @@ class MyWindow(QtGui.QMainWindow):
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
         self.ui.tabWidget.insertTab(3, self.formDimpages, u"DimPages")
         self.ui.tabWidget.insertTab(4, self.formDrawm, u"M_Lut")
+        self.ui.tabWidget.insertTab(5, self.formBin, u"HistBin0Flag")
         # self.ui.tabWidget.insertTab(5, self.formDraw, u"DrawL2G")
         # self.ui.tabWidget.insertTab(6, self.formAutoTest, u"AutoTest")
         self.connect(self.ui.actionConnect, QtCore.SIGNAL('triggered()'), self.connectChip)
@@ -79,7 +80,7 @@ class MyWindow(QtGui.QMainWindow):
 
     def tabchanges(self,index):
         if index == 5:
-            self.resize(1180,760)
+            self.resize(880,730)
         elif index == 4:
             self.resize(1060,780)
         elif index == 3:
@@ -125,6 +126,7 @@ class MyWindow(QtGui.QMainWindow):
         self.formTestPattern.setConnectFlag(self.connectFlag)
         self.formDimpages.setConnectFlag(self.connectFlag)
         self.formDrawm.setConnectFlag(self.connectFlag)
+        self.formBin.setConnectFlag(self.connectFlag)
         print("tfcConnInit returns ", self.connectFlag)
         if self.connectFlag:
             print("Connect to chip!!! ")
@@ -143,6 +145,7 @@ class MyWindow(QtGui.QMainWindow):
         self.formPWMs.setConnectFlag(self.connectFlag)
         self.formHist.setConnectFlag(self.connectFlag)
         self.formTestPattern.setConnectFlag(self.connectFlag)
+        self.formBin.setConnectFlag(self.connectFlag)
         TFC.tfcConnTerm()
         self.setWindowTitle("Dimming Debugger     DisConnect..")
 
