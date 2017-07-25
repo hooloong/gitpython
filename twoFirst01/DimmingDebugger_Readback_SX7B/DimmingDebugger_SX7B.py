@@ -16,6 +16,7 @@ from Hist import *
 from TestPattern import *
 from Dimpages import *
 from DrawMapNew import *
+from HistBin0 import *
 from DrawL2G import *
 from AutoTest import  *
 # from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
@@ -56,6 +57,7 @@ class MyWindow(QtGui.QMainWindow):
         self.formTestPattern = TestPatternWindow()
         self.formDimpages = DimPagesWindow()
         self.formDrawm = DrawMLutWindow()
+        self.formBin = BinWindow()
         # self.formDraw = DrawL2GWindow()
         # self.formAutoTest = AutoTestWindow()
         self.ui.tabWidget.insertTab(2, self.formTestPattern, u"TestPattern")
