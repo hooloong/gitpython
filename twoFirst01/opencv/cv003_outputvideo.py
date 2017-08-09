@@ -10,20 +10,16 @@ print fps
 fps = 30
 size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 print size
-# fourcc = cv2.cv.CV_FOURCC(*'XVID')
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
+
+fourcc = cv2.VideoWriter_fourcc('I','4','2','0')
 out = cv2.VideoWriter('output.avi',fourcc,fps,size)
-while True:
-    ret,frame = cap.read()
-    gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+ret,frame = cap.read()
+num = 10 * fps -1
+while ret and num>0:
     out.write(frame)
-    cv2.imshow('frame',frame)
-    cv2.imshow('gray',gray)
-
-
-    if cv2.waitKey(10) &0xFF == ord('q'):
-        break
+    ret,frame = cap.read()
+    num -= 1
 
 cap.release()
 out.release()
-cv2.destroyAllWindows()
+
