@@ -16,7 +16,7 @@ while True:
     cv2.imshow('gray',gray)#另一窗口显示处理视频
 
 
-    if cv2.waitKey(1) &0xFF == ord('q'):
+    if cv2.waitKey(30) &0xFF == ord('q'):
         break
 
 cap.release()
