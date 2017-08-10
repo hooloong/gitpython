@@ -4,7 +4,7 @@ import cv2
 camera = cv2.VideoCapture(0)
 
 # determine upper and lower HSV limits for (my) skin tones
-lower = np.array([0, 100, 0], dtype="uint8")
+lower = np.array([0, 50, 0], dtype="uint8")
 upper = np.array([50,255,255], dtype="uint8")
 
 while (True):
