@@ -12,10 +12,9 @@ while True:
     plt.plot(histr,color = col)
     plt.xlim([0,256])
     plt.show()
-  #cv2.imshow("frame", img)
-  # k = cv2.waitKey(30) & 0xff
-  # if k == 27:
-  #     break
-
+  cv2.imshow("frame", img)
+  k = cv2.waitKey(30) & 0xff
+  if k == ord('q'):
+      break
 camera.release()
 cv2.destroyAllWindows()
