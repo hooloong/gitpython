@@ -63,6 +63,21 @@ class DrawMLutWindow(QtGui.QMainWindow):
             self.isHDR = True
         else:
             self.isHDR = False
+
+        if self.isLoadxlsx:
+            if self.isHDR:
+                offset = 2
+            else:
+                offset = 1
+            for i in range(64):
+                self.curmm[i] = self.xlsxdata.values[i+1][offset]
+        else:
+            return
+        print self.curmm
+
+        self.initMlutTable()
+        self.tableToLut(self.curmm, self.curmm_lut)
+        self.update()
     def enableMlut(self):
         if self.connectFlag is False: return
         if self.ui.checkBox_en.isChecked():
@@ -386,7 +401,6 @@ class DrawMLutWindow(QtGui.QMainWindow):
                 self.curmm[i] = self.xlsxdata.values[i+1][offset]
         print self.curmm
 
-        return
         self.initMlutTable()
         self.tableToLut(self.curmm, self.curmm_lut)
         self.update()
