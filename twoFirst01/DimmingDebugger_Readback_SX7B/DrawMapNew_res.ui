@@ -111,6 +111,20 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_1">
+      <property name="text">
+       <string>TestingInitData:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QPushButton" name="pushButton_save">
+      <property name="text">
+       <string>SaveToFile</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="0">
      <widget class="QCheckBox" name="checkBox_en">
       <property name="text">
@@ -118,7 +132,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
+    <item row="5" column="1">
      <widget class="QPushButton" name="pushButton_output">
       <property name="text">
        <string>OutputMlut</string>
@@ -170,14 +184,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QPushButton" name="pushButton_load">
-      <property name="text">
-       <string>loadFromFile</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0">
+    <item row="5" column="0">
      <widget class="QPushButton" name="pushButton_draw">
       <property name="text">
        <string>DrawIt!</string>
@@ -198,17 +205,27 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QPushButton" name="pushButton_save">
+    <item row="6" column="0">
+     <widget class="QPushButton" name="pushButton_load">
       <property name="text">
-       <string>SaveToFile</string>
+       <string>loadFromFile</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_1">
+    <item row="6" column="1">
+     <widget class="QRadioButton" name="radioButton_sdr">
       <property name="text">
-       <string>TestingInitData:</string>
+       <string>SDR</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QRadioButton" name="radioButton_hdr">
+      <property name="text">
+       <string>HDR</string>
       </property>
      </widget>
     </item>

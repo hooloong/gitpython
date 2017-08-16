@@ -8,7 +8,7 @@ import numpy as np
 from dispmipsfunc import *
 from PyQt4 import QtCore, QtGui, QtSql,uic  # ,Qwt5
 from DrawMapNew_res import  *
-
+import pandas as pd
 
 class DrawMLutWindow(QtGui.QMainWindow):
 
@@ -16,7 +16,9 @@ class DrawMLutWindow(QtGui.QMainWindow):
         super(DrawMLutWindow, self).__init__()
         self.ui =  Ui_Form_mLut()
         self.ui.setupUi(self)
-
+        self.isLoadxlsx = False
+        self.isHDR = False
+        self.xlsxdata = None
         self.normalm= np.zeros(65, np.uint32)
         self.setzerom = np.zeros(65,np.uint32)
         self.setfullm = np.zeros(65,np.uint32)
@@ -41,6 +43,8 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.connect(self.ui.pushButton_load, QtCore.SIGNAL('clicked()'), self.loadfromfile)
         self.connect(self.ui.pushButton_draw, QtCore.SIGNAL('clicked()'), self.drawit)
         self.connect(self.ui.comboBox_test, QtCore.SIGNAL('currentIndexChanged(int)'), self.comboxchange)
+        self.connect(self.ui.radioButton_sdr, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
+        self.connect(self.ui.radioButton_hdr, QtCore.SIGNAL('clicked(bool)'), self.changeBitsel)
         self.connect(self.ui.checkBox_en, QtCore.SIGNAL('clicked()'), self.enableMlut)
         self.ui.tableWidget_mlut.itemChanged.connect(self.updatetable)
         self.paintMlut()
@@ -52,7 +56,13 @@ class DrawMLutWindow(QtGui.QMainWindow):
     #     print self.r.getState()
     #
     #     pass
+    def changeBitsel(self,flag):
+        # if not self.initFlag: return
 
+        if self.ui.radioButton_hdr.isChecked():
+            self.isHDR = True
+        else:
+            self.isHDR = False
     def enableMlut(self):
         if self.connectFlag is False: return
         if self.ui.checkBox_en.isChecked():
@@ -323,7 +333,7 @@ class DrawMLutWindow(QtGui.QMainWindow):
 
 
 
-    def loadfromfile(self):
+    def loadfromfile_1(self):
         file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "./", "mlut files(*.mlut  *.txt)")
         if file:
             print file
@@ -337,7 +347,49 @@ class DrawMLutWindow(QtGui.QMainWindow):
         self.initMlutTable()
         self.tableToLut(self.curmm, self.curmm_lut)
         self.update()
+    def loadfromfile(self):
+        file = QtGui.QFileDialog.getOpenFileName(self, "Open File dialog", "./", "mlut files(*.mlut  *.txt *.xlsx)")
+        if file:
+            print file
+        else:
+            return
+        file = str(file)
+        if file.split('.')[1] == "xlsx":
+            print "From EXCEL data"
+            try:
+                self.xlsxdata = pd.read_excel(file, '2DD_MLUT', index_col=None, na_values=['NA'])
+            except Exception, e:
+                print e
+                self.isLoadxlsx = False
+                return
+            print str(self.xlsxdata.values[64][2])
+            if str(self.xlsxdata.values[64][2]) == "1023" and str(self.xlsxdata.values[64][1]) == "1023":
+                self.isLoadxlsx = True
+            else:
+                self.isLoadxlsx = False
+                QtGui.QMessageBox.information(self, "warning", ("Please load right M_LUT table file"))
+                return
+        else:
+            self.isLoadxlsx = False
+            try:
+                self.curmm =  np.fromfile(file, dtype=np.uint32)
+            except Exception, e:
+                print e
+        print self.isHDR
+        print self.isLoadxlsx
+        if self.isLoadxlsx:
+            if self.isHDR:
+                offset = 2
+            else:
+                offset = 1
+            for i in range(64):
+                self.curmm[i] = self.xlsxdata.values[i+1][offset]
+        print self.curmm
 
+        return
+        self.initMlutTable()
+        self.tableToLut(self.curmm, self.curmm_lut)
+        self.update()
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     mywindow = DrawMLutWindow()
