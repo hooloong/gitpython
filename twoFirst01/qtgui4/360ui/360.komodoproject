@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="c92c39ca-36a1-4e27-9c30-98a32a487d60" kpf_version="5" name="360.komodoproject">
+<preference-set idref="c92c39ca-36a1-4e27-9c30-98a32a487d60" id="project" preftype="project">
+  <string relative="path" id="import_dirname"></string>
+  <string id="python3ExtraPaths"></string>
+  <string id="python_debuggerLogLevel">WARN</string>
+</preference-set>
+</project>
