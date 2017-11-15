@@ -46,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>155</y>
+     <y>225</y>
      <width>50</width>
      <height>16</height>
     </rect>
@@ -61,7 +61,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>157</y>
+     <y>227</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -81,7 +81,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>192</y>
+     <y>262</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -101,7 +101,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>227</y>
+     <y>297</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -121,7 +121,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>262</y>
+     <y>332</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -141,7 +141,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>297</y>
+     <y>367</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -161,7 +161,7 @@
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>332</y>
+     <y>402</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -181,7 +181,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>190</y>
+     <y>260</y>
      <width>50</width>
      <height>20</height>
     </rect>
@@ -196,7 +196,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>225</y>
+     <y>295</y>
      <width>50</width>
      <height>20</height>
     </rect>
@@ -211,7 +211,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>260</y>
+     <y>330</y>
      <width>50</width>
      <height>20</height>
     </rect>
@@ -226,7 +226,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>295</y>
+     <y>365</y>
      <width>50</width>
      <height>20</height>
     </rect>
@@ -241,7 +241,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>330</y>
+     <y>400</y>
      <width>50</width>
      <height>20</height>
     </rect>
@@ -256,7 +256,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>450</y>
+     <y>480</y>
      <width>362</width>
      <height>92</height>
     </rect>
@@ -497,7 +497,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>541</y>
+     <y>571</y>
      <width>182</width>
      <height>62</height>
     </rect>
@@ -557,7 +557,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>430</y>
+     <y>460</y>
      <width>21</width>
      <height>16</height>
     </rect>
@@ -570,7 +570,7 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>430</y>
+     <y>460</y>
      <width>21</width>
      <height>16</height>
     </rect>
@@ -583,7 +583,7 @@
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>430</y>
+     <y>460</y>
      <width>21</width>
      <height>16</height>
     </rect>
@@ -596,7 +596,7 @@
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>430</y>
+     <y>460</y>
      <width>21</width>
      <height>16</height>
     </rect>
@@ -609,7 +609,7 @@
    <property name="geometry">
     <rect>
      <x>430</x>
-     <y>430</y>
+     <y>460</y>
      <width>21</width>
      <height>16</height>
     </rect>
@@ -622,7 +622,7 @@
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>430</y>
+     <y>460</y>
      <width>21</width>
      <height>16</height>
     </rect>
@@ -635,7 +635,7 @@
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>460</y>
+     <y>490</y>
      <width>30</width>
      <height>12</height>
     </rect>
@@ -648,7 +648,7 @@
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>490</y>
+     <y>520</y>
      <width>30</width>
      <height>12</height>
     </rect>
@@ -661,7 +661,7 @@
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>520</y>
+     <y>550</y>
      <width>30</width>
      <height>12</height>
     </rect>
@@ -674,7 +674,7 @@
    <property name="geometry">
     <rect>
      <x>65</x>
-     <y>550</y>
+     <y>580</y>
      <width>30</width>
      <height>12</height>
     </rect>
@@ -687,7 +687,7 @@
    <property name="geometry">
     <rect>
      <x>55</x>
-     <y>580</y>
+     <y>610</y>
      <width>41</width>
      <height>16</height>
     </rect>
@@ -700,7 +700,7 @@
    <property name="geometry">
     <rect>
      <x>35</x>
-     <y>410</y>
+     <y>440</y>
      <width>451</width>
      <height>201</height>
     </rect>
@@ -716,30 +716,6 @@
    <property name="title">
     <string>ColorTuner</string>
    </property>
-   <zorder>checkBox_ct_y_hue</zorder>
-   <zorder>checkBox_ct_b_bri</zorder>
-   <zorder>checkBox_wb_b_offset</zorder>
-   <zorder>checkBox_wb_g_offset</zorder>
-   <zorder>checkBox_ct_g_bri</zorder>
-   <zorder>checkBox_wb_b_gain</zorder>
-   <zorder>checkBox_ct_y_bri</zorder>
-   <zorder>checkBox_wb_g_gain</zorder>
-   <zorder>checkBox_ct_y_sat</zorder>
-   <zorder>checkBox_ct_r_bri</zorder>
-   <zorder>checkBox_ct_r_sat</zorder>
-   <zorder>tableWidget_color_tuner</zorder>
-   <zorder>checkBox_ct_b_sat</zorder>
-   <zorder>checkBox_ct_g_sat</zorder>
-   <zorder>checkBox_ct_b_hue</zorder>
-   <zorder>checkBox_ct_m_bri</zorder>
-   <zorder>checkBox_ct_g_hue</zorder>
-   <zorder>checkBox_ct_m_sat</zorder>
-   <zorder>checkBox_ct_m_hue</zorder>
-   <zorder>checkBox_ct_c_bri</zorder>
-   <zorder>checkBox_wb_r_gain</zorder>
-   <zorder>checkBox_wb_r_offset</zorder>
-   <zorder>checkBox_ct_c_sat</zorder>
-   <zorder>checkBox_ct_c_hue</zorder>
   </widget>
   <widget class="QPushButton" name="pushButton_read">
    <property name="geometry">
@@ -1031,7 +1007,7 @@
   <widget class="QComboBox" name="comboBox_MpegNR">
    <property name="geometry">
     <rect>
-     <x>450</x>
+     <x>50</x>
      <y>147</y>
      <width>100</width>
      <height>22</height>
@@ -1051,7 +1027,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>170</x>
      <y>150</y>
      <width>81</width>
      <height>16</height>
@@ -1077,7 +1053,7 @@
   <widget class="QComboBox" name="comboBox_NR">
    <property name="geometry">
     <rect>
-     <x>450</x>
+     <x>50</x>
      <y>187</y>
      <width>100</width>
      <height>22</height>
@@ -1097,7 +1073,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>170</x>
      <y>190</y>
      <width>71</width>
      <height>16</height>
@@ -1124,7 +1100,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>227</y>
+     <y>154</y>
      <width>100</width>
      <height>22</height>
     </rect>
@@ -1144,7 +1120,7 @@
    <property name="geometry">
     <rect>
      <x>570</x>
-     <y>230</y>
+     <y>157</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -1173,7 +1149,7 @@
    <property name="geometry">
     <rect>
      <x>570</x>
-     <y>273</y>
+     <y>200</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -1199,7 +1175,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>270</y>
+     <y>197</y>
      <width>100</width>
      <height>22</height>
     </rect>
@@ -1216,7 +1192,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>310</y>
+     <y>237</y>
      <width>100</width>
      <height>22</height>
     </rect>
@@ -1233,7 +1209,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>350</y>
+     <y>277</y>
      <width>100</width>
      <height>22</height>
     </rect>
@@ -1253,7 +1229,7 @@
    <property name="geometry">
     <rect>
      <x>570</x>
-     <y>312</y>
+     <y>239</y>
      <width>151</width>
      <height>16</height>
     </rect>
@@ -1282,7 +1258,7 @@
    <property name="geometry">
     <rect>
      <x>570</x>
-     <y>353</y>
+     <y>280</y>
      <width>151</width>
      <height>16</height>
     </rect>
@@ -1296,6 +1272,98 @@
    </property>
    <property name="text">
     <string>Blur Reduce</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_ColorTemp">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>320</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>ColorTemp</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_ColorTemp">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>317</y>
+     <width>100</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_gammaFactor">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>357</y>
+     <width>100</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_gammaFactor">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>360</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>gammaFactor</string>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -1356,6 +1424,10 @@
   <zorder>comboBox_Blur</zorder>
   <zorder>checkBox_Judder</zorder>
   <zorder>checkBox_Blur</zorder>
+  <zorder>checkBox_ColorTemp</zorder>
+  <zorder>comboBox_ColorTemp</zorder>
+  <zorder>comboBox_gammaFactor</zorder>
+  <zorder>checkBox_gammaFactor</zorder>
  </widget>
  <resources/>
  <connections/>

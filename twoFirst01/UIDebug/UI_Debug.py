@@ -1,7 +1,8 @@
 
 # -*- coding: utf-8 -*-
-# import sys, math, random, time
+# import math, random, time
 # import ctypes as C
+import sys
 import two01 as TFC
 # import xmltodict
 # import numpy as np
@@ -11,7 +12,7 @@ from UI_Debug_res import *
 import json
 
 nameList = ["pic_mode", "AutoBrightness", "MpegNR", "NR", "GameMode", "MovieMode", "BlackExtention",
-                        "DCI", "LocalDimming", "ClearAction"]
+                        "DCI", "LocalDimming", "ClearAction", "ColorTemp", "gammaFactor"]
 
 class UIDebugWindow(QtGui.QMainWindow):
 
@@ -138,7 +139,7 @@ class UIDebugWindow(QtGui.QMainWindow):
                 continue
             elif (self.wb_start <= i and self.wb_end >= i):
                 col = (i - self.wb_start) % 3
-                row = int((i - self.wb_start) / 3)
+                row = 1 - int((i - self.wb_start) / 3)
                 if value & 0x8000 == 0x8000:
                     text = "%d" % (value - 0x10000)
                 else:
@@ -210,7 +211,7 @@ class UIDebugWindow(QtGui.QMainWindow):
                         return
             elif (self.wb_start <= i and self.wb_end >= i):
                 col = (i - self.wb_start) % 3
-                row = int((i - self.wb_start) / 3)
+                row = 1 - int((i - self.wb_start) / 3)
                 item = self.ui.tableWidget_wb.item(row, col)
                 if item.checkState() == 0:
                     continue
@@ -228,7 +229,7 @@ class UIDebugWindow(QtGui.QMainWindow):
                         return
             elif Name == "customMEMC":
                 if self.ui.checkBox_Blur.isChecked() is False and self.ui.checkBox_Judder.isChecked() is False:
-                    break
+                    continue
                 regNo = int(DebugInfo[i]["debug_reg"])
                 regAddr = int(self.ui_debug_info["debug_regs"][regNo]["address"], 16)
                 regMask = int(DebugInfo[i]["mask"], 16)

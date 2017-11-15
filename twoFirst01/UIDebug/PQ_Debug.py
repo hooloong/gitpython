@@ -65,8 +65,8 @@ class MyWindow(QtGui.QMainWindow):
 
         self.resize(900, 730)
 
-        qss_file = open('style.qss').read()
-        self.setStyleSheet(qss_file)
+        # qss_file = open('style.qss').read()
+        # self.setStyleSheet(qss_file)
 
     def tabchanges(self,index):
         if index == 4:
