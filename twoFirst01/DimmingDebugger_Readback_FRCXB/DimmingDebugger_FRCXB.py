@@ -229,6 +229,12 @@ class MyWindow(QtGui.QMainWindow):
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
+    with open("./darkero.qss") as f:
+        s = f.read()
+    app.setStyleSheet(s)
+    splash = QtGui.QSplashScreen(pixmap=QtGui.QPixmap("images/sigma-logo.png"))
+    splash.show()
+    time.sleep(1)
     mywindow = MyWindow()
     mywindow.show()
     sys.exit(app.exec_())
