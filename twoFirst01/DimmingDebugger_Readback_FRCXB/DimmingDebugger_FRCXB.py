@@ -237,4 +237,5 @@ if __name__ == "__main__":
     time.sleep(1)
     mywindow = MyWindow()
     mywindow.show()
+    splash.finish(mywindow)
     sys.exit(app.exec_())
